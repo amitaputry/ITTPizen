@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/feature-auth" />
             <option value="$PROJECT_DIR$/feature-onboarding-screen" />
             <option value="$PROJECT_DIR$/feature-splash-screen" />
+            <option value="$PROJECT_DIR$/navigation" />
             <option value="$PROJECT_DIR$/ui" />
           </set>
         </option>

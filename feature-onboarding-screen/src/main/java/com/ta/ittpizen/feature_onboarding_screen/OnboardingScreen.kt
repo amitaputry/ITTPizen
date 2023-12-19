@@ -81,6 +81,7 @@ fun OnboardingScreen(
                 count = pagerState.pageCount,
                 activePage = pagerState.currentPage,
                 buttonFinishVisibility = buttonFinishVisibility,
+                onFinishClick = navigateToLoginScreen,
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .fillMaxWidth()

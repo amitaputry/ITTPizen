@@ -25,9 +25,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
+import com.ta.ittpizen.ui.theme.PrimaryRed
 
 val baseOutlinedTextFieldColors @Composable get() = OutlinedTextFieldDefaults.colors(
     unfocusedBorderColor = Color(0xFFDEDEDE),
+    focusedBorderColor = PrimaryRed
 )
 
 val baseOutlinedTextFieldTextStyle @Composable get() = TextStyle(

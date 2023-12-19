@@ -37,6 +37,7 @@ import org.koin.compose.KoinApplication
 fun RegisterScreen(
     modifier: Modifier = Modifier,
     viewModel: RegisterViewModel = koinViewModel(),
+    navigateUp: () -> Unit = {},
     navigateToLoginScreen: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
@@ -61,7 +62,10 @@ fun RegisterScreen(
 
     Scaffold(
         topBar = {
-            DetailTopAppBar(title = "Register")
+            DetailTopAppBar(
+                title = "Register",
+                onNavigationClick = navigateUp
+            )
         },
         modifier = modifier
     ) { paddingValues ->
