@@ -28,7 +28,6 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
 val baseOutlinedTextFieldColors @Composable get() = OutlinedTextFieldDefaults.colors(
     unfocusedBorderColor = Color(0xFFDEDEDE),
-    unfocusedContainerColor = Color(0xFFFFFFFF)
 )
 
 val baseOutlinedTextFieldTextStyle @Composable get() = TextStyle(

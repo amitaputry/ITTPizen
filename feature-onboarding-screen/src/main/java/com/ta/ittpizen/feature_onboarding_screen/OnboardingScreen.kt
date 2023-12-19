@@ -36,21 +36,18 @@ fun OnboardingScreen(
     val onBoardings = listOf(
         Onboarding(
             image = R.drawable.img_onboarding_1,
-            imageHeight = 286.dp,
             title = "Hi ITTPizen, start now!",
             description = "Let’s connect, sharing information and job with students, alumni, lecturer and other civitas at ITTPizen now."
         ),
         Onboarding(
             image = R.drawable.img_onboarding_2,
-            imageHeight = 276.dp,
-            title = "Hi ITTPizen, start now!",
-            description = "Let’s connect, sharing information and job with students, alumni, lecturer and other civitas at ITTPizen now."
+            title = "Let’s Connect and Sharing",
+            description = "Connect with all students, alumni, lecturers and staff at IT Telkom Purwokerto"
         ),
         Onboarding(
-            image = R.drawable.img_onboarding_1,
-            imageHeight = 276.dp,
-            title = "Hi ITTPizen, start now!",
-            description = "Let’s connect, sharing information and job with students, alumni, lecturer and other civitas at ITTPizen now."
+            image = R.drawable.img_onboarding_3,
+            title = "Share your information and job with us",
+            description = "With ITTPizen Apps you can share all your information academic or knowledge about jobs"
         )
     )
     val pagerState = rememberPagerState { onBoardings.size }

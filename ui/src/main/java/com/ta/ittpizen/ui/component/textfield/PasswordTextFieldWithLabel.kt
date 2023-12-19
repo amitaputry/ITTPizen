@@ -21,7 +21,7 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
 @ExperimentalMaterial3Api
 @Composable
-fun OutlinedTextFieldWithLabel(
+fun PasswordTextFieldWithLabel(
     modifier: Modifier = Modifier,
     label: String,
     value: String,
@@ -34,7 +34,7 @@ fun OutlinedTextFieldWithLabel(
     Column(modifier = modifier) {
         TextTitleSmall(text = label, color = Color(0xFF343433))
         Spacer(modifier = Modifier.height(4.dp))
-        BaseOutlinedTextField(
+        PasswordTextField(
             value = value,
             onValueChange = onValueChange,
             placeholder = placeholder,
@@ -49,11 +49,11 @@ fun OutlinedTextFieldWithLabel(
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun PreviewOutlinedTextFieldWithLabel() {
+fun PreviewPasswordTextFieldWithLabel() {
     ITTPizenTheme {
         Surface {
             var value by remember { mutableStateOf("") }
-            OutlinedTextFieldWithLabel(
+            PasswordTextFieldWithLabel(
                 value = value,
                 onValueChange = { value = it },
                 label = "Full Name",

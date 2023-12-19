@@ -21,26 +21,20 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
 @ExperimentalMaterial3Api
 @Composable
-fun OutlinedTextFieldWithLabel(
+fun DropDownTextFieldWithLabel(
     modifier: Modifier = Modifier,
     label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    placeholder: String = "",
-    enabled: Boolean = true,
-    singleLine: Boolean = true,
-    isError: Boolean = false
+    selectedOption: String,
+    options: List<String>,
+    onSelected: (Int) -> Unit
 ) {
     Column(modifier = modifier) {
         TextTitleSmall(text = label, color = Color(0xFF343433))
         Spacer(modifier = Modifier.height(4.dp))
-        BaseOutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
-            placeholder = placeholder,
-            enabled = enabled,
-            singleLine = singleLine,
-            isError = isError,
+        DropDownTextField(
+            selectedOption = selectedOption,
+            options = options,
+            onSelected = onSelected,
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -49,14 +43,16 @@ fun OutlinedTextFieldWithLabel(
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun PreviewOutlinedTextFieldWithLabel() {
+fun PreviewDropDownTextFieldWithLabel() {
     ITTPizenTheme {
         Surface {
-            var value by remember { mutableStateOf("") }
-            OutlinedTextFieldWithLabel(
-                value = value,
-                onValueChange = { value = it },
+            val genders = listOf("Male", "Female")
+            var selectedGender by remember { mutableStateOf(genders[0]) }
+            DropDownTextFieldWithLabel(
                 label = "Full Name",
+                selectedOption = selectedGender,
+                options = genders,
+                onSelected = { selectedGender = genders[it] },
                 modifier = Modifier.padding(16.dp)
                     .fillMaxWidth()
             )

@@ -1,6 +1,8 @@
 package com.ta.ittpizen.ui.component.textfield
 
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -8,15 +10,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import com.ta.ittpizen.ui.component.text.TextBodyMedium
+import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
 @ExperimentalMaterial3Api
 @Composable
-fun BaseOutlinedTextField(
+fun PasswordTextField(
     modifier: Modifier = Modifier,
     value: String = "",
     onValueChange: (String) -> Unit,
@@ -24,24 +27,33 @@ fun BaseOutlinedTextField(
     enabled: Boolean = true,
     singleLine: Boolean = true,
     isError: Boolean = false,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    supportingText: @Composable (() -> Unit)? = null,
 ) {
-    BaseTextField(
+    var passwordVisible by remember { mutableStateOf(false) }
+    val visualTransformation = remember(key1 = passwordVisible) {
+        if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
+    }
+    val passwordToggleIcon = remember(key1 = passwordVisible) {
+        if (passwordVisible) R.drawable.ic_visible_on else R.drawable.ic_visible_off
+    }
+    val togglePassword: () -> Unit = {
+        passwordVisible = !passwordVisible
+    }
+    BaseOutlinedTextField(
         modifier = modifier,
         value = value,
         onValueChange = onValueChange,
         singleLine = singleLine,
         enabled = enabled,
         isError = isError,
-        leadingIcon = leadingIcon,
-        trailingIcon = trailingIcon,
-        supportingText = supportingText,
+        placeholder = placeholder,
         visualTransformation = visualTransformation,
-        placeholder = {
-            TextBodyMedium(text = placeholder, color = Color(0xFFAAAAAA))
+        trailingIcon = {
+            IconButton(onClick = togglePassword) {
+                Icon(
+                    painter = painterResource(id = passwordToggleIcon),
+                    contentDescription = "Toggle Password"
+                )
+            }
         }
     )
 }
@@ -49,11 +61,11 @@ fun BaseOutlinedTextField(
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun PreviewBaseOutlinedTextField() {
+fun PreviewPasswordTextField() {
     ITTPizenTheme {
         Surface {
             var value by remember { mutableStateOf("") }
-            BaseOutlinedTextField(
+            PasswordTextField(
                 value = value,
                 onValueChange = { value = it },
                 placeholder = "Enter your username"

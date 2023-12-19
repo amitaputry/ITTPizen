@@ -10,6 +10,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
@@ -19,7 +20,9 @@ import com.ta.ittpizen.ui.theme.PrimaryRed
 fun PrimaryTextButton(
     modifier: Modifier = Modifier,
     text: String,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
+    fontSize: TextUnit = 16.sp,
+    fontWeight: FontWeight = FontWeight(700),
 ) {
     val buttonText = buildAnnotatedString {
         append(text)
@@ -29,8 +32,8 @@ fun PrimaryTextButton(
         onClick = { onClick() },
         modifier = modifier,
         style = TextStyle(
-            fontSize = 16.sp,
-            fontWeight = FontWeight(700),
+            fontSize = fontSize,
+            fontWeight = fontWeight,
             color = PrimaryRed,
             textAlign = TextAlign.Center,
             letterSpacing = 0.02.sp,

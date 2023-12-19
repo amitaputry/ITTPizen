@@ -52,6 +52,9 @@ android {
 dependencies {
 
     implementation(project(":ui"))
+    implementation(project(":feature-splash-screen"))
+    implementation(project(":feature-onboarding-screen"))
+    implementation(project(":feature-auth"))
 
     testImplementation("junit:junit:4.13.2")
 

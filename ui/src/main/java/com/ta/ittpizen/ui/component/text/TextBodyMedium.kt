@@ -18,7 +18,8 @@ fun TextBodyMedium(
     modifier: Modifier = Modifier,
     text: String,
     color: Color = MaterialTheme.colorScheme.onBackground,
-    textAlign: TextAlign = TextAlign.Start
+    textAlign: TextAlign = TextAlign.Start,
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
@@ -27,6 +28,7 @@ fun TextBodyMedium(
         color = color,
         letterSpacing = 0.04.sp,
         textAlign = textAlign,
+        maxLines = maxLines,
         modifier = modifier
     )
 }

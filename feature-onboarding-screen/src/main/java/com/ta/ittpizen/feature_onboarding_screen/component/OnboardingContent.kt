@@ -38,10 +38,10 @@ fun OnboardingContent(
             contentDescription = onboarding.title,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
-                .height(onboarding.imageHeight)
+                .height(277.dp)
                 .fillMaxWidth()
         )
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(100.dp))
         TextHeadlineSmall(
             text = onboarding.title,
             color = PrimaryRed,
@@ -66,7 +66,6 @@ fun PreviewOnboardingContent() {
         Surface {
             val onboarding = Onboarding(
                 image = R.drawable.img_onboarding_1,
-                imageHeight = 286.dp,
                 title = "Hi ITTPizen, start now!",
                 description = "Let’s connect, sharing information and job with students, alumni, lecturer and other civitas at ITTPizen now."
             )
