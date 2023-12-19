@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ta.ittpizen.feature_auth.di.authModule
-import com.ta.ittpizen.feature_auth.register.RegisterScreen
+import com.ta.ittpizen.feature_auth.login.LoginScreen
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import org.koin.compose.KoinApplication
 
@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        RegisterScreen()
+                        LoginScreen()
                     }
                 }
             }
