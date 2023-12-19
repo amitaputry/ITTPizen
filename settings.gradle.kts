@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "ITTPizen"
 include(":app")
 include(":ui")
+include(":feature-splash-screen")
