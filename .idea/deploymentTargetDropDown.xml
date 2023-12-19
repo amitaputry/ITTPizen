@@ -2,19 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewBaseOutlinedTextField">
+      <entry key="PreviewDetailTopAppBar">
         <State />
       </entry>
-      <entry key="PreviewDetailTopAppBar">
+      <entry key="PreviewOnboardingContent">
+        <State />
+      </entry>
+      <entry key="PreviewOnboardingScreen">
         <State />
       </entry>
       <entry key="PreviewOutlinedTextFieldWithLabel">
         <State />
       </entry>
-      <entry key="PreviewSmallTextField">
-        <State />
-      </entry>
-      <entry key="PreviewTextTitleSmall">
+      <entry key="PreviewSplashScreen">
         <State />
       </entry>
       <entry key="app">

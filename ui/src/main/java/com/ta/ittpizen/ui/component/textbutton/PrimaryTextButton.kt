@@ -2,7 +2,6 @@ package com.ta.ittpizen.ui.component.textbutton
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
+import com.ta.ittpizen.ui.theme.PrimaryRed
 
 @Composable
 fun PrimaryTextButton(
@@ -31,7 +31,7 @@ fun PrimaryTextButton(
         style = TextStyle(
             fontSize = 16.sp,
             fontWeight = FontWeight(700),
-            color = MaterialTheme.colorScheme.primary,
+            color = PrimaryRed,
             textAlign = TextAlign.Center,
             letterSpacing = 0.02.sp,
         )
