@@ -89,6 +89,7 @@ fun RegisterScreen(
                 value = studentIdOrLectureId,
                 onValueChange = viewModel::updateStudentIdOrLectureId,
                 placeholder = "Enter your ID Number",
+                isOptional = true,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(20.dp))
@@ -105,6 +106,7 @@ fun RegisterScreen(
                 value = phone,
                 onValueChange = viewModel::updatePhone,
                 placeholder = "Enter your phone number",
+                isOptional = true,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(20.dp))

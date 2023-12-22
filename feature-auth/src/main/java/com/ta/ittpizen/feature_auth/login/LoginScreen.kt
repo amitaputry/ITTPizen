@@ -46,6 +46,8 @@ fun LoginScreen(
     val email = uiState.email
     val password = uiState.password
 
+    val emailError by viewModel.emailError.collectAsStateWithLifecycle(initialValue = false)
+
     val buttonRegisterEnable by viewModel.buttonRegisterEnable.collectAsStateWithLifecycle(
         initialValue = false
     )
@@ -74,6 +76,7 @@ fun LoginScreen(
             OutlinedTextFieldWithLabel(
                 label = "Email",
                 value = email,
+                isError = emailError,
                 onValueChange = viewModel::updateEmail,
                 placeholder = "Enter your email",
                 modifier = Modifier.fillMaxWidth()
