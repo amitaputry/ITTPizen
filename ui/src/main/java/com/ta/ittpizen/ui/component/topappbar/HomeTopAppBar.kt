@@ -53,6 +53,7 @@ fun HomeTopAppBar(
             model = profile,
             contentDescription = "Profile",
             placeholder = painterResource(id = R.drawable.ic_profile_default),
+            error = painterResource(id = R.drawable.ic_profile_default),
             modifier = Modifier
                 .size(22.dp)
                 .clip(CircleShape)

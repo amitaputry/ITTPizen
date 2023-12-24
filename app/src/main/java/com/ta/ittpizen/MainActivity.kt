@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.ta.ittpizen.feature_auth.di.authModule
+import com.ta.ittpizen.feature_home.HomeScreen
 import com.ta.ittpizen.navigation.ITTPizenNavHost
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import org.koin.compose.KoinApplication
@@ -29,7 +30,8 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        ITTPizenNavHost()
+//                        ITTPizenNavHost()
+                        HomeScreen()
                     }
                 }
             }
