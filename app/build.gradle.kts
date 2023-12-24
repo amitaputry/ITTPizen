@@ -52,6 +52,7 @@ android {
 dependencies {
 
     implementation(project(":ui"))
+    implementation(project(":domain"))
     implementation(project(":navigation"))
 
     implementation(project(":feature-splash-screen"))

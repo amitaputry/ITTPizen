@@ -26,12 +26,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.size.Scale
+import coil.size.Size
 import com.ta.ittpizen.domain.entity.PostItem
 import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.component.text.TextBodySmall
@@ -142,6 +146,7 @@ private fun PostBody(
     text: String = "",
     media: String = ""
 ) {
+    val context = LocalContext.current
     var isExpanded by remember { mutableStateOf(false) }
     Column(modifier = modifier.animateContentSize()) {
         ReadMoreText(
@@ -159,17 +164,23 @@ private fun PostBody(
             onExpandedChange = { isExpanded = it },
             toggleArea = ToggleArea.More
         )
-        if (media.isNotEmpty()) {
-            Spacer(modifier = Modifier.height(10.dp))
-            AsyncImage(
-                model = media,
-                contentDescription = null,
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(20.dp))
-            )
-        }
+//        if (media.isNotEmpty()) {
+//        }
+        Spacer(modifier = Modifier.height(10.dp))
+        val model = ImageRequest.Builder(context)
+            .data(media)
+//            .size(Size.ORIGINAL)
+            .crossfade(true)
+            .scale(Scale.FIT)
+            .build()
+        AsyncImage(
+            model = model,
+            contentDescription = null,
+            modifier = Modifier
+                .height(100.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(20.dp))
+        )
     }
 }
 
@@ -254,9 +265,8 @@ fun PreviewPostItem() {
                 date = "1 hours ago",
                 profile = "",
                 text = "Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen",
-                media = "",
+                media = "https://kemahasiswaan.ittelkom-pwt.ac.id/wp-content/uploads/sites/27/2021/05/pilmapres20211-1200x675.png",
                 liked = true
-
             )
             PostItem(
                 post = postItem,
