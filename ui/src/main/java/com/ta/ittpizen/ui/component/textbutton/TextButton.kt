@@ -5,6 +5,7 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -17,12 +18,13 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import com.ta.ittpizen.ui.theme.PrimaryRed
 
 @Composable
-fun PrimaryTextButton(
+fun TextButton(
     modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit = {},
     fontSize: TextUnit = 16.sp,
     fontWeight: FontWeight = FontWeight(700),
+    color: Color = PrimaryRed
 ) {
     val buttonText = buildAnnotatedString {
         append(text)
@@ -34,7 +36,7 @@ fun PrimaryTextButton(
         style = TextStyle(
             fontSize = fontSize,
             fontWeight = fontWeight,
-            color = PrimaryRed,
+            color = color,
             textAlign = TextAlign.Center,
             letterSpacing = 0.02.sp,
         )
@@ -43,10 +45,10 @@ fun PrimaryTextButton(
 
 @Preview
 @Composable
-fun PreviewPrimaryTextButton() {
+fun PreviewTextButton() {
     ITTPizenTheme {
         Surface {
-            PrimaryTextButton(
+            TextButton(
                 text = "Skip",
                 modifier = Modifier.padding(16.dp)
             )

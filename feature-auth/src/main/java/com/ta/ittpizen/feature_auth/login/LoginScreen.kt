@@ -26,7 +26,7 @@ import com.ta.ittpizen.feature_auth.di.authModule
 import com.ta.ittpizen.ui.component.button.LargePrimaryButton
 import com.ta.ittpizen.ui.component.text.TextBodySmall
 import com.ta.ittpizen.ui.component.text.TextTitleLarge
-import com.ta.ittpizen.ui.component.textbutton.PrimaryTextButton
+import com.ta.ittpizen.ui.component.textbutton.TextButton
 import com.ta.ittpizen.ui.component.textfield.OutlinedTextFieldWithLabel
 import com.ta.ittpizen.ui.component.textfield.PasswordTextFieldWithLabel
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
@@ -100,7 +100,7 @@ fun LoginScreen(
                 horizontalArrangement = Arrangement.Center
             ) {
                 TextBodySmall(text = "Do not have an account? ")
-                PrimaryTextButton(
+                TextButton(
                     text = "Register",
                     fontSize = 12.sp,
                     onClick = navigateToRegisterScreen

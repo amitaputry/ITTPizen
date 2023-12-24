@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.ui.component.textbutton.PrimaryTextButton
+import com.ta.ittpizen.ui.component.textbutton.TextButton
 
 @Composable
 fun OnboardingHeader(
@@ -30,7 +30,7 @@ fun OnboardingHeader(
             enter = fadeIn(),
             exit = fadeOut()
         ) {
-            PrimaryTextButton(
+            TextButton(
                 text = "Skip",
                 onClick = onSkipClick,
             )

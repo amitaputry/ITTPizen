@@ -45,6 +45,8 @@ android {
 
 dependencies {
 
+    implementation(project(":domain"))
+
     api("androidx.core:core-ktx:1.12.0")
     api("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     api("androidx.activity:activity-compose:1.8.2")
@@ -61,6 +63,10 @@ dependencies {
     api("io.insert-koin:koin-core")
     api("io.insert-koin:koin-android")
     api("io.insert-koin:koin-androidx-compose")
+
+    api("io.coil-kt:coil-compose:2.5.0")
+
+    api("com.webtoonscorp.android:readmore-material3:1.4.4")
 
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")

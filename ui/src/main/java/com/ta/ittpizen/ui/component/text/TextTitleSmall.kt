@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
@@ -17,7 +18,9 @@ fun TextTitleSmall(
     modifier: Modifier = Modifier,
     text: String,
     color: Color = MaterialTheme.colorScheme.onBackground,
-    textAlign: TextAlign = TextAlign.Start
+    textAlign: TextAlign = TextAlign.Start,
+    maxLines: Int = Int.MAX_VALUE,
+    overflow: TextOverflow = TextOverflow.Ellipsis
 ) {
     Text(
         text = text,
@@ -27,7 +30,9 @@ fun TextTitleSmall(
         color = color,
         letterSpacing = 0.02.sp,
         textAlign = textAlign,
-        modifier = modifier
+        modifier = modifier,
+        maxLines = maxLines,
+        overflow = overflow
     )
 }
 

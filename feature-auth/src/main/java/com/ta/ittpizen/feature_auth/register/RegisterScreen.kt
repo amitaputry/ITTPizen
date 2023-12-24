@@ -23,7 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ta.ittpizen.feature_auth.di.authModule
 import com.ta.ittpizen.ui.component.button.LargePrimaryButton
 import com.ta.ittpizen.ui.component.text.TextBodySmall
-import com.ta.ittpizen.ui.component.textbutton.PrimaryTextButton
+import com.ta.ittpizen.ui.component.textbutton.TextButton
 import com.ta.ittpizen.ui.component.textfield.DropDownTextFieldWithLabel
 import com.ta.ittpizen.ui.component.textfield.OutlinedTextFieldWithLabel
 import com.ta.ittpizen.ui.component.textfield.PasswordTextFieldWithLabel
@@ -155,7 +155,7 @@ fun RegisterScreen(
                 horizontalArrangement = Arrangement.Center
             ) {
                 TextBodySmall(text = "Already have an account? ")
-                PrimaryTextButton(
+                TextButton(
                     text = "Login",
                     fontSize = 12.sp,
                     onClick = navigateToLoginScreen

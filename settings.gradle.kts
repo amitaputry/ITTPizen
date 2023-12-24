@@ -1,3 +1,5 @@
+import java.net.URI
+
 pluginManagement {
     repositories {
         google()
@@ -8,6 +10,9 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+//        maven {
+//            url = URI.create("https://s01.oss.sonatype.org/content/repositories/snapshots")
+//        }
         google()
         mavenCentral()
     }
@@ -20,3 +25,4 @@ include(":feature-splash-screen")
 include(":feature-onboarding-screen")
 include(":feature-auth")
 include(":navigation")
+include(":domain")

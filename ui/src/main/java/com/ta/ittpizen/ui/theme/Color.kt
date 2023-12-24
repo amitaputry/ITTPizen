@@ -11,5 +11,7 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val PrimaryRed = Color(0xFFD32B28)
+val ColorText = Color(0xFF343433)
 val HoverRed = Color(0x80D32B28)
 val SecondDarkGrey = Color(0xFF706F6F)
+val DisableColorGrey = Color(0xFFC5C3C3)
