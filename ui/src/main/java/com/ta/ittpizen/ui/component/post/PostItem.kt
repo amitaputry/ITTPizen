@@ -152,7 +152,7 @@ private fun PostBody(
         ReadMoreText(
             text = text,
             expanded = isExpanded,
-            fontSize = 12.sp,
+            fontSize = 14.sp,
             fontWeight = FontWeight(400),
             lineHeight = 16.sp,
             color = ColorText,
@@ -164,23 +164,23 @@ private fun PostBody(
             onExpandedChange = { isExpanded = it },
             toggleArea = ToggleArea.More
         )
-//        if (media.isNotEmpty()) {
-//        }
-        Spacer(modifier = Modifier.height(10.dp))
-        val model = ImageRequest.Builder(context)
-            .data(media)
+        if (media.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(10.dp))
+            val model = ImageRequest.Builder(context)
+                .data(media)
 //            .size(Size.ORIGINAL)
-            .crossfade(true)
-            .scale(Scale.FIT)
-            .build()
-        AsyncImage(
-            model = model,
-            contentDescription = null,
-            modifier = Modifier
-                .height(100.dp)
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(20.dp))
-        )
+                .crossfade(true)
+                .scale(Scale.FIT)
+                .build()
+            AsyncImage(
+                model = model,
+                contentDescription = null,
+                modifier = Modifier
+                    .height(100.dp)
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(20.dp))
+            )
+        }
     }
 }
 

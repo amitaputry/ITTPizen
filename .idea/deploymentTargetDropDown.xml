@@ -2,16 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewOutlinedTextFieldWithLabel">
+      <entry key="PreviewBaseTabRow">
         <State />
       </entry>
-      <entry key="PreviewPostBody">
+      <entry key="PreviewBaseTabRow (1)">
         <State />
       </entry>
-      <entry key="PreviewPostFooter">
-        <State />
-      </entry>
-      <entry key="PreviewPostHeader">
+      <entry key="PreviewHomeScreen">
         <State />
       </entry>
       <entry key="PreviewPostItem">

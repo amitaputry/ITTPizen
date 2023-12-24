@@ -33,10 +33,10 @@ fun HomeTopAppBar(
 ) {
     Row(
         modifier = modifier
-            .height(60.dp)
             .padding(horizontal = 20.dp)
+            .padding(top = 20.dp, bottom = 10.dp)
             .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(painter = painterResource(id = R.drawable.ic_home_ittpizen), contentDescription = "ITTPizen")
         Spacer(modifier = Modifier.weight(1f))
@@ -44,7 +44,7 @@ fun HomeTopAppBar(
             painter = painterResource(id = R.drawable.ic_notification),
             contentDescription = "Notification",
             modifier = Modifier
-                .size(22.dp)
+                .size(26.dp)
                 .clip(CircleShape)
                 .clickable { onNotificationClick() }
         )
@@ -55,7 +55,7 @@ fun HomeTopAppBar(
             placeholder = painterResource(id = R.drawable.ic_profile_default),
             error = painterResource(id = R.drawable.ic_profile_default),
             modifier = Modifier
-                .size(22.dp)
+                .size(26.dp)
                 .clip(CircleShape)
                 .clickable { onProfileClick() }
         )
