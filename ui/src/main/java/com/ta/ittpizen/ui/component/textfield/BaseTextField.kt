@@ -24,18 +24,21 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ta.ittpizen.ui.component.text.TextBodyMedium
+import com.ta.ittpizen.ui.theme.ColorText
+import com.ta.ittpizen.ui.theme.DisableColorGrey
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
-import com.ta.ittpizen.ui.theme.PrimaryRed
 
-val baseOutlinedTextFieldColors @Composable get() = OutlinedTextFieldDefaults.colors(
-    unfocusedBorderColor = Color(0xFFDEDEDE),
-    focusedBorderColor = PrimaryRed
+val baseTextFieldColors @Composable get() = OutlinedTextFieldDefaults.colors(
+    unfocusedBorderColor = Color.Transparent,
+    focusedBorderColor = Color.Transparent,
+    disabledBorderColor = Color.Transparent
 )
 
-val baseOutlinedTextFieldTextStyle @Composable get() = TextStyle(
+val baseFieldTextStyle @Composable get() = TextStyle(
     fontSize = 14.sp,
     lineHeight = 18.sp,
-    color = MaterialTheme.colorScheme.onBackground,
+    color = ColorText,
     letterSpacing = 0.04.sp,
 )
 
@@ -47,9 +50,9 @@ fun BaseTextField(
     onValueChange: (String) -> Unit,
     enabled: Boolean = true,
     readOnly: Boolean = false,
-    textStyle: TextStyle = baseOutlinedTextFieldTextStyle,
+    textStyle: TextStyle = baseFieldTextStyle,
+    placeholder: String = "",
     label: @Composable (() -> Unit)? = null,
-    placeholder: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     supportingText: @Composable (() -> Unit)? = null,
@@ -61,7 +64,7 @@ fun BaseTextField(
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = RoundedCornerShape(100.dp),
-    colors: TextFieldColors = baseOutlinedTextFieldColors,
+    colors: TextFieldColors = baseTextFieldColors,
     contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 10.dp)
 ) {
 
@@ -92,7 +95,9 @@ fun BaseTextField(
                     interactionSource = interactionSource,
                     isError = isError,
                     label = label,
-                    placeholder = placeholder,
+                    placeholder = {
+                        TextBodyMedium(text = placeholder, color = DisableColorGrey)
+                    },
                     leadingIcon = leadingIcon,
                     trailingIcon = trailingIcon,
                     supportingText = supportingText,

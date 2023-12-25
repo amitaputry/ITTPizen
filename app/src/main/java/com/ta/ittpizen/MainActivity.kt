@@ -12,6 +12,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.ta.ittpizen.feature_auth.di.authModule
 import com.ta.ittpizen.feature_chat.chat.ChatScreen
+import com.ta.ittpizen.feature_post.add.AddPostScreen
+import com.ta.ittpizen.feature_post.add.AddPostType
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import org.koin.compose.KoinApplication
 
@@ -32,7 +34,9 @@ class MainActivity : ComponentActivity() {
                         color = MaterialTheme.colorScheme.background
                     ) {
 //                        ITTPizenNavHost()
-                        ChatScreen()
+                        AddPostScreen(
+                            type = AddPostType.ACHIEVEMENT
+                        )
                     }
                 }
             }

@@ -18,7 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.ui.R
-import com.ta.ittpizen.ui.component.BaseIconButton
+import com.ta.ittpizen.ui.component.iconbutton.FieldIconButton
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
 @ExperimentalMaterial3Api
@@ -45,7 +45,7 @@ fun SearchBarWithAddButton(
             modifier = Modifier.weight(1f)
         )
         Spacer(modifier = Modifier.width(10.dp))
-        BaseIconButton(
+        FieldIconButton(
             icon = painterResource(id = R.drawable.ic_add_primary),
             contentDescription = "Add chat",
             onClick = onAddClick

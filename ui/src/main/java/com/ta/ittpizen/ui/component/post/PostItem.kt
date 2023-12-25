@@ -38,6 +38,7 @@ import coil.size.Scale
 import coil.size.Size
 import com.ta.ittpizen.domain.entity.PostItem
 import com.ta.ittpizen.ui.R
+import com.ta.ittpizen.ui.component.iconbutton.BaseIconButton
 import com.ta.ittpizen.ui.component.text.TextBodySmall
 import com.ta.ittpizen.ui.component.text.TextTitleSmall
 import com.ta.ittpizen.ui.theme.ColorText
@@ -229,32 +230,20 @@ fun PostFooter(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            Image(
-                painter = painterResource(id = iconLike),
+            BaseIconButton(
+                icon = painterResource(id = iconLike),
                 contentDescription = "Like",
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .clickable { onLike() }
-                    .padding(4.dp)
-                    .size(24.dp)
+                onClick = onLike
             )
-            Image(
-                painter = painterResource(id = R.drawable.ic_comment),
+            BaseIconButton(
+                icon = painterResource(id = R.drawable.ic_comment),
                 contentDescription = "Comment",
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .clickable { onComment() }
-                    .padding(4.dp)
-                    .size(24.dp)
+                onClick = onComment
             )
-            Image(
-                painter = painterResource(id = R.drawable.ic_send),
+            BaseIconButton(
+                icon = painterResource(id = R.drawable.ic_send),
                 contentDescription = "Send",
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .clickable { onSend() }
-                    .padding(4.dp)
-                    .size(24.dp)
+                onClick = onSend
             )
         }
     }

@@ -2,19 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewBaseIconButton">
+      <entry key="PreviewAddPostFooter">
         <State />
       </entry>
-      <entry key="PreviewChatScreen">
+      <entry key="PreviewAddPostHeader">
         <State />
       </entry>
-      <entry key="PreviewEmptyChat">
+      <entry key="PreviewAddPostScreen">
         <State />
       </entry>
-      <entry key="PreviewPostItem">
+      <entry key="PreviewBaseOutlinedTextField">
         <State />
       </entry>
-      <entry key="PreviewSearchBarWithAddButton">
+      <entry key="PreviewPostFooter">
         <State />
       </entry>
       <entry key="app">

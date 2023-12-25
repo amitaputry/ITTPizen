@@ -23,11 +23,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ta.ittpizen.ui.R
-import com.ta.ittpizen.ui.component.text.TextBodyMedium
 import com.ta.ittpizen.ui.component.textfield.BaseTextField
 import com.ta.ittpizen.ui.theme.GreyShadow
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
-import com.ta.ittpizen.ui.theme.SecondDarkGrey
 
 val baseSearchBarColors @Composable get() = OutlinedTextFieldDefaults.colors(
     unfocusedBorderColor = Color.Transparent,
@@ -68,9 +66,7 @@ fun BaseSearchBar(
                 modifier = Modifier.size(16.dp)
             )
         },
-        placeholder = {
-            TextBodyMedium(text = placeholder, color = SecondDarkGrey)
-        },
+        placeholder = placeholder,
         colors = baseSearchBarColors
     )
 }

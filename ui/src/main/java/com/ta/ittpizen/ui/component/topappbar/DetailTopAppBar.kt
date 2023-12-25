@@ -8,7 +8,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,7 +31,6 @@ fun DetailTopAppBar(
                 modifier = Modifier.offset(y = (-1).dp)
             )
         },
-        modifier = modifier.shadow(elevation = 1.dp),
         navigationIcon = {
             IconButton(onClick = onNavigationClick) {
                 Image(
@@ -40,7 +38,8 @@ fun DetailTopAppBar(
                     contentDescription = "Back"
                 )
             }
-        }
+        },
+        modifier = modifier
     )
 }
 

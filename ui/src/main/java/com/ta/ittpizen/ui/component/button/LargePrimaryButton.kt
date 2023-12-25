@@ -3,6 +3,7 @@ package com.ta.ittpizen.ui.component.button
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
@@ -23,7 +24,8 @@ fun LargePrimaryButton(
     text: String,
     onClick: () -> Unit = {},
     enable: Boolean = true,
-    loading: Boolean = false
+    loading: Boolean = false,
+    contentPaddingValues: PaddingValues = PaddingValues(vertical = 13.dp, horizontal = 28.dp)
 ) {
     val buttonText = if (loading) "Loading..." else text
     val buttonEnabled = if (loading) false else enable
@@ -34,7 +36,7 @@ fun LargePrimaryButton(
             .clip(RoundedCornerShape(size = 100.dp))
             .clickable(buttonEnabled) { onClick() }
             .background(color = buttonBackground)
-            .padding(vertical = 13.dp, horizontal = 28.dp),
+            .padding(contentPaddingValues),
         contentAlignment = Alignment.Center
     ) {
         TextTitleSmall(
