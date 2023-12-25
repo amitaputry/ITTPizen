@@ -5,13 +5,13 @@
       <entry key="PreviewBaseIconButton">
         <State />
       </entry>
-      <entry key="PreviewChatItem">
-        <State />
-      </entry>
       <entry key="PreviewChatScreen">
         <State />
       </entry>
       <entry key="PreviewEmptyChat">
+        <State />
+      </entry>
+      <entry key="PreviewPostItem">
         <State />
       </entry>
       <entry key="PreviewSearchBarWithAddButton">

@@ -79,6 +79,7 @@ fun PostItem(
             PostFooter(
                 like = post.like,
                 comment = post.comment,
+                liked = post.liked,
                 onLike = { onLike(post) },
                 onComment = { onComment(post) },
                 onSend = { onSend(post) },
@@ -168,17 +169,19 @@ private fun PostBody(
             Spacer(modifier = Modifier.height(10.dp))
             val model = ImageRequest.Builder(context)
                 .data(media)
-//            .size(Size.ORIGINAL)
+                .size(Size.ORIGINAL)
                 .crossfade(true)
                 .scale(Scale.FIT)
+                .placeholder(R.drawable.img_media_placeholder)
+                .error(R.drawable.img_media_placeholder)
                 .build()
             AsyncImage(
                 model = model,
                 contentDescription = null,
+                contentScale = ContentScale.FillWidth,
                 modifier = Modifier
-                    .height(100.dp)
-                    .fillMaxWidth()
                     .clip(RoundedCornerShape(20.dp))
+                    .fillMaxWidth()
             )
         }
     }
@@ -196,7 +199,10 @@ private fun PostLikeAndComment(
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         TextBodySmall(text = "$like Likes", color = SecondDarkGrey)
-        Image(painter = painterResource(id = R.drawable.ic_circle), contentDescription = null)
+        Image(
+            painter = painterResource(id = R.drawable.ic_circle),
+            contentDescription = null
+        )
         TextBodySmall(text = "$comment comments", color = SecondDarkGrey)
     }
 }
@@ -211,7 +217,7 @@ fun PostFooter(
     onComment: () -> Unit = {},
     onSend: () -> Unit = {}
 ) {
-    val iconLike = if (liked) R.drawable.ic_like else R.drawable.ic_like
+    val iconLike = if (liked) R.drawable.ic_liked else R.drawable.ic_like
     Column(modifier = modifier) {
         PostLikeAndComment(
             like = like,
@@ -265,7 +271,7 @@ fun PreviewPostItem() {
                 date = "1 hours ago",
                 profile = "",
                 text = "Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen",
-                media = "https://kemahasiswaan.ittelkom-pwt.ac.id/wp-content/uploads/sites/27/2021/05/pilmapres20211-1200x675.png",
+                media = "https://serayunews.com/_next/image?url=https%3A%2F%2Fserayunews.pw%2Fwp-content%2Fuploads%2F2023%2F07%2FWhatsApp-Image-2023-07-02-at-14.44.51.jpeg&w=640&q=75",
                 liked = true
             )
             PostItem(
