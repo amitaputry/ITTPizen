@@ -10,7 +10,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,9 +33,9 @@ fun BaseTabIndicator(
     val indicatorStart by transition.animateDp(
         transitionSpec = {
             if (initialState < targetState) {
-                spring(dampingRatio = 1f, stiffness = 50f)
+                spring(dampingRatio = 1f, stiffness = 500f)
             } else {
-                spring(dampingRatio = 1f, stiffness = 100f)
+                spring(dampingRatio = 1f, stiffness = 1000f)
             }
         },
         label = "indicator-start"
@@ -47,9 +46,9 @@ fun BaseTabIndicator(
     val indicatorEnd by transition.animateDp(
         transitionSpec = {
             if (initialState < targetState) {
-                spring(dampingRatio = 1f, stiffness = 100f)
+                spring(dampingRatio = 1f, stiffness = 1000f)
             } else {
-                spring(dampingRatio = 1f, stiffness = 50f)
+                spring(dampingRatio = 1f, stiffness = 500f)
             }
         },
         label = "indicator-end"
