@@ -60,6 +60,7 @@ dependencies {
     implementation(project(":feature-auth"))
     implementation(project(":feature-home"))
     implementation(project(":feature-connection"))
+    implementation(project(":feature-chat"))
 
     testImplementation("junit:junit:4.13.2")
 

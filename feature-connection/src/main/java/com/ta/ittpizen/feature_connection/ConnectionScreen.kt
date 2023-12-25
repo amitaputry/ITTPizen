@@ -76,10 +76,9 @@ fun ConnectionScreen(
             }
             item {
                 BaseSearchBar(
-                    value = query,
-                    onValueChange = { query = it },
+                    query = query,
+                    onQueryChange = { query = it },
                     placeholder = "Find your friends..",
-                    singleLine = true,
                     modifier = Modifier
                         .padding(horizontal = 20.dp)
                         .fillMaxWidth()

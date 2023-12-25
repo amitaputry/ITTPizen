@@ -46,18 +46,17 @@ val baseSearchBarTextStyle @Composable get() = TextStyle(
 @Composable
 fun BaseSearchBar(
     modifier: Modifier = Modifier,
-    value: String = "",
-    onValueChange: (String) -> Unit = {},
+    query: String = "",
+    onQueryChange: (String) -> Unit = {},
     placeholder: String = "",
     enabled: Boolean = true,
-    singleLine: Boolean = true,
-    isError: Boolean = false,
+    isError: Boolean = false
 ) {
     BaseTextField(
         modifier = modifier.height(42.dp),
-        value = value,
-        onValueChange = onValueChange,
-        singleLine = singleLine,
+        value = query,
+        onValueChange = onQueryChange,
+        singleLine = true,
         enabled = enabled,
         isError = isError,
         textStyle = baseSearchBarTextStyle,
@@ -85,8 +84,8 @@ fun PreviewBaseSearchBar() {
             var value by remember { mutableStateOf("") }
             BaseSearchBar(
                 placeholder = "Find your friends..",
-                value = value,
-                onValueChange = { value = it },
+                query = value,
+                onQueryChange = { value = it },
                 modifier = Modifier
                     .padding(20.dp)
                     .fillMaxWidth()
