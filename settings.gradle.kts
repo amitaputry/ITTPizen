@@ -1,5 +1,8 @@
 import java.net.URI
 
+include(":feature-connection")
+
+
 include(":feature-home")
 
 

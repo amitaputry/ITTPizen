@@ -12,7 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.ui.component.text.TextBodySmall
+import com.ta.ittpizen.ui.component.text.TextBodyMedium
 import com.ta.ittpizen.ui.theme.DisableColorGrey
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import com.ta.ittpizen.ui.theme.PrimaryRed
@@ -27,7 +27,7 @@ fun BaseChip(
     val borderColor = if (selected) PrimaryRed else DisableColorGrey
     val textColor = if (selected) Color.White else DisableColorGrey
     val backgroundColor = if (selected) PrimaryRed else Color.Transparent
-    TextBodySmall(
+    TextBodyMedium(
         text = text,
         color = textColor,
         modifier = modifier

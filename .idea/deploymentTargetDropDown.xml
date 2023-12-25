@@ -2,16 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewBaseTabRow">
+      <entry key="PreviewConnectionScreen">
         <State />
       </entry>
-      <entry key="PreviewBaseTabRow (1)">
+      <entry key="PreviewSingleChipRow">
         <State />
       </entry>
-      <entry key="PreviewHomeScreen">
+      <entry key="PreviewSmallOutlinedButton">
         <State />
       </entry>
-      <entry key="PreviewPostItem">
+      <entry key="PreviewSmallPrimaryButton">
+        <State />
+      </entry>
+      <entry key="PreviewUserItem">
         <State />
       </entry>
       <entry key="app">

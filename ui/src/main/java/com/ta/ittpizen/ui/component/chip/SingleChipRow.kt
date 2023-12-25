@@ -1,9 +1,11 @@
 package com.ta.ittpizen.ui.component.chip
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,7 +26,9 @@ fun SingleChipRow(
     contentPadding: PaddingValues = PaddingValues()
 ) {
     LazyRow(
-        modifier = modifier,
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .then(modifier),
         contentPadding = contentPadding,
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
