@@ -2,19 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="PreviewChatItem">
+        <State />
+      </entry>
+      <entry key="PreviewChatScreen">
+        <State />
+      </entry>
+      <entry key="PreviewChatUnreadIndicator">
+        <State />
+      </entry>
       <entry key="PreviewConnectionScreen">
         <State />
       </entry>
       <entry key="PreviewSingleChipRow">
-        <State />
-      </entry>
-      <entry key="PreviewSmallOutlinedButton">
-        <State />
-      </entry>
-      <entry key="PreviewSmallPrimaryButton">
-        <State />
-      </entry>
-      <entry key="PreviewUserItem">
         <State />
       </entry>
       <entry key="app">

@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
@@ -19,7 +20,8 @@ fun TextBodyLarge(
     text: String,
     color: Color = MaterialTheme.colorScheme.onBackground,
     textAlign: TextAlign = TextAlign.Start,
-    fontWeight: FontWeight = FontWeight(400)
+    fontWeight: FontWeight = FontWeight(400),
+    maxLines: Int = Int.MAX_VALUE
 ) {
     Text(
         text = text,
@@ -28,7 +30,9 @@ fun TextBodyLarge(
         textAlign = textAlign,
         letterSpacing = 0.04.sp,
         fontWeight = fontWeight,
-        modifier = modifier
+        modifier = modifier,
+        maxLines = maxLines,
+        overflow = TextOverflow.Ellipsis
     )
 }
 
