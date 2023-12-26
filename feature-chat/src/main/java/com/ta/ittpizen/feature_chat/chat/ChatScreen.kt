@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.entity.ChatItem
+import com.ta.ittpizen.feature_chat.component.EmptyChatContent
 import com.ta.ittpizen.ui.component.chat.ChatItem
 import com.ta.ittpizen.ui.component.searchbar.SearchBarWithAddButton
 import com.ta.ittpizen.ui.component.topappbar.BaseTopAppBar

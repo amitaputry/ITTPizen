@@ -1,4 +1,4 @@
-import java.net.URI
+include(":common")
 
 include(":feature-post")
 

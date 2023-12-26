@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ta.ittpizen.feature_chat"
+    namespace = "com.ta.ittpizen.common"
     compileSdk = 34
 
     defaultConfig {
@@ -31,24 +31,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
 
-    implementation(project(":ui"))
-    implementation(project(":common"))
-    implementation(project(":domain"))
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
 
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs_nio:2.0.4")
 
