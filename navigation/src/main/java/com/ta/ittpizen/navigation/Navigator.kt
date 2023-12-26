@@ -20,7 +20,7 @@ class MainNavigator(
     override fun navigateToSearchConnectionScreen() = navController.navigateToSearchConnectionScreen()
     override fun navigateToDetailChatScreen(id: String) = navController.navigateToDetailChatScreen(id)
     override fun navigateToAddJobScreen() = navController.navigateToAddJobScreen()
-    override fun navigateToDetailJobScreen(id: String) = navController.navigateToDetailJobScreen(id)
+    override fun navigateToDetailJobScreen(id: String) = navController.navigateToJobDetailScreen(id)
     override fun navigateToSearchJobScreen() = navController.navigateToSearchJobScreen()
 }
 
@@ -108,7 +108,7 @@ fun NavHostController.navigateToDetailChatScreen(chatId: String) {
 }
 
 @Throws(IllegalArgumentException::class)
-fun NavHostController.navigateToDetailJobScreen(jobId: String) {
-    navigate(Screen.DetailJobScreen.generateRoute(jobId))
+fun NavHostController.navigateToJobDetailScreen(jobId: String) {
+    navigate(Screen.JobDetailScreen.generateRoute(jobId))
 }
 

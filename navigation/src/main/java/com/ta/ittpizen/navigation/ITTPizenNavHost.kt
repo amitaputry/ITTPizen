@@ -14,6 +14,7 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.ta.ittpizen.feature_auth.login.LoginScreen
 import com.ta.ittpizen.feature_auth.register.RegisterScreen
 import com.ta.ittpizen.feature_chat.detail.DetailChatScreen
+import com.ta.ittpizen.feature_job.detail.JobDetailScreen
 import com.ta.ittpizen.feature_main.MainScreen
 import com.ta.ittpizen.feature_onboarding_screen.OnboardingScreen
 import com.ta.ittpizen.feature_post.add.AddPostScreen
@@ -129,14 +130,18 @@ fun ITTPizenNavHost(
             )
         }
         composableWithSlideHorizontalAnimation(
-            route = Screen.DetailJobScreen.route,
+            route = Screen.JobDetailScreen.route,
             arguments = listOf(
                 navArgument(Screen.JOB_ID) {
                     type = NavType.StringType
                 }
             )
         ) {
-//            val jobId = it.arguments?.getString(Screen.JOB_ID) ?: ""
+            val jobId = it.arguments?.getString(Screen.JOB_ID) ?: ""
+            JobDetailScreen(
+                navigateUp = navController::navigateUp,
+                jobId = jobId
+            )
         }
     }
 }

@@ -34,7 +34,7 @@ sealed class Screen(val route: String) {
             return "detail-chat-screen/$chatId"
         }
     }
-    object DetailJobScreen : Screen(route = "detail-job-screen/{$JOB_ID}") {
+    object JobDetailScreen : Screen(route = "detail-job-screen/{$JOB_ID}") {
         fun generateRoute(jobId: String): String {
             return "detail-job-screen/$jobId"
         }

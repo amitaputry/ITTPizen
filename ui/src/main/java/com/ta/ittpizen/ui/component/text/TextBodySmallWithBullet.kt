@@ -2,14 +2,11 @@ package com.ta.ittpizen.ui.component.text
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
@@ -22,29 +19,25 @@ import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
 @Composable
-fun TextBodySmallWithLeadingIcon(
+fun TextBodySmallWithBullet(
     modifier: Modifier = Modifier,
-    leadIcon: Painter,
+    bullet: Painter,
     text: String,
     fontWeight: FontWeight = FontWeight.Normal,
     color: Color = MaterialTheme.colorScheme.onBackground,
-    maxLines: Int = Int.MAX_VALUE,
-    size: Dp = 20.dp
+    size: Dp = 4.dp
 ) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
+    Row(modifier = modifier) {
         Image(
-            painter = leadIcon,
+            painter = bullet,
             contentDescription = null,
-            modifier = Modifier.size(size)
+            modifier = Modifier
+                .padding(6.dp)
+                .size(size)
         )
-        Spacer(modifier = Modifier.width(5.dp))
         TextBodySmall(
             text = text,
             fontWeight = fontWeight,
-            maxLines = maxLines,
             color = color
         )
     }
@@ -52,11 +45,11 @@ fun TextBodySmallWithLeadingIcon(
 
 @Preview
 @Composable
-fun PreviewTextBodySmallWithLeadingIcon() {
+fun PreviewTextBodySmallWithBullet() {
     ITTPizenTheme {
         Surface {
-            TextBodySmallWithLeadingIcon(
-                leadIcon = painterResource(id = R.drawable.ic_company),
+            TextBodySmallWithBullet(
+                bullet = painterResource(id = R.drawable.ic_ellipse),
                 text = "PT Graha Indonesia",
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.padding(20.dp)

@@ -5,16 +5,29 @@
       <entry key="PreviewAddPostBottomSheet">
         <State />
       </entry>
-      <entry key="PreviewImageWithBorder">
+      <entry key="PreviewDetailJobHeader">
         <State />
+      </entry>
+      <entry key="PreviewDetailJobScreen">
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="YX75U8IJMBYDQOHY" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2023-12-26T17:46:46.190065Z" />
+        </State>
       </entry>
       <entry key="PreviewImageWithCaption">
         <State />
       </entry>
-      <entry key="PreviewMainScreen">
-        <State />
-      </entry>
-      <entry key="PreviewPostItem">
+      <entry key="PreviewTextBodySmallWithBullet">
         <State />
       </entry>
       <entry key="app">
