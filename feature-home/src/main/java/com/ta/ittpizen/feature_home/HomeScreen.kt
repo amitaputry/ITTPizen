@@ -54,7 +54,7 @@ fun HomeScreen(
 
     val postItems = (1..10).map {
         val media = when (it) {
-            1 -> "https://serayunews.com/_next/image?url=https%3A%2F%2Fserayunews.pw%2Fwp-content%2Fuploads%2F2023%2F07%2FWhatsApp-Image-2023-07-02-at-14.44.51.jpeg&w=640&q=75"
+            1 -> "https://imgv2-2-f.scribdassets.com/img/document/435811139/original/93f2b7f3b2/1696470516?v=1"
             3 -> "https://static.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/ayosemarang/images/post/articles/2021/04/14/75145/kuliah-gratis-institut-teknologi-telkom-purwokerto.jpg"
             7 -> "https://cdn.rri.co.id/berita/47/images/1694653138068-W/1694653138068-W.jpeg"
             else -> ""

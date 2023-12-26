@@ -63,7 +63,7 @@ fun PostItem(
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         Column(
-            modifier = modifier,
+            modifier = modifier.animateContentSize(),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             PostHeader(
@@ -150,7 +150,7 @@ private fun PostBody(
 ) {
     val context = LocalContext.current
     var isExpanded by remember { mutableStateOf(false) }
-    Column(modifier = modifier.animateContentSize()) {
+    Column(modifier = modifier) {
         ReadMoreText(
             text = text,
             expanded = isExpanded,
@@ -162,7 +162,7 @@ private fun PostBody(
             readMoreText = "Read More",
             readMoreFontSize = 12.sp,
             readMoreColor = DisableColorGrey,
-            readMoreMaxLines = 3,
+            readMoreMaxLines = 8,
             onExpandedChange = { isExpanded = it },
             toggleArea = ToggleArea.More
         )
