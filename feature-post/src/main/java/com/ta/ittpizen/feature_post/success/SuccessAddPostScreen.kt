@@ -30,7 +30,7 @@ import com.ta.ittpizen.ui.theme.PrimaryRed
 @Composable
 fun SuccessAddPostScreen(
     modifier: Modifier = Modifier,
-    navigateToPostScreen: () -> Unit = {},
+    navigateToDetailPostScreen: () -> Unit = {},
     navigateToMainScreen: () -> Unit = {},
 ) {
     Scaffold(
@@ -63,7 +63,7 @@ fun SuccessAddPostScreen(
             Spacer(modifier = Modifier.height(40.dp))
             LargePrimaryButton(
                 text = "See Post",
-                onClick = navigateToPostScreen,
+                onClick = navigateToDetailPostScreen,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(20.dp))

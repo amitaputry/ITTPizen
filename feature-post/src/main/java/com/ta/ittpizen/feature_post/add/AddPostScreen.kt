@@ -37,6 +37,8 @@ enum class AddPostType(val title: String) {
 @Composable
 fun AddPostScreen(
     modifier: Modifier = Modifier,
+    navigateUp: () -> Unit = {},
+    navigateToSuccessAddPostScreen: (String) -> Unit = {},
     type: AddPostType = AddPostType.TWEET
 ) {
     val topAppBarTitle = "Posting ${type.title}"
@@ -48,13 +50,16 @@ fun AddPostScreen(
 
     Scaffold(
         topBar = {
-            DetailTopAppBar(title = topAppBarTitle)
+            DetailTopAppBar(
+                title = topAppBarTitle,
+                onNavigationClick = navigateUp
+            )
         },
         bottomBar = {
             AddPostFooter(
                 type = type,
                 onAddPhotoClick = {},
-                onPostClick = {}
+                onPostClick = { navigateToSuccessAddPostScreen("test") }
             )
         },
         modifier = modifier

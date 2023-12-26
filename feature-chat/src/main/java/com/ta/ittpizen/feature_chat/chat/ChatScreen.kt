@@ -17,13 +17,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.entity.ChatItem
 import com.ta.ittpizen.feature_chat.component.EmptyChatContent
 import com.ta.ittpizen.ui.component.chat.ChatItem
-import com.ta.ittpizen.ui.component.searchbar.SearchBarWithIconButton
+import com.ta.ittpizen.ui.component.searchbar.BaseSearchBar
 import com.ta.ittpizen.ui.component.topappbar.BaseTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
@@ -31,39 +30,35 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 @ExperimentalMaterial3Api
 @Composable
 fun ChatScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToDetailChatScreen: (String) -> Unit = {}
 ) {
 
     var query by remember { mutableStateOf("") }
 
     val chats = remember {
-//        (1..20).map {
-//            ChatItem(
-//                name = "Amita Putry Prasasti",
-//                message = "Yorem ipsum dolor sit amet, consectetur ..",
-//                date = "6/12/2023",
-//                unReadChat = it-1,
-//                id = it.toString()
-//            )
-//        }
-        emptyList<ChatItem>()
+        (1..10).map {
+            ChatItem(
+                name = "Amita Putry Prasasti",
+                message = "Yorem ipsum dolor sit amet, consectetur ..",
+                date = "6/12/2023",
+                unReadChat = it-1,
+                id = it.toString()
+            )
+        }
+//        emptyList<ChatItem>()
     }
 
     Scaffold(modifier = modifier) { paddingValues ->
         LazyColumn(contentPadding = paddingValues) {
             item {
-                BaseTopAppBar(
-                    title = "Chat"
-                )
+                BaseTopAppBar(title = "Chat")
             }
             stickyHeader {
-                SearchBarWithIconButton(
+                BaseSearchBar(
                     query = query,
                     onQueryChange = { query = it },
                     placeholder = "Search",
-                    onButtonClick = {},
-                    icon = painterResource(id = com.ta.ittpizen.ui.R.drawable.ic_add_primary),
-                    contentDescription = "Add chat",
                     modifier = Modifier
                         .background(MaterialTheme.colorScheme.background)
                         .padding(horizontal = 20.dp, vertical = 10.dp)
@@ -82,6 +77,7 @@ fun ChatScreen(
             items(items = chats, key = { it.id }) {
                 ChatItem(
                     chat = it,
+                    onClick = { navigateToDetailChatScreen(it.id) },
                     modifier = Modifier
                         .padding(horizontal = 20.dp, vertical = 10.dp)
                         .fillMaxWidth()

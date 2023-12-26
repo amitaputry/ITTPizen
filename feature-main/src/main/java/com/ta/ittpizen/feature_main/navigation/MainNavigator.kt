@@ -1,24 +1,23 @@
 package com.ta.ittpizen.feature_main.navigation
 
 interface MainNavigator {
-
-    // Bottom Navigation Screen
-    fun navigateToHomeScreen()
-    fun navigateToConnectionScreen()
-    fun navigateToAddPostScreen()
-    fun navigateToChatScreen()
-    fun navigateToJobScreen()
+    // Add Post Navigator
+    fun navigateToAddTweetScreen()
+    fun navigateToAddAcademicScreen()
+    fun navigateToAddAchievementScreen()
+    fun navigateToAddEventScreen()
+    fun navigateToAddScholarshipScreen()
 
     // Home Screen Navigator
     fun navigateToDetailPostScreen(id: String)
     fun navigateToProfileScreen()
+    fun navigateToNotificationScreen()
 
     // Connection Screen Navigator
     fun navigateToDetailUserScreen(id: String)
     fun navigateToSearchConnectionScreen()
 
     // Chat Screen Navigator
-    fun navigateToAddChatScreen()
     fun navigateToDetailChatScreen(id: String)
 
     // Job Screen Navigator
@@ -28,16 +27,17 @@ interface MainNavigator {
 }
 
 object EmptyMainNavigator : MainNavigator {
-    override fun navigateToHomeScreen() {}
-    override fun navigateToConnectionScreen() {}
-    override fun navigateToAddPostScreen() {}
-    override fun navigateToChatScreen() {}
-    override fun navigateToJobScreen() {}
+    override fun navigateToAddTweetScreen() {}
+    override fun navigateToAddAcademicScreen() {}
+    override fun navigateToAddAchievementScreen() {}
+    override fun navigateToAddEventScreen() {}
+    override fun navigateToAddScholarshipScreen() {}
     override fun navigateToDetailPostScreen(id: String) {}
+    override fun navigateToNotificationScreen() {}
+
     override fun navigateToProfileScreen() {}
     override fun navigateToDetailUserScreen(id: String) {}
     override fun navigateToSearchConnectionScreen() {}
-    override fun navigateToAddChatScreen() {}
     override fun navigateToDetailChatScreen(id: String) {}
     override fun navigateToAddJobScreen() {}
     override fun navigateToDetailJobScreen(id: String) {}

@@ -1,7 +1,28 @@
 package com.ta.ittpizen.navigation
 
 import androidx.navigation.NavHostController
+import com.ta.ittpizen.feature_main.navigation.MainNavigator
+import com.ta.ittpizen.feature_post.add.AddPostType
 import kotlin.jvm.Throws
+
+class MainNavigator(
+    private val navController: NavHostController
+) : MainNavigator {
+    override fun navigateToAddTweetScreen() = navController.navigateToAddPostScreen(AddPostType.TWEET)
+    override fun navigateToAddAcademicScreen() = navController.navigateToAddPostScreen(AddPostType.ACADEMIC)
+    override fun navigateToAddAchievementScreen() = navController.navigateToAddPostScreen(AddPostType.ACHIEVEMENT)
+    override fun navigateToAddEventScreen() = navController.navigateToAddPostScreen(AddPostType.EVENT)
+    override fun navigateToAddScholarshipScreen() = navController.navigateToAddPostScreen(AddPostType.SCHOLARSHIP)
+    override fun navigateToDetailPostScreen(id: String) {}
+    override fun navigateToProfileScreen() {}
+    override fun navigateToNotificationScreen() {}
+    override fun navigateToDetailUserScreen(id: String) {}
+    override fun navigateToSearchConnectionScreen() = navController.navigateToSearchConnectionScreen()
+    override fun navigateToDetailChatScreen(id: String) = navController.navigateToDetailChatScreen(id)
+    override fun navigateToAddJobScreen() = navController.navigateToAddJobScreen()
+    override fun navigateToDetailJobScreen(id: String) = navController.navigateToDetailJobScreen(id)
+    override fun navigateToSearchJobScreen() = navController.navigateToSearchJobScreen()
+}
 
 @Throws(IllegalArgumentException::class)
 fun NavHostController.navigateToOnboardingScreen(
@@ -43,6 +64,51 @@ fun NavHostController.navigateToMainScreen(
 }
 
 @Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToSuccessAddPostScreen(
+    from: Screen = Screen.AddPostScreen,
+    clearBackStack: Boolean = true,
+    postId: String
+) {
+    navigate(route = Screen.SuccessAddPostScreen.generateRoute(postId)) {
+        if (!clearBackStack) return@navigate
+        popUpTo(from.route) {
+            inclusive = true
+        }
+    }
+}
+
+@Throws(IllegalArgumentException::class)
 fun NavHostController.navigateToRegisterScreen() {
     navigate(Screen.RegisterScreen.route)
 }
+
+@Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToSearchConnectionScreen() {
+    navigate(Screen.SearchConnectionScreen.route)
+}
+
+@Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToSearchJobScreen() {
+    navigate(Screen.SearchJobScreen.route)
+}
+
+@Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToAddJobScreen() {
+    navigate(Screen.AddJobScreen.route)
+}
+
+@Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToAddPostScreen(type: AddPostType) {
+    navigate(Screen.AddPostScreen.generateRoute(type))
+}
+
+@Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToDetailChatScreen(chatId: String) {
+    navigate(Screen.DetailChatScreen.generateRoute(chatId))
+}
+
+@Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToDetailJobScreen(jobId: String) {
+    navigate(Screen.DetailJobScreen.generateRoute(jobId))
+}
+

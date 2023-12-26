@@ -35,7 +35,10 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterial3Api
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToProfileScreen: () -> Unit = {},
+    navigateToNotificationScreen: () -> Unit = {},
+    navigateToDetailPostScreen: (String) -> Unit = {},
 ) {
 
     val tabs = listOf("All Post", "Tweet", "Academic", "#PrestasiITTP", "Events", "Scholarship")
@@ -50,6 +53,12 @@ fun HomeScreen(
     }
 
     val postItems = (1..10).map {
+        val media = when (it) {
+            1 -> "https://serayunews.com/_next/image?url=https%3A%2F%2Fserayunews.pw%2Fwp-content%2Fuploads%2F2023%2F07%2FWhatsApp-Image-2023-07-02-at-14.44.51.jpeg&w=640&q=75"
+            3 -> "https://static.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/ayosemarang/images/post/articles/2021/04/14/75145/kuliah-gratis-institut-teknologi-telkom-purwokerto.jpg"
+            7 -> "https://cdn.rri.co.id/berita/47/images/1694653138068-W/1694653138068-W.jpeg"
+            else -> ""
+        }
         PostItem(
             id = it.toString(),
             name = "Amita Putry Prasasti",
@@ -57,7 +66,7 @@ fun HomeScreen(
             date = "1 hours ago",
             profile = "",
             text = "Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen",
-//            media = "https://kemahasiswaan.ittelkom-pwt.ac.id/wp-content/uploads/sites/27/2021/05/pilmapres20211-1200x675.png",
+            media = media,
             liked = true
         )
     }
@@ -72,6 +81,8 @@ fun HomeScreen(
         modifier = modifier,
         topBar = {
             HomeTopAppBar(
+                onProfileClick = navigateToProfileScreen,
+                onNotificationClick = navigateToNotificationScreen,
                 modifier = Modifier
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
                     .zIndex(1f)
@@ -98,6 +109,7 @@ fun HomeScreen(
                     items(items = postItems, key = { it.id }) {
                         PostItem(
                             post = it,
+                            onClick = { navigateToDetailPostScreen(it.id) },
                             modifier = Modifier
                                 .padding(top = 20.dp)
                                 .padding(horizontal = 20.dp)

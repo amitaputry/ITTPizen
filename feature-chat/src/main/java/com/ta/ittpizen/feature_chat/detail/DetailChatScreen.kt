@@ -50,6 +50,7 @@ import java.util.UUID
 @Composable
 fun DetailChatScreen(
     modifier: Modifier = Modifier,
+    navigateUp: () -> Unit = {},
     id: String = ""
 ) {
 
@@ -66,39 +67,6 @@ fun DetailChatScreen(
 //        name = "Amita Putry Prasasti",
 //        type = "Student"
 //    )
-
-//    val chats = remember {
-//        mutableStateListOf(
-//            ChatBubble(
-//                id = "1",
-//                userId = userId,
-//                date = "06 December 2023",
-//                time = "21:59",
-//                text = "Halo Amita, Apa Kabar?"
-//            ),
-//            ChatBubble(
-//                id = "2",
-//                userId = friend.id,
-//                date = "06 December 2023",
-//                time = "21:59",
-//                text = "Hi, Baik, Ada apa ya?"
-//            ),
-//            ChatBubble(
-//                id = "3",
-//                userId = userId,
-//                date = "07 December 2023",
-//                time = "14:00",
-//                text = "Agar silahturahmi tidak putus, boleh pinjem seratus ga mita? :)"
-//            ),
-//            ChatBubble(
-//                id = "4",
-//                userId = friend.id,
-//                date = "07 December 2023",
-//                time = "21:59",
-//                text = "Sungkem"
-//            ),
-//        )
-//    }
 
     val chats = remember {
         mutableStateListOf<ChatBubble>()
@@ -131,8 +99,9 @@ fun DetailChatScreen(
     Scaffold(
         topBar = {
             ChatTopAppBar(
+                onNavigateClick = navigateUp,
                 name = "Amita Putry Prasasti",
-                type = "Student",
+                type = "Student"
             )
         },
         bottomBar = {

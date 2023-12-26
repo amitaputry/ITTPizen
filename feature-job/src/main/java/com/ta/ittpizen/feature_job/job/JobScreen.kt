@@ -34,7 +34,10 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 @ExperimentalMaterial3Api
 @Composable
 fun JobScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToAddJobScreen: () -> Unit = {},
+    navigateToDetailJobScreen: (String) -> Unit = {},
+    navigateToSearchJobScreen: () -> Unit = {}
 ) {
 
     var query by remember { mutableStateOf("") }
@@ -86,7 +89,7 @@ fun JobScreen(
                     placeholder = "Search...",
                     icon = painterResource(id = com.ta.ittpizen.ui.R.drawable.ic_add_job),
                     contentDescription = "Add Job",
-                    onButtonClick = {},
+                    onButtonClick = navigateToAddJobScreen,
                     modifier = Modifier
                         .padding(horizontal = 20.dp)
                         .fillMaxWidth()
@@ -104,6 +107,7 @@ fun JobScreen(
             items(items = jobItems, key = { it.id }) {
                 JobItem(
                     jobItem = it,
+                    onClick = { navigateToDetailJobScreen(it.id) },
                     onSaveClick = onButtonSaveClick,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
                 )

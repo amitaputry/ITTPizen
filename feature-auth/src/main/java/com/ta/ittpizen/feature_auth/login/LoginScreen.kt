@@ -39,7 +39,8 @@ import org.koin.compose.KoinApplication
 fun LoginScreen(
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = koinViewModel(),
-    navigateToRegisterScreen: () -> Unit = {}
+    navigateToRegisterScreen: () -> Unit = {},
+    navigateToMainScreen: () -> Unit = {}
 ) {
     val uiState by viewModel.registerUiState.collectAsStateWithLifecycle()
 
@@ -89,7 +90,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(20.dp))
             LargePrimaryButton(
                 text = "Login",
-                onClick = {},
+                onClick = navigateToMainScreen,
                 enable = buttonRegisterEnable,
                 modifier = Modifier.fillMaxWidth()
             )

@@ -31,7 +31,9 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 @ExperimentalMaterial3Api
 @Composable
 fun ConnectionScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToSearchConnectionScreen: () -> Unit = {},
+    navigateToDetailUserScreen: (String) -> Unit = {},
 ) {
 
     var query by remember { mutableStateOf("") }
@@ -96,8 +98,9 @@ fun ConnectionScreen(
             items(items = users, key = { it.id }) {
                 UserItem(
                     user = it,
-                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
-                    onConnectClick = onButtonConnection
+                    onClick = { navigateToDetailUserScreen(it.id) },
+                    onConnectClick = onButtonConnection,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
                 )
             }
         }

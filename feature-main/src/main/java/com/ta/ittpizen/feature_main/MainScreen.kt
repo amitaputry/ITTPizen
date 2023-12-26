@@ -56,13 +56,43 @@ fun MainScreen(
         }
     }
 
+    val navigateToAddTweetScreen: () -> Unit = {
+        toggleBottomSheet()
+        mainNavigator.navigateToAddTweetScreen()
+    }
+
+    val navigateToAddAcademicScreen: () -> Unit = {
+        toggleBottomSheet()
+        mainNavigator.navigateToAddAcademicScreen()
+    }
+
+    val navigateToAddAchievementScreen: () -> Unit = {
+        toggleBottomSheet()
+        mainNavigator.navigateToAddAchievementScreen()
+    }
+
+    val navigateToAddEventScreen: () -> Unit = {
+        toggleBottomSheet()
+        mainNavigator.navigateToAddEventScreen()
+    }
+
+    val navigateToAddScholarshipScreen: () -> Unit = {
+        toggleBottomSheet()
+        mainNavigator.navigateToAddScholarshipScreen()
+    }
+
     ModalBottomSheetLayout(
         sheetState = sheetState,
         sheetElevation = 0.dp,
         sheetBackgroundColor = Color.Transparent,
         sheetContent = {
             AddPostBottomSheet(
-                closeBottomSheet = toggleBottomSheet
+                closeBottomSheet = toggleBottomSheet,
+                navigateToAddTweetScreen = navigateToAddTweetScreen,
+                navigateToAddAcademicScreen = navigateToAddAcademicScreen,
+                navigateToAddAchievementScreen = navigateToAddAchievementScreen,
+                navigateToAddEventScreen = navigateToAddEventScreen,
+                navigateToAddScholarshipScreen = navigateToAddScholarshipScreen
             )
         }
     ) {
@@ -81,16 +111,29 @@ fun MainScreen(
                 modifier = Modifier.padding(paddingValues)
             ) {
                 composable(route = Screen.Home.route) {
-                    HomeScreen()
+                    HomeScreen(
+                        navigateToProfileScreen = mainNavigator::navigateToProfileScreen,
+                        navigateToNotificationScreen = mainNavigator::navigateToNotificationScreen,
+                        navigateToDetailPostScreen = mainNavigator::navigateToDetailPostScreen
+                    )
                 }
                 composable(route = Screen.Connection.route) {
-                    ConnectionScreen()
+                    ConnectionScreen(
+                        navigateToSearchConnectionScreen = mainNavigator::navigateToSearchConnectionScreen,
+                        navigateToDetailUserScreen = mainNavigator::navigateToDetailUserScreen
+                    )
                 }
                 composable(route = Screen.Chat.route) {
-                    ChatScreen()
+                    ChatScreen(
+                        navigateToDetailChatScreen = mainNavigator::navigateToDetailChatScreen
+                    )
                 }
                 composable(route = Screen.Job.route) {
-                    JobScreen()
+                    JobScreen(
+                        navigateToAddJobScreen = mainNavigator::navigateToAddJobScreen,
+                        navigateToDetailJobScreen = mainNavigator::navigateToDetailJobScreen,
+                        navigateToSearchJobScreen = mainNavigator::navigateToSearchJobScreen
+                    )
                 }
             }
         }

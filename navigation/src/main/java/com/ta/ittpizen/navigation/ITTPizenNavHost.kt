@@ -6,13 +6,19 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.ta.ittpizen.feature_auth.login.LoginScreen
 import com.ta.ittpizen.feature_auth.register.RegisterScreen
+import com.ta.ittpizen.feature_chat.detail.DetailChatScreen
 import com.ta.ittpizen.feature_main.MainScreen
 import com.ta.ittpizen.feature_onboarding_screen.OnboardingScreen
+import com.ta.ittpizen.feature_post.add.AddPostScreen
+import com.ta.ittpizen.feature_post.add.AddPostType
+import com.ta.ittpizen.feature_post.success.SuccessAddPostScreen
 import com.ta.ittpizen.feature_splash_screen.SplashScreen
 
 @ExperimentalMaterialApi
@@ -23,7 +29,7 @@ import com.ta.ittpizen.feature_splash_screen.SplashScreen
 @Composable
 fun ITTPizenNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: Screen = Screen.MainScreen
+    startDestination: Screen = Screen.SplashScreen
 ) {
     val startDestinationRoute = startDestination.route
     NavHost(navController = navController, startDestination = startDestinationRoute) {
@@ -45,7 +51,8 @@ fun ITTPizenNavHost(
             route = Screen.LoginScreen.route
         ) {
             LoginScreen(
-                navigateToRegisterScreen = navController::navigateToRegisterScreen
+                navigateToRegisterScreen = navController::navigateToRegisterScreen,
+                navigateToMainScreen = { navController.navigateToMainScreen(from = Screen.LoginScreen) }
             )
         }
         composableWithSlideHorizontalAnimation(
@@ -59,7 +66,77 @@ fun ITTPizenNavHost(
         composableWithSlideHorizontalAnimation(
             route = Screen.MainScreen.route
         ) {
-            MainScreen()
+            val mainNavigator = MainNavigator(navController)
+            MainScreen(mainNavigator = mainNavigator)
+        }
+        composableWithSlideHorizontalAnimation(
+            route = Screen.SearchConnectionScreen.route
+        ) {
+
+        }
+        composableWithSlideHorizontalAnimation(
+            route = Screen.SearchJobScreen.route
+        ) {
+
+        }
+        composableWithSlideHorizontalAnimation(
+            route = Screen.AddJobScreen.route
+        ) {
+
+        }
+        composableWithSlideHorizontalAnimation(
+            route = Screen.SuccessAddPostScreen.route,
+            arguments = listOf(
+                navArgument(Screen.POST_ID) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val postId = it.arguments?.getString(Screen.POST_ID) ?: ""
+            SuccessAddPostScreen(
+                navigateToDetailPostScreen = {},
+                navigateToMainScreen = { navController.navigateToMainScreen(from = Screen.MainScreen) }
+            )
+        }
+        composableWithSlideHorizontalAnimation(
+            route = Screen.AddPostScreen.route,
+            arguments = listOf(
+                navArgument(Screen.ADD_POST_TYPE) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val type = it.arguments?.getString(Screen.ADD_POST_TYPE) ?: AddPostType.TWEET.name
+            val addPostType = AddPostType.valueOf(type)
+            AddPostScreen(
+                navigateUp = navController::navigateUp,
+                navigateToSuccessAddPostScreen = { navController.navigateToSuccessAddPostScreen(postId = it) },
+                type = addPostType,
+            )
+        }
+        composableWithSlideHorizontalAnimation(
+            route = Screen.DetailChatScreen.route,
+            arguments = listOf(
+                navArgument(Screen.CHAT_ID) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val chatId = it.arguments?.getString(Screen.CHAT_ID) ?: ""
+            DetailChatScreen(
+                navigateUp = navController::navigateUp,
+                id = chatId,
+            )
+        }
+        composableWithSlideHorizontalAnimation(
+            route = Screen.DetailJobScreen.route,
+            arguments = listOf(
+                navArgument(Screen.JOB_ID) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+//            val jobId = it.arguments?.getString(Screen.JOB_ID) ?: ""
         }
     }
 }
