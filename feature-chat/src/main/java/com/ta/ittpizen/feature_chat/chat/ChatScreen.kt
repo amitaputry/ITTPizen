@@ -17,12 +17,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.entity.ChatItem
 import com.ta.ittpizen.feature_chat.component.EmptyChatContent
 import com.ta.ittpizen.ui.component.chat.ChatItem
-import com.ta.ittpizen.ui.component.searchbar.SearchBarWithAddButton
+import com.ta.ittpizen.ui.component.searchbar.SearchBarWithIconButton
 import com.ta.ittpizen.ui.component.topappbar.BaseTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
@@ -56,11 +57,13 @@ fun ChatScreen(
                 )
             }
             stickyHeader {
-                SearchBarWithAddButton(
+                SearchBarWithIconButton(
                     query = query,
                     onQueryChange = { query = it },
                     placeholder = "Search",
-                    onAddClick = {},
+                    onButtonClick = {},
+                    icon = painterResource(id = com.ta.ittpizen.ui.R.drawable.ic_add_primary),
+                    contentDescription = "Add chat",
                     modifier = Modifier
                         .background(MaterialTheme.colorScheme.background)
                         .padding(horizontal = 20.dp, vertical = 10.dp)

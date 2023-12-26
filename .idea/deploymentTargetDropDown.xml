@@ -2,19 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewAddPostFooter">
+      <entry key="PreviewAddPostBottomSheet">
         <State />
       </entry>
-      <entry key="PreviewBubbleChatMe">
+      <entry key="PreviewImageWithBorder">
         <State />
       </entry>
-      <entry key="PreviewChatTopAppBar">
+      <entry key="PreviewImageWithCaption">
         <State />
       </entry>
-      <entry key="PreviewDetailChatFooter">
+      <entry key="PreviewMainScreen">
         <State />
       </entry>
-      <entry key="PreviewDetailChatScreen">
+      <entry key="PreviewPostItem">
         <State />
       </entry>
       <entry key="app">

@@ -6,15 +6,19 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.ta.ittpizen.feature_auth.di.authModule
-import com.ta.ittpizen.feature_chat.detail.DetailChatScreen
+import com.ta.ittpizen.navigation.ITTPizenNavHost
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import org.koin.compose.KoinApplication
 
+@ExperimentalMaterialApi
+@ExperimentalMaterialNavigationApi
 @ExperimentalLayoutApi
 @ExperimentalMaterial3Api
 @ExperimentalFoundationApi
@@ -26,13 +30,11 @@ class MainActivity : ComponentActivity() {
                 modules(authModule)
             }) {
                 ITTPizenTheme {
-                    // A surface container using the 'background' color from the theme
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-//                        ITTPizenNavHost()
-                        DetailChatScreen()
+                        ITTPizenNavHost()
                     }
                 }
             }

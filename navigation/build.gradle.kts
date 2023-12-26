@@ -50,7 +50,15 @@ dependencies {
     implementation(project(":feature-splash-screen"))
     implementation(project(":feature-onboarding-screen"))
     implementation(project(":feature-auth"))
+    implementation(project(":feature-home"))
+    implementation(project(":feature-connection"))
+    implementation(project(":feature-chat"))
+    implementation(project(":feature-post"))
+    implementation(project(":feature-job"))
+
+    implementation(project(":feature-main"))
 
     api("androidx.navigation:navigation-compose:2.7.6")
+    api("com.google.accompanist:accompanist-navigation-material:0.33.2-alpha")
 
 }

@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
@@ -21,7 +22,8 @@ fun BaseIconButton(
     modifier: Modifier = Modifier,
     icon: Painter,
     contentDescription: String? = null,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
+    size: Dp = 24.dp
 ) {
     Image(
         painter = icon,
@@ -30,7 +32,7 @@ fun BaseIconButton(
             .clip(CircleShape)
             .clickable { onClick() }
             .padding(4.dp)
-            .size(24.dp)
+            .size(size)
     )
 }
 

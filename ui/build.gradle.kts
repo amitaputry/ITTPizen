@@ -55,6 +55,7 @@ dependencies {
     api("androidx.compose.ui:ui")
     api("androidx.compose.ui:ui-graphics")
     api("androidx.compose.ui:ui-tooling-preview")
+    api("androidx.compose.material:material")
     api("androidx.compose.material3:material3")
 
     api("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")

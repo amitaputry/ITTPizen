@@ -241,7 +241,7 @@ fun PostFooter(
                 onClick = onComment
             )
             BaseIconButton(
-                icon = painterResource(id = R.drawable.ic_send),
+                icon = painterResource(id = R.drawable.ic_share),
                 contentDescription = "Send",
                 onClick = onSend
             )

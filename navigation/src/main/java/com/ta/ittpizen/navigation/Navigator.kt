@@ -30,6 +30,19 @@ fun NavHostController.navigateToLoginScreen(
 }
 
 @Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToMainScreen(
+    from: Screen = Screen.SplashScreen,
+    clearBackStack: Boolean = true
+) {
+    navigate(route = Screen.MainScreen.route) {
+        if (!clearBackStack) return@navigate
+        popUpTo(from.route) {
+            inclusive = true
+        }
+    }
+}
+
+@Throws(IllegalArgumentException::class)
 fun NavHostController.navigateToRegisterScreen() {
     navigate(Screen.RegisterScreen.route)
 }

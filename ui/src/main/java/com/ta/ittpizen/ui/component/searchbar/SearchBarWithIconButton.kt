@@ -14,23 +14,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.ui.R
-import com.ta.ittpizen.ui.component.iconbutton.FieldIconButton
+import com.ta.ittpizen.ui.component.iconbutton.FilledIconButton
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
 @ExperimentalMaterial3Api
 @Composable
-fun SearchBarWithAddButton(
+fun SearchBarWithIconButton(
     modifier: Modifier = Modifier,
     query: String = "",
     onQueryChange: (String) -> Unit = {},
     placeholder: String = "",
     enabled: Boolean = true,
     isError: Boolean = false,
-    onAddClick: () -> Unit = {}
+    icon: Painter = painterResource(id = R.drawable.ic_add_primary),
+    contentDescription: String? = null,
+    onButtonClick: () -> Unit = {}
 ) {
     Row(
         modifier = modifier,
@@ -45,10 +48,10 @@ fun SearchBarWithAddButton(
             modifier = Modifier.weight(1f)
         )
         Spacer(modifier = Modifier.width(10.dp))
-        FieldIconButton(
-            icon = painterResource(id = R.drawable.ic_add_primary),
-            contentDescription = "Add chat",
-            onClick = onAddClick
+        FilledIconButton(
+            icon = icon,
+            contentDescription = contentDescription,
+            onClick = onButtonClick
         )
     }
 }
@@ -56,14 +59,16 @@ fun SearchBarWithAddButton(
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-fun PreviewSearchBarWithAddButton() {
+fun PreviewSearchBarWithIconButton() {
     ITTPizenTheme {
         Surface {
             var query by remember { mutableStateOf("") }
-            SearchBarWithAddButton(
+            SearchBarWithIconButton(
                 query = query,
                 onQueryChange = { query = it },
                 placeholder = "Search",
+                icon = painterResource(id = R.drawable.ic_add_primary),
+                contentDescription = "Add message",
                 modifier = Modifier
                     .padding(20.dp)
                     .fillMaxWidth()

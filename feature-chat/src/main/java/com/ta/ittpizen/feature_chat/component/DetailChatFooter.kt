@@ -19,7 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.ui.component.iconbutton.FieldIconButton
+import com.ta.ittpizen.feature_chat.R
+import com.ta.ittpizen.ui.component.iconbutton.FilledIconButton
 import com.ta.ittpizen.ui.component.textfield.BaseOutlinedTextField
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import com.ta.ittpizen.ui.theme.PrimaryRed
@@ -50,8 +51,8 @@ fun DetailChatFooter(
             modifier = Modifier.weight(1f)
         )
         Spacer(modifier = Modifier.width(10.dp))
-        FieldIconButton(
-            icon = painterResource(id = com.ta.ittpizen.feature_chat.R.drawable.ic_send),
+        FilledIconButton(
+            icon = painterResource(id = R.drawable.ic_send),
             contentDescription = "Send chat",
             onClick = onSendClick,
             containerColor = PrimaryRed
