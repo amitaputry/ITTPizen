@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ta.ittpizen.domain.entity.UserItem
 import com.ta.ittpizen.ui.R
-import com.ta.ittpizen.ui.component.button.SmallOutlinedButton
+import com.ta.ittpizen.ui.component.button.SmallPrimaryOutlinedButton
 import com.ta.ittpizen.ui.component.button.SmallPrimaryButton
 import com.ta.ittpizen.ui.component.text.TextBodyLarge
 import com.ta.ittpizen.ui.component.text.TextBodySmall
@@ -68,7 +68,7 @@ fun UserItem(
             )
         }
         if (user.connected) {
-            SmallOutlinedButton(text = "Connected", onClick = { onConnectClick(user) })
+            SmallPrimaryOutlinedButton(text = "Connected", onClick = { onConnectClick(user) })
         } else {
             SmallPrimaryButton(text = "Connect", onClick = { onConnectClick(user) })
         }
