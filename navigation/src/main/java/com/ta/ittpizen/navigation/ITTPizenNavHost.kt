@@ -19,6 +19,7 @@ import com.ta.ittpizen.feature_main.MainScreen
 import com.ta.ittpizen.feature_onboarding_screen.OnboardingScreen
 import com.ta.ittpizen.feature_post.add.AddPostScreen
 import com.ta.ittpizen.feature_post.add.AddPostType
+import com.ta.ittpizen.feature_post.detail.PostDetailScreen
 import com.ta.ittpizen.feature_post.success.SuccessAddPostScreen
 import com.ta.ittpizen.feature_splash_screen.SplashScreen
 
@@ -143,5 +144,20 @@ fun ITTPizenNavHost(
                 jobId = jobId
             )
         }
+        composableWithSlideHorizontalAnimation(
+            route = Screen.PostDetailScreen.route,
+            arguments = listOf(
+                navArgument(Screen.POST_ID) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val postId = it.arguments?.getString(Screen.POST_ID) ?: ""
+            PostDetailScreen(
+                navigateUp = navController::navigateUp,
+                postId = postId
+            )
+        }
+
     }
 }

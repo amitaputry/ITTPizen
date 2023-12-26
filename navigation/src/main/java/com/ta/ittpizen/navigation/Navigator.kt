@@ -13,7 +13,7 @@ class MainNavigator(
     override fun navigateToAddAchievementScreen() = navController.navigateToAddPostScreen(AddPostType.ACHIEVEMENT)
     override fun navigateToAddEventScreen() = navController.navigateToAddPostScreen(AddPostType.EVENT)
     override fun navigateToAddScholarshipScreen() = navController.navigateToAddPostScreen(AddPostType.SCHOLARSHIP)
-    override fun navigateToDetailPostScreen(id: String) {}
+    override fun navigateToDetailPostScreen(id: String) = navController.navigateToPostDetailScreen(id)
     override fun navigateToProfileScreen() {}
     override fun navigateToNotificationScreen() {}
     override fun navigateToDetailUserScreen(id: String) {}
@@ -110,5 +110,10 @@ fun NavHostController.navigateToDetailChatScreen(chatId: String) {
 @Throws(IllegalArgumentException::class)
 fun NavHostController.navigateToJobDetailScreen(jobId: String) {
     navigate(Screen.JobDetailScreen.generateRoute(jobId))
+}
+
+@Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToPostDetailScreen(postId: String) {
+    navigate(Screen.PostDetailScreen.generateRoute(postId))
 }
 

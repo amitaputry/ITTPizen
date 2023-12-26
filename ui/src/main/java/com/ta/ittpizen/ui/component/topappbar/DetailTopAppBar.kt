@@ -20,7 +20,7 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 @Composable
 fun DetailTopAppBar(
     modifier: Modifier = Modifier,
-    title: String,
+    title: String = "",
     onNavigationClick: () -> Unit = {}
 ) {
     TopAppBar(

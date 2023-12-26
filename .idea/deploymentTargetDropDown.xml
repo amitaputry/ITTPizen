@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewAddPostBottomSheet">
-        <State />
-      </entry>
       <entry key="PreviewDetailJobHeader">
         <State />
       </entry>
@@ -24,7 +21,10 @@
           <timeTargetWasSelectedWithDropDown value="2023-12-26T17:46:46.190065Z" />
         </State>
       </entry>
-      <entry key="PreviewImageWithCaption">
+      <entry key="PreviewPostCommentItem">
+        <State />
+      </entry>
+      <entry key="PreviewPostDetailScreen">
         <State />
       </entry>
       <entry key="PreviewTextBodySmallWithBullet">

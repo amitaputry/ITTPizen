@@ -29,6 +29,11 @@ sealed class Screen(val route: String) {
             return "add-post-screen/${type.name}"
         }
     }
+    object PostDetailScreen : Screen(route = "post-detail-screen/{$POST_ID}") {
+        fun generateRoute(postId: String): String {
+            return "post-detail-screen/$postId"
+        }
+    }
     object DetailChatScreen : Screen(route = "detail-chat-screen/{$CHAT_ID}") {
         fun generateRoute(chatId: String): String {
             return "detail-chat-screen/$chatId"
