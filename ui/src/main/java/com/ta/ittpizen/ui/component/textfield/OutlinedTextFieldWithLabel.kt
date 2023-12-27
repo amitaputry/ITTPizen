@@ -1,5 +1,6 @@
 package com.ta.ittpizen.ui.component.textfield
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ta.ittpizen.ui.component.text.TextBodySmall
 import com.ta.ittpizen.ui.component.text.TextRegular
 import com.ta.ittpizen.ui.component.text.TextTitleSmall
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
@@ -37,7 +40,7 @@ fun OutlinedTextFieldWithLabel(
     isOptional: Boolean = false,
     supportingText: String = ""
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.animateContentSize()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextTitleSmall(text = label, color = Color(0xFF343433))
             if (isOptional) {
@@ -56,6 +59,9 @@ fun OutlinedTextFieldWithLabel(
             modifier = Modifier.fillMaxWidth(),
             supportingText = supportingText
         )
+        if (isError && supportingText.isNotEmpty()) {
+            TextBodySmall(text = supportingText, color = MaterialTheme.colorScheme.error)
+        }
     }
 }
 

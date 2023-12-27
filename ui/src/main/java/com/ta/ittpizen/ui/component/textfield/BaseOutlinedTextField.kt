@@ -75,7 +75,7 @@ fun BaseOutlinedTextField(
 ) {
     val cursorColor = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
     val supportingTextColor = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onBackground
-    val supportingTextComposable: @Composable (() -> Unit)? = if (true) {
+    val supportingTextComposable: @Composable (() -> Unit)? = if (supportingText?.isNotEmpty() == true) {
         { TextBodySmall(text = "supportingText", color = supportingTextColor) }
     } else null
 
