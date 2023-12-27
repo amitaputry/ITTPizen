@@ -58,7 +58,7 @@ fun PostDetailScreen(
         date = "1 hours ago",
         profile = "",
         text = "Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen",
-        media = "https://imgv2-2-f.scribdassets.com/img/document/435811139/original/93f2b7f3b2/1696470516?v=1",
+//        media = "https://imgv2-2-f.scribdassets.com/img/document/435811139/original/93f2b7f3b2/1696470516?v=1",
         liked = true
     )
 
@@ -123,7 +123,7 @@ fun PostDetailScreen(
                         post = it,
                         modifier = Modifier
                             .padding(horizontal = 20.dp)
-                            .animateItemPlacement()
+//                            .animateItemPlacement()
                     )
                 }
             }
