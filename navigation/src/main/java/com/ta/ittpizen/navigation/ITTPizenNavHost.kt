@@ -31,7 +31,7 @@ import com.ta.ittpizen.feature_splash_screen.SplashScreen
 @Composable
 fun ITTPizenNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: Screen = Screen.SplashScreen
+    startDestination: Screen = Screen.LoginScreen
 ) {
     val startDestinationRoute = startDestination.route
     NavHost(navController = navController, startDestination = startDestinationRoute) {

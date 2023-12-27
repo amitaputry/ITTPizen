@@ -8,5 +8,14 @@ data class RegisterUiState(
     val gender: String = "",
     val status: String = "",
     val password: String = "",
-    val confirmPassword: String = ""
+    val confirmPassword: String = "",
+
+    val fullNameErrorMessage: String = "",
+    val studentIdOrLectureIdErrorMessage: String = "",
+    val emailErrorMessage: String = "",
+    val phoneErrorMessage: String = "",
+    val genderErrorMessage: String = "",
+    val statusErrorMessage: String = "",
+    val passwordErrorMessage: String = "",
+    val confirmPasswordErrorMessage: String = "",
 )

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.ui.component.text.TextRegular
 import com.ta.ittpizen.ui.component.text.TextTitleSmall
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
-import com.ta.ittpizen.ui.theme.PrimaryRed
 
 @ExperimentalMaterial3Api
 @Composable
@@ -37,17 +35,8 @@ fun OutlinedTextFieldWithLabel(
     singleLine: Boolean = true,
     isError: Boolean = false,
     isOptional: Boolean = false,
-    errorMessage: String = ""
+    supportingText: String = ""
 ) {
-    val supportingText: (@Composable () -> Unit)? = if (!isError) null else {
-        {
-            TextRegular(
-                text = errorMessage,
-                color = PrimaryRed,
-                modifier = Modifier.offset(x = (-16).dp)
-            )
-        }
-    }
     Column(modifier = modifier) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextTitleSmall(text = label, color = Color(0xFF343433))
@@ -81,7 +70,7 @@ fun PreviewOutlinedTextFieldWithLabel() {
                 value = value,
                 onValueChange = { value = it },
                 label = "Full Name",
-                errorMessage = "Name cannot be empty",
+                supportingText = "Name cannot be empty",
                 isOptional = true,
                 isError = true,
                 modifier = Modifier

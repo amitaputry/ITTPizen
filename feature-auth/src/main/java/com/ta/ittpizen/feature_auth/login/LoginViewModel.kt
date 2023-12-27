@@ -11,10 +11,16 @@ class LoginViewModel : ViewModel() {
     private val _registerUiState = MutableStateFlow(LoginUiState())
     val registerUiState: StateFlow<LoginUiState> get() = _registerUiState
 
-    private var firstStart = true
-
     val buttonRegisterEnable get() = _registerUiState.map {
         it.email.isNotEmpty() && it.password.length >= 6
+    }
+
+    val emailError get() = _registerUiState.map {
+        it.emailErrorMessage.isNotEmpty()
+    }
+
+    val passwordError get() = _registerUiState.map {
+        it.passwordErrorMessage.isNotEmpty()
     }
 
     fun updateEmail(email: String) {
@@ -24,9 +30,21 @@ class LoginViewModel : ViewModel() {
     }
 
     fun updatePassword(password: String) {
-        firstStart = false
         _registerUiState.update {
             it.copy(password = password)
         }
     }
+
+    fun updateEmailErrorMessage(message: String) {
+        _registerUiState.update {
+            it.copy(emailErrorMessage = message)
+        }
+    }
+
+    fun updatePasswordErrorMessage(message: String) {
+        _registerUiState.update {
+            it.copy(passwordErrorMessage = message)
+        }
+    }
+
 }

@@ -13,6 +13,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ta.ittpizen.common.isValidEmail
 import com.ta.ittpizen.feature_auth.di.authModule
 import com.ta.ittpizen.ui.component.button.LargePrimaryButton
 import com.ta.ittpizen.ui.component.text.TextBodySmall
@@ -56,9 +58,43 @@ fun RegisterScreen(
     val password = uiState.password
     val confirmPassword = uiState.confirmPassword
 
-    val buttonRegisterEnable by viewModel.buttonRegisterEnable.collectAsStateWithLifecycle(
-        initialValue = false
-    )
+    val fullNameErrorMessage = uiState.fullNameErrorMessage
+    val emailErrorMessage = uiState.emailErrorMessage
+    val passwordErrorMessage = uiState.passwordErrorMessage
+    val confirmPasswordErrorMessage = uiState.confirmPasswordErrorMessage
+
+    val fullNameError by viewModel.fullNameError.collectAsStateWithLifecycle(initialValue = false)
+    val emailError by viewModel.emailError.collectAsStateWithLifecycle(initialValue = false)
+    val passwordError by viewModel.passwordError.collectAsStateWithLifecycle(initialValue = false)
+    val confirmPasswordError by viewModel.confirmPasswordError.collectAsStateWithLifecycle(initialValue = false)
+
+    val buttonRegisterEnable by viewModel.buttonRegisterEnable.collectAsStateWithLifecycle(initialValue = false)
+
+    val updateFullName: (String) -> Unit = {
+        val errorMessage = if (it.isNotEmpty()) "" else "Nama tidak boleh kosong!"
+        viewModel.updateFullName(it)
+        viewModel.updateFullNameErrorMessage(errorMessage)
+    }
+    val updateEmail: (String) -> Unit = {
+        val errorMessage = if (it.isValidEmail() || it.isEmpty()) "" else "Email kamu tidak valid!"
+        viewModel.updateEmail(it)
+        viewModel.updateEmailErrorMessage(errorMessage)
+    }
+    val updatePassword: (String) -> Unit = {
+        val errorMessage = if (it.length >= 6 || it.isEmpty()) "" else "Password minimal 6 karakter!"
+        viewModel.updatePassword(it)
+        viewModel.updatePasswordErrorMessage(errorMessage)
+    }
+    val updateConfirmPassword: (String) -> Unit = {
+        val errorMessage = if (it == password) "" else "Password tidak sama!"
+        viewModel.updateConfirmPassword(it)
+        viewModel.updateConfirmPasswordErrorMessage(errorMessage)
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.updateGender(genders[0])
+        viewModel.updateStatus(status[0])
+    }
 
     Scaffold(
         topBar = {
@@ -79,7 +115,9 @@ fun RegisterScreen(
             OutlinedTextFieldWithLabel(
                 label = "Full Name",
                 value = fullName,
-                onValueChange = viewModel::updateFullName,
+                onValueChange = updateFullName,
+                supportingText = fullNameErrorMessage,
+                isError = fullNameError,
                 placeholder = "Enter your name",
                 modifier = Modifier.fillMaxWidth()
             )
@@ -96,8 +134,10 @@ fun RegisterScreen(
             OutlinedTextFieldWithLabel(
                 label = "Email",
                 value = email,
-                onValueChange = viewModel::updateEmail,
+                onValueChange = updateEmail,
                 placeholder = "Enter your email",
+                supportingText = emailErrorMessage,
+                isError = emailError,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(20.dp))
@@ -129,16 +169,20 @@ fun RegisterScreen(
             PasswordTextFieldWithLabel(
                 label = "Password",
                 value = password,
-                onValueChange = viewModel::updatePassword,
+                onValueChange = updatePassword,
                 placeholder = "Enter your password",
+                supportingText = passwordErrorMessage,
+                isError = passwordError,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(20.dp))
             PasswordTextFieldWithLabel(
                 label = "Confirm Password",
                 value = confirmPassword,
-                onValueChange = viewModel::updateConfirmPassword,
+                onValueChange = updateConfirmPassword,
                 placeholder = "Enter your password",
+                supportingText = confirmPasswordErrorMessage,
+                isError = confirmPasswordError,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(20.dp))

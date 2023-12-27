@@ -61,7 +61,7 @@ fun DropDownTextField(
                 shape = RoundedCornerShape(size = 100.dp)
             )
             .clickable { expanded = true }
-            .height(40.dp)
+            .height(45.dp)
             .padding(horizontal = 12.dp, vertical = 10.dp)
             .onGloballyPositioned {
                 componentWidth = with(density) {

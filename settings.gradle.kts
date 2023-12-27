@@ -1,3 +1,5 @@
+import java.net.URI
+
 include(":common")
 
 include(":feature-post")
@@ -25,6 +27,9 @@ dependencyResolutionManagement {
 //        maven {
 //            url = URI.create("https://s01.oss.sonatype.org/content/repositories/snapshots")
 //        }
+        maven {
+            url = URI.create("https://jitpack.io")
+        }
         google()
         mavenCentral()
     }

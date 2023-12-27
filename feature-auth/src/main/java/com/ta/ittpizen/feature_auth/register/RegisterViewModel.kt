@@ -16,6 +16,19 @@ class RegisterViewModel : ViewModel() {
         it.status.isNotEmpty() && it.password.length >= 6 && it.password == it.confirmPassword
     }
 
+    val fullNameError get() = _registerUiState.map {
+        it.fullNameErrorMessage.isNotEmpty()
+    }
+    val emailError get() = _registerUiState.map {
+        it.emailErrorMessage.isNotEmpty()
+    }
+    val passwordError get() = _registerUiState.map {
+        it.passwordErrorMessage.isNotEmpty()
+    }
+    val confirmPasswordError get() = _registerUiState.map {
+        it.confirmPasswordErrorMessage.isNotEmpty()
+    }
+
     fun updateFullName(fullName: String) {
         _registerUiState.update {
             it.copy(fullName = fullName)
@@ -33,36 +46,50 @@ class RegisterViewModel : ViewModel() {
             it.copy(email = email)
         }
     }
-
     fun updatePhone(phone: String) {
         _registerUiState.update {
             it.copy(phone = phone)
         }
     }
-
     fun updateGender(gender: String) {
         _registerUiState.update {
             it.copy(gender = gender)
         }
     }
-
     fun updateStatus(status: String) {
         _registerUiState.update {
             it.copy(status = status)
         }
     }
-
     fun updatePassword(password: String) {
         _registerUiState.update {
             it.copy(password = password)
         }
     }
-
     fun updateConfirmPassword(confirmPassword: String) {
         _registerUiState.update {
             it.copy(confirmPassword = confirmPassword)
         }
     }
 
-
+    fun updateFullNameErrorMessage(message: String) {
+        _registerUiState.update {
+            it.copy(fullNameErrorMessage = message)
+        }
+    }
+    fun updateEmailErrorMessage(message: String) {
+        _registerUiState.update {
+            it.copy(emailErrorMessage = message)
+        }
+    }
+    fun updatePasswordErrorMessage(message: String) {
+        _registerUiState.update {
+            it.copy(passwordErrorMessage = message)
+        }
+    }
+    fun updateConfirmPasswordErrorMessage(message: String) {
+        _registerUiState.update {
+            it.copy(confirmPasswordErrorMessage = message)
+        }
+    }
 }

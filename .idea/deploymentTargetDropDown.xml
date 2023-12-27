@@ -5,29 +5,16 @@
       <entry key="PreviewAddJobScreen">
         <State />
       </entry>
-      <entry key="PreviewDetailJobScreen">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="YX75U8IJMBYDQOHY" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-12-26T17:46:46.190065Z" />
-        </State>
+      <entry key="PreviewBaseOutlinedTextField">
+        <State />
+      </entry>
+      <entry key="PreviewOutlinedTextFieldWithLabel">
+        <State />
       </entry>
       <entry key="PreviewPostCommentItem">
         <State />
       </entry>
       <entry key="PreviewPostDetailScreen">
-        <State />
-      </entry>
-      <entry key="PreviewTextBodySmallWithBullet">
         <State />
       </entry>
       <entry key="app">

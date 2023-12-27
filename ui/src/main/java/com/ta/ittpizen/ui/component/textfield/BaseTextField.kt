@@ -61,6 +61,7 @@ fun BaseTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = false,
+    minLines: Int = Int.MAX_VALUE,
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = RoundedCornerShape(100.dp),
@@ -83,6 +84,7 @@ fun BaseTextField(
         keyboardActions = keyboardActions,
         interactionSource = interactionSource,
         singleLine = singleLine,
+        minLines = minLines,
         maxLines = maxLines,
         decorationBox = @Composable { innerTextField ->
             TextFieldDefaults.run {

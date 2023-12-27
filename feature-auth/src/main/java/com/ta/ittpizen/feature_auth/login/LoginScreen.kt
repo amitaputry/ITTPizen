@@ -1,5 +1,6 @@
 package com.ta.ittpizen.feature_auth.login
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ta.ittpizen.common.isValidEmail
 import com.ta.ittpizen.feature_auth.R
 import com.ta.ittpizen.feature_auth.di.authModule
 import com.ta.ittpizen.ui.component.button.LargePrimaryButton
@@ -46,16 +48,34 @@ fun LoginScreen(
 
     val email = uiState.email
     val password = uiState.password
+    val emailErrorMessage = uiState.emailErrorMessage
+    val passwordErrorMessage = uiState.passwordErrorMessage
+
+    val emailError by viewModel.emailError.collectAsStateWithLifecycle(initialValue = false)
+    val passwordError by viewModel.passwordError.collectAsStateWithLifecycle(initialValue = false)
 
     val buttonRegisterEnable by viewModel.buttonRegisterEnable.collectAsStateWithLifecycle(
         initialValue = false
     )
+
+    val updateEmail: (String) -> Unit = {
+        val errorMessage = if (it.isValidEmail() || it.isEmpty()) "" else "Email kamu tidak valid!"
+        viewModel.updateEmail(it)
+        viewModel.updateEmailErrorMessage(errorMessage)
+    }
+
+    val updatePassword: (String) -> Unit = {
+        val errorMessage = if (it.length >= 6 || it.isEmpty()) "" else "Password minimal 6 karakter!"
+        viewModel.updatePassword(it)
+        viewModel.updatePasswordErrorMessage(errorMessage)
+    }
 
     Scaffold(modifier = modifier) { paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(horizontal = 20.dp)
+                .animateContentSize()
         ) {
             Spacer(modifier = Modifier.height(20.dp))
             Image(
@@ -75,16 +95,20 @@ fun LoginScreen(
             OutlinedTextFieldWithLabel(
                 label = "Email",
                 value = email,
-                onValueChange = viewModel::updateEmail,
+                onValueChange = updateEmail,
                 placeholder = "Enter your email",
-                modifier = Modifier.fillMaxWidth()
+                supportingText = emailErrorMessage,
+                isError = emailError,
+                modifier = Modifier.fillMaxWidth(),
             )
             Spacer(modifier = Modifier.height(20.dp))
             PasswordTextFieldWithLabel(
                 label = "Password",
                 value = password,
-                onValueChange = viewModel::updatePassword,
+                onValueChange = updatePassword,
                 placeholder = "Enter your password",
+                supportingText = passwordErrorMessage,
+                isError = passwordError,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(20.dp))

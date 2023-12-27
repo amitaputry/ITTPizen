@@ -2,6 +2,8 @@ package com.ta.ittpizen.ui.component.textfield
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -27,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ta.ittpizen.ui.component.text.TextBodyMedium
+import com.ta.ittpizen.ui.component.text.TextBodySmall
 import com.ta.ittpizen.ui.theme.ColorText
 import com.ta.ittpizen.ui.theme.Grey
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
@@ -57,12 +60,13 @@ fun BaseOutlinedTextField(
     label: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
-    supportingText: @Composable (() -> Unit)? = null,
+    supportingText: String? = null,
     isError: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = false,
+    minLines: Int = Int.MAX_VALUE,
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = RoundedCornerShape(100.dp),
@@ -70,10 +74,14 @@ fun BaseOutlinedTextField(
     contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 10.dp)
 ) {
     val cursorColor = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
+    val supportingTextColor = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onBackground
+    val supportingTextComposable: @Composable (() -> Unit)? = if (true) {
+        { TextBodySmall(text = "supportingText", color = supportingTextColor) }
+    } else null
 
     BasicTextField(
         value = value,
-        modifier = modifier,
+        modifier = modifier.height(45.dp),
         onValueChange = onValueChange,
         enabled = enabled,
         readOnly = readOnly,
@@ -84,6 +92,7 @@ fun BaseOutlinedTextField(
         keyboardActions = keyboardActions,
         interactionSource = interactionSource,
         singleLine = singleLine,
+        minLines = minLines,
         maxLines = maxLines,
         decorationBox = @Composable { innerTextField ->
             TextFieldDefaults.run {
@@ -99,9 +108,9 @@ fun BaseOutlinedTextField(
                     placeholder = {
                         TextBodyMedium(text = placeholder, color = Grey)
                     },
+                    supportingText = supportingTextComposable,
                     leadingIcon = leadingIcon,
                     trailingIcon = trailingIcon,
-                    supportingText = supportingText,
                     colors = colors,
                     contentPadding = contentPadding,
                     container = {
@@ -131,7 +140,10 @@ fun PreviewBaseOutlinedTextField() {
             BaseOutlinedTextField(
                 value = value,
                 onValueChange = { value = it },
-                placeholder = "Enter your username"
+                placeholder = "Enter your username",
+                isError = true,
+                supportingText = "Hello Mas Bro",
+                modifier = Modifier.padding(20.dp)
             )
         }
     }

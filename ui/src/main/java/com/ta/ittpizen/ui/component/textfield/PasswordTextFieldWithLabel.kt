@@ -29,7 +29,8 @@ fun PasswordTextFieldWithLabel(
     placeholder: String = "",
     enabled: Boolean = true,
     singleLine: Boolean = true,
-    isError: Boolean = false
+    isError: Boolean = false,
+    supportingText: String = ""
 ) {
     Column(modifier = modifier) {
         TextTitleSmall(text = label, color = Color(0xFF343433))
@@ -38,6 +39,7 @@ fun PasswordTextFieldWithLabel(
             value = value,
             onValueChange = onValueChange,
             placeholder = placeholder,
+            supportingText = supportingText,
             enabled = enabled,
             singleLine = singleLine,
             isError = isError,

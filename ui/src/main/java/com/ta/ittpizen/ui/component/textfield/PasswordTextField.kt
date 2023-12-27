@@ -1,5 +1,6 @@
 package com.ta.ittpizen.ui.component.textfield
 
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
@@ -24,6 +26,7 @@ fun PasswordTextField(
     value: String = "",
     onValueChange: (String) -> Unit,
     placeholder: String = "",
+    supportingText: String? = null,
     enabled: Boolean = true,
     singleLine: Boolean = true,
     isError: Boolean = false,
@@ -39,13 +42,14 @@ fun PasswordTextField(
         passwordVisible = !passwordVisible
     }
     BaseOutlinedTextField(
-        modifier = modifier,
+        modifier = modifier.height(45.dp),
         value = value,
         onValueChange = onValueChange,
         singleLine = singleLine,
         enabled = enabled,
         isError = isError,
         placeholder = placeholder,
+        supportingText = supportingText,
         visualTransformation = visualTransformation,
         trailingIcon = {
             IconButton(onClick = togglePassword) {
