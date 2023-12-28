@@ -1,6 +1,6 @@
 package com.ta.ittpizen.ui.component.button
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,7 +19,7 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import com.ta.ittpizen.ui.theme.PrimaryRed
 
 @Composable
-fun LargePrimaryButton(
+fun LargePrimaryOutlinedButton(
     modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit = {},
@@ -29,13 +29,13 @@ fun LargePrimaryButton(
 ) {
     val buttonText = if (loading) "Loading..." else text
     val buttonEnabled = if (loading) false else enable
-    val buttonBackground = if (buttonEnabled) PrimaryRed else Color(0xFFDEDEDE)
-    val textButton = if (buttonEnabled) Color.White else Color(0xFFAAAAAA)
+    val buttonBorderColor = if (buttonEnabled) PrimaryRed else Color(0xFFDEDEDE)
+    val textButton = if (buttonEnabled) PrimaryRed else Color(0xFFAAAAAA)
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(size = 100.dp))
             .clickable(buttonEnabled) { onClick() }
-            .background(color = buttonBackground)
+            .border(width = 1.dp, color = buttonBorderColor, shape = RoundedCornerShape(size = 100.dp))
             .padding(contentPaddingValues),
         contentAlignment = Alignment.Center
     ) {
@@ -48,11 +48,12 @@ fun LargePrimaryButton(
 
 @Preview
 @Composable
-fun PreviewLargePrimaryButton() {
+fun PreviewLargePrimaryOutlinedButton() {
     ITTPizenTheme {
         Surface {
-            LargePrimaryButton(
-                text = "Let’s Go!"
+            LargePrimaryOutlinedButton(
+                text = "Connected",
+                modifier = Modifier.padding(20.dp)
             )
         }
     }

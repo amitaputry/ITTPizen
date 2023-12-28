@@ -3,7 +3,6 @@ package com.ta.ittpizen.ui.component.tab
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.height
@@ -23,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -30,7 +30,6 @@ import androidx.compose.ui.zIndex
 import com.ta.ittpizen.ui.component.text.TextBodyMedium
 import com.ta.ittpizen.ui.theme.DisableColorGrey
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
-import com.ta.ittpizen.ui.theme.PrimaryRed
 
 @ExperimentalLayoutApi
 @ExperimentalFoundationApi
@@ -66,7 +65,7 @@ fun BaseScrollableTabRow(
                     selected = selected,
                     onClick = { onSelected(index) },
                     text = {
-                        TextBodyMedium(text = tab, color = textColor)
+                        TextBodyMedium(text = tab, color = textColor, fontWeight = FontWeight.Medium)
                     },
                     modifier = Modifier
                         .offset(x = xOffset)

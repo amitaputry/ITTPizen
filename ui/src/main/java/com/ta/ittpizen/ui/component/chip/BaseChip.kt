@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.ui.component.text.TextBodyMedium
@@ -30,6 +31,7 @@ fun BaseChip(
     TextBodyMedium(
         text = text,
         color = textColor,
+        fontWeight = FontWeight.Medium,
         modifier = modifier
             .clip(RoundedCornerShape(100.dp))
             .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(size = 100.dp))

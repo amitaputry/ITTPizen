@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.entity.JobDetail
 import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.component.text.TextBodyLarge
-import com.ta.ittpizen.ui.component.text.TextBodySmallWithLeadingIcon
+import com.ta.ittpizen.ui.component.text.TextBodyMediumWithLeadingIcon
 import com.ta.ittpizen.ui.theme.ColorText
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
@@ -33,38 +33,38 @@ fun JobDetailHeader(
     Column(modifier = modifier) {
         TextBodyLarge(text = job.title, fontWeight = FontWeight.Medium, color = ColorText)
         Spacer(modifier = Modifier.height(10.dp))
-        TextBodySmallWithLeadingIcon(
+        TextBodyMediumWithLeadingIcon(
             leadIcon = painterResource(id = R.drawable.ic_company),
             color = ColorText,
             text = job.company,
             fontWeight = FontWeight.Medium
         )
         Spacer(modifier = Modifier.height(5.dp))
-        TextBodySmallWithLeadingIcon(
+        TextBodyMediumWithLeadingIcon(
             leadIcon = painterResource(id = R.drawable.ic_location),
             color = ColorText,
             text = address
         )
         Spacer(modifier = Modifier.height(5.dp))
-        TextBodySmallWithLeadingIcon(
+        TextBodyMediumWithLeadingIcon(
             leadIcon = painterResource(id = R.drawable.ic_time),
             color = ColorText,
             text = "${job.experience} Experiences"
         )
         Spacer(modifier = Modifier.height(5.dp))
-        TextBodySmallWithLeadingIcon(
+        TextBodyMediumWithLeadingIcon(
             leadIcon = painterResource(id = R.drawable.ic_graduate),
             color = ColorText,
             text = job.graduates
         )
         Spacer(modifier = Modifier.height(5.dp))
-        TextBodySmallWithLeadingIcon(
+        TextBodyMediumWithLeadingIcon(
             leadIcon = painterResource(id = R.drawable.ic_person),
             color = ColorText,
             text = job.workplaceType
         )
         Spacer(modifier = Modifier.height(5.dp))
-        TextBodySmallWithLeadingIcon(
+        TextBodyMediumWithLeadingIcon(
             leadIcon = painterResource(id = R.drawable.ic_bag),
             color = ColorText,
             text = job.jobType

@@ -13,14 +13,14 @@ class MainNavigator(
     override fun navigateToAddAchievementScreen() = navController.navigateToAddPostScreen(AddPostType.ACHIEVEMENT)
     override fun navigateToAddEventScreen() = navController.navigateToAddPostScreen(AddPostType.EVENT)
     override fun navigateToAddScholarshipScreen() = navController.navigateToAddPostScreen(AddPostType.SCHOLARSHIP)
-    override fun navigateToDetailPostScreen(id: String) = navController.navigateToPostDetailScreen(id)
+    override fun navigateToDetailPostScreen(id: String) = navController.navigateToPostDetailScreen(postId = id)
     override fun navigateToProfileScreen() {}
     override fun navigateToNotificationScreen() {}
     override fun navigateToDetailUserScreen(id: String) {}
     override fun navigateToSearchConnectionScreen() = navController.navigateToSearchConnectionScreen()
     override fun navigateToDetailChatScreen(id: String) = navController.navigateToDetailChatScreen(id)
     override fun navigateToAddJobScreen() = navController.navigateToAddJobScreen()
-    override fun navigateToDetailJobScreen(id: String) = navController.navigateToJobDetailScreen(id)
+    override fun navigateToDetailJobScreen(id: String) = navController.navigateToJobDetailScreen(jobId = id)
     override fun navigateToSearchJobScreen() = navController.navigateToSearchJobScreen()
 }
 
@@ -78,6 +78,35 @@ fun NavHostController.navigateToSuccessAddPostScreen(
 }
 
 @Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToJobDetailScreen(
+    from: Screen = Screen.AddJobScreen,
+    clearBackStack: Boolean = true,
+    jobId: String
+) {
+    navigate(Screen.JobDetailScreen.generateRoute(jobId)) {
+        if (!clearBackStack) return@navigate
+        popUpTo(from.route) {
+            inclusive = true
+        }
+    }
+}
+
+@Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToPostDetailScreen(
+    from: Screen = Screen.SuccessAddPostScreen,
+    clearBackStack: Boolean = true,
+    postId: String,
+) {
+    navigate(Screen.PostDetailScreen.generateRoute(postId)) {
+        if (!clearBackStack) return@navigate
+        popUpTo(from.route) {
+            inclusive = true
+        }
+    }
+}
+
+
+@Throws(IllegalArgumentException::class)
 fun NavHostController.navigateToRegisterScreen() {
     navigate(Screen.RegisterScreen.route)
 }
@@ -106,14 +135,3 @@ fun NavHostController.navigateToAddPostScreen(type: AddPostType) {
 fun NavHostController.navigateToDetailChatScreen(chatId: String) {
     navigate(Screen.DetailChatScreen.generateRoute(chatId))
 }
-
-@Throws(IllegalArgumentException::class)
-fun NavHostController.navigateToJobDetailScreen(jobId: String) {
-    navigate(Screen.JobDetailScreen.generateRoute(jobId))
-}
-
-@Throws(IllegalArgumentException::class)
-fun NavHostController.navigateToPostDetailScreen(postId: String) {
-    navigate(Screen.PostDetailScreen.generateRoute(postId))
-}
-

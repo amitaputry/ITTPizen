@@ -82,7 +82,7 @@ fun AddJobDetailSection(
             minLines = 4,
             singleLine = false
         )
-        Column {
+        Column(modifier = Modifier.animateContentSize()) {
             TextTitleSmall(text = "Skills", color = Color(0xFF343433))
             Spacer(modifier = Modifier.height(4.dp))
             skills.forEachIndexed { index, skill ->

@@ -32,7 +32,7 @@ import com.ta.ittpizen.feature_splash_screen.SplashScreen
 @Composable
 fun ITTPizenNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: Screen = Screen.AddJobScreen
+    startDestination: Screen = Screen.MainScreen
 ) {
     val startDestinationRoute = startDestination.route
     NavHost(navController = navController, startDestination = startDestinationRoute) {
@@ -87,7 +87,7 @@ fun ITTPizenNavHost(
         ) {
             AddJobScreen(
                 navigateUp = navController::navigateUp,
-                navigateToDetailJob = navController::navigateToJobDetailScreen
+                navigateToDetailJob = { navController.navigateToJobDetailScreen(jobId = it) }
             )
         }
         composableWithSlideHorizontalAnimation(
@@ -100,7 +100,7 @@ fun ITTPizenNavHost(
         ) {
             val postId = it.arguments?.getString(Screen.POST_ID) ?: ""
             SuccessAddPostScreen(
-                navigateToDetailPostScreen = {},
+                navigateToDetailPostScreen = { navController.navigateToPostDetailScreen(postId = postId) },
                 navigateToMainScreen = { navController.navigateToMainScreen(from = Screen.MainScreen) }
             )
         }

@@ -12,8 +12,8 @@ import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.entity.JobDetail
 import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.component.text.TextBodyLarge
-import com.ta.ittpizen.ui.component.text.TextBodySmall
-import com.ta.ittpizen.ui.component.text.TextBodySmallWithBullet
+import com.ta.ittpizen.ui.component.text.TextBodyMedium
+import com.ta.ittpizen.ui.component.text.TextBodyMediumWithBullet
 import com.ta.ittpizen.ui.theme.ColorText
 import com.ta.ittpizen.ui.theme.DisableColorGrey
 
@@ -29,7 +29,7 @@ fun JobDetailContent(
             color = ColorText
         )
         Spacer(modifier = Modifier.height(5.dp))
-        TextBodySmall(text = job.description, fontWeight = FontWeight.Normal)
+        TextBodyMedium(text = job.description, fontWeight = FontWeight.Normal)
 
         Spacer(modifier = Modifier.height(20.dp))
         Divider(thickness = 0.5.dp, color = DisableColorGrey)
@@ -42,7 +42,7 @@ fun JobDetailContent(
         )
         Spacer(modifier = Modifier.height(5.dp))
         job.skills.forEach { skill ->
-            TextBodySmallWithBullet(
+            TextBodyMediumWithBullet(
                 bullet = painterResource(id = R.drawable.ic_ellipse),
                 text = skill,
                 color = ColorText

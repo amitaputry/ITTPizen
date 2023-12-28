@@ -38,7 +38,7 @@ fun ConnectionScreen(
 
     var query by remember { mutableStateOf("") }
 
-    val options = listOf("Students", "Alumni", "Lecturer", "Staff", "Academic", "Organization")
+    val options = listOf("Students", "Alumni", "Lecturer", "Staff", "Academic")
     var selectedOption by remember { mutableStateOf(options[0]) }
 
     val users = remember(key1 = selectedOption) {
