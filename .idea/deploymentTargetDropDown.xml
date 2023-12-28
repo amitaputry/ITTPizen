@@ -2,23 +2,36 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewAddJobDoneSection">
-        <State />
-      </entry>
-      <entry key="PreviewAddJobGeneralSection">
-        <State />
-      </entry>
-      <entry key="PreviewAddJobScreen">
-        <State />
-      </entry>
       <entry key="PreviewBaseOutlinedTextField">
         <State />
       </entry>
-      <entry key="PreviewOutlinedTextFieldWithLabel">
+      <entry key="PreviewHistoryContent">
+        <State />
+      </entry>
+      <entry key="PreviewHistoryItem">
+        <State />
+      </entry>
+      <entry key="PreviewHistoryLoadingContent">
+        <State />
+      </entry>
+      <entry key="PreviewSearchConnectionScreen">
         <State />
       </entry>
       <entry key="app">
-        <State />
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="YX75U8IJMBYDQOHY" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2023-12-28T17:24:21.334351Z" />
+        </State>
       </entry>
     </value>
   </component>

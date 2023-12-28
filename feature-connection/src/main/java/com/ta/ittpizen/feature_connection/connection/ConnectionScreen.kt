@@ -1,9 +1,8 @@
-package com.ta.ittpizen.feature_connection
+package com.ta.ittpizen.feature_connection.connection
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,9 +19,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.domain.entity.UserItem
+import com.ta.ittpizen.domain.model.UserItem
 import com.ta.ittpizen.ui.component.chip.SingleChipRow
-import com.ta.ittpizen.ui.component.searchbar.BaseSearchBar
+import com.ta.ittpizen.ui.component.searchbar.DummySearchBar
 import com.ta.ittpizen.ui.component.topappbar.BaseTopAppBar
 import com.ta.ittpizen.ui.component.user.UserItem
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
@@ -35,8 +34,6 @@ fun ConnectionScreen(
     navigateToSearchConnectionScreen: () -> Unit = {},
     navigateToDetailUserScreen: (String) -> Unit = {},
 ) {
-
-    var query by remember { mutableStateOf("") }
 
     val options = listOf("Students", "Alumni", "Lecturer", "Staff", "Academic")
     var selectedOption by remember { mutableStateOf(options[0]) }
@@ -77,13 +74,10 @@ fun ConnectionScreen(
                 )
             }
             item {
-                BaseSearchBar(
-                    query = query,
-                    onQueryChange = { query = it },
+                DummySearchBar(
                     placeholder = "Find your friends..",
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp)
-                        .fillMaxWidth()
+                    onClick = navigateToSearchConnectionScreen,
+                    modifier = Modifier.padding(horizontal = 20.dp)
                 )
             }
             item { Spacer(modifier = Modifier.height(10.dp)) }

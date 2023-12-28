@@ -14,6 +14,7 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.ta.ittpizen.feature_auth.login.LoginScreen
 import com.ta.ittpizen.feature_auth.register.RegisterScreen
 import com.ta.ittpizen.feature_chat.detail.DetailChatScreen
+import com.ta.ittpizen.feature_connection.search.SearchConnectionScreen
 import com.ta.ittpizen.feature_job.add.AddJobScreen
 import com.ta.ittpizen.feature_job.detail.JobDetailScreen
 import com.ta.ittpizen.feature_main.MainScreen
@@ -75,7 +76,10 @@ fun ITTPizenNavHost(
         composableWithSlideHorizontalAnimation(
             route = Screen.SearchConnectionScreen.route
         ) {
-
+            SearchConnectionScreen(
+                navigateUp = navController::navigateUp,
+                navigateToDetailConnection = {}
+            )
         }
         composableWithSlideHorizontalAnimation(
             route = Screen.SearchJobScreen.route

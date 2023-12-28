@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.domain.entity.JobDetail
+import com.ta.ittpizen.domain.model.JobDetail
 import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.component.text.TextBodyLarge
 import com.ta.ittpizen.ui.component.text.TextBodyMedium

@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.ta.ittpizen.domain.entity.UserItem
+import com.ta.ittpizen.domain.model.UserItem
 import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.component.button.SmallPrimaryOutlinedButton
 import com.ta.ittpizen.ui.component.button.SmallPrimaryButton

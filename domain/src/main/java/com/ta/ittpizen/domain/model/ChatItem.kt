@@ -1,4 +1,4 @@
-package com.ta.ittpizen.domain.entity
+package com.ta.ittpizen.domain.model
 
 data class ChatItem(
     val id: String = "",

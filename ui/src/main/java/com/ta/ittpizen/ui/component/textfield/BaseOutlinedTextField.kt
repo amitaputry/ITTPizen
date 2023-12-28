@@ -3,7 +3,6 @@ package com.ta.ittpizen.ui.component.textfield
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -143,9 +142,8 @@ fun PreviewBaseOutlinedTextField() {
                 value = value,
                 onValueChange = { value = it },
                 placeholder = "Enter your username",
-                isError = true,
                 supportingText = "Hello Mas Bro",
-                modifier = Modifier.padding(20.dp)
+//                modifier = Modifier.height(42.dp)
             )
         }
     }

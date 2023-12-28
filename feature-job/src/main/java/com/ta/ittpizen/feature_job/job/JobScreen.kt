@@ -22,10 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.domain.entity.JobItem
+import com.ta.ittpizen.domain.model.JobItem
 import com.ta.ittpizen.ui.component.chip.SingleChipRow
 import com.ta.ittpizen.ui.component.job.JobItem
-import com.ta.ittpizen.ui.component.searchbar.SearchBarWithIconButton
+import com.ta.ittpizen.ui.component.searchbar.DummySearchBarWithIconButton
 import com.ta.ittpizen.ui.component.topappbar.BaseTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
@@ -40,9 +40,7 @@ fun JobScreen(
     navigateToSearchJobScreen: () -> Unit = {}
 ) {
 
-    var query by remember { mutableStateOf("") }
-
-    val options = listOf("For you", "Remote", "Onsite", "Full time", "Part Time")
+    val options = listOf("For you", "Remote", "Onsite", "Full time", "Part Time", "Internship", "Volunteer")
     var selectedOption by remember { mutableStateOf(options[0]) }
 
     val jobItems = remember(key1 = selectedOption) {
@@ -83,10 +81,9 @@ fun JobScreen(
                 )
             }
             item {
-                SearchBarWithIconButton(
-                    query = query,
-                    onQueryChange = { query = it },
+                DummySearchBarWithIconButton(
                     placeholder = "Search...",
+                    onSearchBarClick = navigateToSearchJobScreen,
                     icon = painterResource(id = com.ta.ittpizen.ui.R.drawable.ic_add_job),
                     contentDescription = "Add Job",
                     onButtonClick = navigateToAddJobScreen,

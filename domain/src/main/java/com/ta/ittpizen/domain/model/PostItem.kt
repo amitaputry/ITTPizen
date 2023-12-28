@@ -1,4 +1,4 @@
-package com.ta.ittpizen.domain.entity
+package com.ta.ittpizen.domain.model
 
 data class PostItem(
     val id: String = "",

@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.domain.entity.JobDetail
+import com.ta.ittpizen.domain.model.JobDetail
 import com.ta.ittpizen.feature_job.component.JobDetailContent
 import com.ta.ittpizen.feature_job.component.JobDetailFooter
 import com.ta.ittpizen.feature_job.component.JobDetailHeader

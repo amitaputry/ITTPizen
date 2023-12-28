@@ -17,3 +17,7 @@ val Grey = Color(0xFFAAAAAA)
 val SecondDarkGrey = Color(0xFF706F6F)
 val DisableColorGrey = Color(0xFFC5C3C3)
 val GreyShadow = Color(0xFFE5E5E5)
+
+val ColorDark = Color(0xFF333538)
+val ColorDanger = Color(0xFFFF0000)
+val ColorStroke = Color(0xFFDEDEDE)

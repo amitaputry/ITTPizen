@@ -21,7 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ta.ittpizen.feature_chat.chat.ChatScreen
-import com.ta.ittpizen.feature_connection.ConnectionScreen
+import com.ta.ittpizen.feature_connection.connection.ConnectionScreen
 import com.ta.ittpizen.feature_home.HomeScreen
 import com.ta.ittpizen.feature_job.job.JobScreen
 import com.ta.ittpizen.feature_main.component.BaseBottomNavigation

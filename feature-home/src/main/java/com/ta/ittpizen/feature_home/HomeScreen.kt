@@ -23,7 +23,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.ta.ittpizen.domain.entity.PostItem
+import com.ta.ittpizen.domain.model.PostItem
 import com.ta.ittpizen.ui.component.post.PostItem
 import com.ta.ittpizen.ui.component.tab.BaseScrollableTabRow
 import com.ta.ittpizen.ui.component.topappbar.HomeTopAppBar

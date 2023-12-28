@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.ta.ittpizen.domain.entity.ChatItem
+import com.ta.ittpizen.domain.model.ChatItem
 import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.component.text.TextBodyLarge
 import com.ta.ittpizen.ui.component.text.TextBodySmall

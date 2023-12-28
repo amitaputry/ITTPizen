@@ -19,10 +19,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.domain.entity.ChatItem
+import com.ta.ittpizen.domain.model.ChatItem
 import com.ta.ittpizen.feature_chat.component.EmptyChatContent
 import com.ta.ittpizen.ui.component.chat.ChatItem
-import com.ta.ittpizen.ui.component.searchbar.BaseSearchBar
+import com.ta.ittpizen.ui.component.searchbar.FilledSearchBar
 import com.ta.ittpizen.ui.component.topappbar.BaseTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
@@ -55,7 +55,7 @@ fun ChatScreen(
                 BaseTopAppBar(title = "Chat")
             }
             stickyHeader {
-                BaseSearchBar(
+                FilledSearchBar(
                     query = query,
                     onQueryChange = { query = it },
                     placeholder = "Search",

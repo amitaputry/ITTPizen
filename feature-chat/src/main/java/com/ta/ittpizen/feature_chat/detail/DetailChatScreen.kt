@@ -32,7 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.common.toChatDateFormat
 import com.ta.ittpizen.common.toChatTimeFormat
-import com.ta.ittpizen.domain.entity.ChatBubble
+import com.ta.ittpizen.domain.model.ChatBubble
 import com.ta.ittpizen.feature_chat.R
 import com.ta.ittpizen.feature_chat.component.DetailChatFooter
 import com.ta.ittpizen.feature_chat.component.EmptyDetailChatContent
