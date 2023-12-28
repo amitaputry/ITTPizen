@@ -112,7 +112,8 @@ fun MainScreen(
             ) {
                 composable(route = Screen.Home.route) {
                     HomeScreen(
-                        navigateToProfileScreen = mainNavigator::navigateToProfileScreen,
+                        navigateToMyProfileScreen = mainNavigator::navigateToMyProfileScreen,
+                        navigateToUserProfileScreen = mainNavigator::navigateToUserProfileScreen,
                         navigateToNotificationScreen = mainNavigator::navigateToNotificationScreen,
                         navigateToDetailPostScreen = mainNavigator::navigateToDetailPostScreen
                     )
@@ -120,7 +121,7 @@ fun MainScreen(
                 composable(route = Screen.Connection.route) {
                     ConnectionScreen(
                         navigateToSearchConnectionScreen = mainNavigator::navigateToSearchConnectionScreen,
-                        navigateToDetailUserScreen = mainNavigator::navigateToDetailUserScreen
+                        navigateToDetailUserScreen = mainNavigator::navigateToUserProfileScreen
                     )
                 }
                 composable(route = Screen.Chat.route) {

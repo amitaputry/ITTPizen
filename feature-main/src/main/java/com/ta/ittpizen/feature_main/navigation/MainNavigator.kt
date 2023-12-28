@@ -10,11 +10,11 @@ interface MainNavigator {
 
     // Home Screen Navigator
     fun navigateToDetailPostScreen(id: String)
-    fun navigateToProfileScreen()
+    fun navigateToMyProfileScreen(userId: String)
+    fun navigateToUserProfileScreen(userId: String)
     fun navigateToNotificationScreen()
 
     // Connection Screen Navigator
-    fun navigateToDetailUserScreen(id: String)
     fun navigateToSearchConnectionScreen()
 
     // Chat Screen Navigator
@@ -34,9 +34,8 @@ object EmptyMainNavigator : MainNavigator {
     override fun navigateToAddScholarshipScreen() {}
     override fun navigateToDetailPostScreen(id: String) {}
     override fun navigateToNotificationScreen() {}
-
-    override fun navigateToProfileScreen() {}
-    override fun navigateToDetailUserScreen(id: String) {}
+    override fun navigateToMyProfileScreen(userId: String) {}
+    override fun navigateToUserProfileScreen(userId: String) {}
     override fun navigateToSearchConnectionScreen() {}
     override fun navigateToDetailChatScreen(id: String) {}
     override fun navigateToAddJobScreen() {}

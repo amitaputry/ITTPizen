@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ta.ittpizen.feature_main"
+    namespace = "com.ta.ittpizen.feature_profile"
     compileSdk = 34
 
     defaultConfig {
@@ -47,13 +47,6 @@ dependencies {
 
     implementation(project(":ui"))
     implementation(project(":domain"))
-
-    implementation(project(":feature-home"))
-    implementation(project(":feature-connection"))
-    implementation(project(":feature-chat"))
-    implementation(project(":feature-job"))
-
-    implementation("androidx.navigation:navigation-compose:2.7.6")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

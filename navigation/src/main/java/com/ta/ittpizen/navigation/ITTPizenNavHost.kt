@@ -24,6 +24,8 @@ import com.ta.ittpizen.feature_post.add.AddPostScreen
 import com.ta.ittpizen.feature_post.add.AddPostType
 import com.ta.ittpizen.feature_post.detail.PostDetailScreen
 import com.ta.ittpizen.feature_post.success.SuccessAddPostScreen
+import com.ta.ittpizen.feature_profile.profile.ProfileScreen
+import com.ta.ittpizen.feature_profile.profile.ProfileScreenType
 import com.ta.ittpizen.feature_splash_screen.SplashScreen
 
 @ExperimentalMaterialApi
@@ -170,6 +172,28 @@ fun ITTPizenNavHost(
                 postId = postId
             )
         }
-
+        composableWithSlideHorizontalAnimation(
+            route = Screen.ProfileScreen.route,
+            arguments = listOf(
+                navArgument(Screen.PROFILE_TYPE) {
+                    type = NavType.StringType
+                },
+                navArgument(Screen.USER_ID) {
+                    type = NavType.StringType
+                },
+            )
+        ) {
+            val type = it.arguments?.getString(Screen.PROFILE_TYPE) ?: ProfileScreenType.ME.name
+            val userId = it.arguments?.getString(Screen.USER_ID) ?: ""
+            val userType = ProfileScreenType.valueOf(type)
+            ProfileScreen(
+                navigateUp = navController::navigateUp,
+                type = userType,
+                userId = userId,
+                navigateToEditProfile = {},
+                navigateToDetailPostScreen = { navController.navigateToPostDetailScreen(postId = it) },
+                navigateToSavedJob = {}
+            )
+        }
     }
 }

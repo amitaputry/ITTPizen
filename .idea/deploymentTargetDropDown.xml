@@ -2,19 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewBaseOutlinedTextField">
+      <entry key="PreviewOutlinedIconButton">
         <State />
       </entry>
-      <entry key="PreviewHistoryContent">
+      <entry key="PreviewProfileHeader">
         <State />
       </entry>
-      <entry key="PreviewHistoryItem">
+      <entry key="PreviewProfileMeButtonSection">
         <State />
       </entry>
-      <entry key="PreviewHistoryLoadingContent">
+      <entry key="PreviewProfilePostIndicator">
         <State />
       </entry>
-      <entry key="PreviewSearchConnectionScreen">
+      <entry key="PreviewProfileScreen">
         <State />
       </entry>
       <entry key="app">

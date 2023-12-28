@@ -55,6 +55,7 @@ dependencies {
     implementation(project(":feature-chat"))
     implementation(project(":feature-post"))
     implementation(project(":feature-job"))
+    implementation(project(":feature-profile"))
 
     implementation(project(":feature-main"))
 

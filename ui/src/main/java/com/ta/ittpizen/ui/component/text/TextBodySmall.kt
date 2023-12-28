@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -22,7 +23,8 @@ fun TextBodySmall(
     color: Color = MaterialTheme.colorScheme.onBackground,
     fontWeight: FontWeight = FontWeight(500),
     maxLines: Int = Int.MAX_VALUE,
-    lineHeight: TextUnit = 16.sp
+    lineHeight: TextUnit = 16.sp,
+    textAlign: TextAlign = TextAlign.Start
 ) {
     Text(
         text = text,
@@ -33,7 +35,8 @@ fun TextBodySmall(
         lineHeight = lineHeight,
         overflow = TextOverflow.Ellipsis,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
+        textAlign = textAlign,
     )
 }
 

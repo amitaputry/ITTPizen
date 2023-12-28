@@ -35,7 +35,7 @@ fun LargePrimaryOutlinedButton(
         modifier = modifier
             .clip(RoundedCornerShape(size = 100.dp))
             .clickable(buttonEnabled) { onClick() }
-            .border(width = 1.dp, color = buttonBorderColor, shape = RoundedCornerShape(size = 100.dp))
+            .border(width = 1.5.dp, color = buttonBorderColor, shape = RoundedCornerShape(size = 100.dp))
             .padding(contentPaddingValues),
         contentAlignment = Alignment.Center
     ) {

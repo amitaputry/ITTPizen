@@ -3,6 +3,7 @@ package com.ta.ittpizen.navigation
 import androidx.navigation.NavHostController
 import com.ta.ittpizen.feature_main.navigation.MainNavigator
 import com.ta.ittpizen.feature_post.add.AddPostType
+import com.ta.ittpizen.feature_profile.profile.ProfileScreenType
 import kotlin.jvm.Throws
 
 class MainNavigator(
@@ -14,9 +15,9 @@ class MainNavigator(
     override fun navigateToAddEventScreen() = navController.navigateToAddPostScreen(AddPostType.EVENT)
     override fun navigateToAddScholarshipScreen() = navController.navigateToAddPostScreen(AddPostType.SCHOLARSHIP)
     override fun navigateToDetailPostScreen(id: String) = navController.navigateToPostDetailScreen(postId = id)
-    override fun navigateToProfileScreen() {}
+    override fun navigateToMyProfileScreen(userId: String) = navController.navigateToProfileScreen(type = ProfileScreenType.ME, userId = userId)
+    override fun navigateToUserProfileScreen(userId: String) = navController.navigateToProfileScreen(type = ProfileScreenType.FRIEND, userId = userId)
     override fun navigateToNotificationScreen() {}
-    override fun navigateToDetailUserScreen(id: String) {}
     override fun navigateToSearchConnectionScreen() = navController.navigateToSearchConnectionScreen()
     override fun navigateToDetailChatScreen(id: String) = navController.navigateToDetailChatScreen(id)
     override fun navigateToAddJobScreen() = navController.navigateToAddJobScreen()
@@ -134,4 +135,9 @@ fun NavHostController.navigateToAddPostScreen(type: AddPostType) {
 @Throws(IllegalArgumentException::class)
 fun NavHostController.navigateToDetailChatScreen(chatId: String) {
     navigate(Screen.DetailChatScreen.generateRoute(chatId))
+}
+
+@Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToProfileScreen(type: ProfileScreenType, userId: String) {
+    navigate(Screen.ProfileScreen.generateRoute(type, userId))
 }

@@ -36,10 +36,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    navigateToProfileScreen: () -> Unit = {},
+    navigateToMyProfileScreen: (String) -> Unit = {},
+    navigateToUserProfileScreen: (String) -> Unit = {},
     navigateToNotificationScreen: () -> Unit = {},
     navigateToDetailPostScreen: (String) -> Unit = {},
 ) {
+
+    val userId = "my-id"
 
     val tabs = listOf("All Post", "Tweet", "Academic", "#PrestasiITTP", "Events", "Scholarship")
 
@@ -81,7 +84,7 @@ fun HomeScreen(
         modifier = modifier,
         topBar = {
             HomeTopAppBar(
-                onProfileClick = navigateToProfileScreen,
+                onProfileClick = { navigateToMyProfileScreen(userId) },
                 onNotificationClick = navigateToNotificationScreen,
                 modifier = Modifier
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
@@ -109,6 +112,7 @@ fun HomeScreen(
                     items(items = postItems, key = { it.id }) {
                         PostItem(
                             post = it,
+                            onProfile = { navigateToUserProfileScreen(it.id) },
                             onClick = { navigateToDetailPostScreen(it.id) },
                             modifier = Modifier
                                 .padding(top = 20.dp)

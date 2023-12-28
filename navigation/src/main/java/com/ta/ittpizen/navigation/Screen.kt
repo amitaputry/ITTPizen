@@ -1,6 +1,7 @@
 package com.ta.ittpizen.navigation
 
 import com.ta.ittpizen.feature_post.add.AddPostType
+import com.ta.ittpizen.feature_profile.profile.ProfileScreenType
 
 sealed class Screen(val route: String) {
 
@@ -9,6 +10,8 @@ sealed class Screen(val route: String) {
         const val POST_ID = "post_id"
         const val CHAT_ID = "chat_id"
         const val JOB_ID = "job_id"
+        const val PROFILE_TYPE = "profile_type"
+        const val USER_ID = "user_id"
     }
 
     object SplashScreen : Screen(route = "splash-screen")
@@ -42,6 +45,11 @@ sealed class Screen(val route: String) {
     object JobDetailScreen : Screen(route = "detail-job-screen/{$JOB_ID}") {
         fun generateRoute(jobId: String): String {
             return "detail-job-screen/$jobId"
+        }
+    }
+    object ProfileScreen : Screen(route = "profile-screen/{$PROFILE_TYPE}/{$USER_ID}") {
+        fun generateRoute(type: ProfileScreenType, userId: String): String {
+            return "profile-screen/${type.name}/$userId"
         }
     }
 }
