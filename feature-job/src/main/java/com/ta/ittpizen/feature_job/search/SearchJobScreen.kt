@@ -1,9 +1,10 @@
-package com.ta.ittpizen.feature_connection.search
+package com.ta.ittpizen.feature_job.search
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,21 +21,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ta.ittpizen.domain.model.JobItem
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.UserItem
 import com.ta.ittpizen.ui.component.history.HistoryContent
 import com.ta.ittpizen.ui.component.history.HistoryEmptyContent
+import com.ta.ittpizen.ui.component.job.JobItem
 import com.ta.ittpizen.ui.component.topappbar.DetailSearchAppBar
-import com.ta.ittpizen.ui.component.user.UserItem
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
+@ExperimentalLayoutApi
 @ExperimentalFoundationApi
 @ExperimentalMaterial3Api
 @Composable
-fun SearchConnectionScreen(
+fun SearchJobScreen(
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit = {},
-    navigateToDetailConnection: (String) -> Unit = {},
+    navigateToDetailJob: (String) -> Unit = {},
 ) {
 
     var query by remember { mutableStateOf("") }
@@ -51,21 +54,23 @@ fun SearchConnectionScreen(
         histories.remove(histories[it])
     }
 
-    val dummyUsers = (1..20).map {
-        val connected = it == 3
-        UserItem(
+    val dummyJobs = (1..20).map {
+        JobItem(
             id = it.toString(),
-            name = "Amita Putry Prasasti",
-            type = "Student",
-            connected = connected
+            name = "Asisten Praktikum Basis Data",
+            characteristics = listOf("Onsite", "Part time", "0 - 1 year", "Min D3"),
+            company = "Fakultas Informatika",
+            date = "12 days ago",
+            location = "Jl. DI Panjaitan No.128, Banyumas, Jawa Tengah",
+            saved = it == 3
         )
     }
-    var users: Resource<List<UserItem>> by remember {
+    var jobs: Resource<List<JobItem>> by remember {
         mutableStateOf(Resource.Idle)
     }
 
     val onSearch: () -> Unit = {
-        users = Resource.Success(data = dummyUsers)
+        jobs = Resource.Success(data = dummyJobs)
     }
 
     Scaffold(
@@ -81,7 +86,7 @@ fun SearchConnectionScreen(
         modifier = modifier
     ) { paddingValues ->
         AnimatedVisibility(
-            visible = users is Resource.Idle,
+            visible = jobs is Resource.Idle,
             enter = fadeIn(),
             exit = fadeOut()
         ) {
@@ -93,29 +98,29 @@ fun SearchConnectionScreen(
             )
         }
         AnimatedVisibility(
-            visible = users is Resource.Success && (users as Resource.Success<List<UserItem>>).data.isEmpty(),
+            visible = jobs is Resource.Success && (jobs as Resource.Success<List<UserItem>>).data.isEmpty(),
             enter = fadeIn(),
             exit = fadeOut()
         ) {
             HistoryEmptyContent(
                 modifier = Modifier.padding(paddingValues),
-                description = "No Friends found :("
+                description = "No Job Vacancy Found :("
             )
         }
         AnimatedVisibility(
-            visible = users is Resource.Success,
+            visible = jobs is Resource.Success,
             enter = fadeIn(),
             exit = fadeOut()
         ) {
-            val data = (users as Resource.Success).data
+            val data = (jobs as Resource.Success).data
             LazyColumn(
                 contentPadding = PaddingValues(vertical = 20.dp),
                 modifier = Modifier.padding(paddingValues),
             ) {
-                items(items = data, key = { it.id }) { userItem ->
-                    UserItem(
-                        user = userItem,
-                        onClick = { navigateToDetailConnection(it.id) },
+                items(items = data, key = { it.id }) { jobItem ->
+                    JobItem(
+                        jobItem = jobItem,
+                        onClick = { navigateToDetailJob(it.id) },
                         modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
                     )
                 }
@@ -124,14 +129,15 @@ fun SearchConnectionScreen(
     }
 }
 
+@ExperimentalLayoutApi
 @ExperimentalMaterial3Api
 @ExperimentalFoundationApi
 @Preview
 @Composable
-fun PreviewSearchConnectionScreen() {
+fun PreviewSearchJobScreen() {
     ITTPizenTheme {
         Surface {
-            SearchConnectionScreen()
+            SearchJobScreen()
         }
     }
 }

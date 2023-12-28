@@ -17,6 +17,7 @@ import com.ta.ittpizen.feature_chat.detail.DetailChatScreen
 import com.ta.ittpizen.feature_connection.search.SearchConnectionScreen
 import com.ta.ittpizen.feature_job.add.AddJobScreen
 import com.ta.ittpizen.feature_job.detail.JobDetailScreen
+import com.ta.ittpizen.feature_job.search.SearchJobScreen
 import com.ta.ittpizen.feature_main.MainScreen
 import com.ta.ittpizen.feature_onboarding_screen.OnboardingScreen
 import com.ta.ittpizen.feature_post.add.AddPostScreen
@@ -84,7 +85,10 @@ fun ITTPizenNavHost(
         composableWithSlideHorizontalAnimation(
             route = Screen.SearchJobScreen.route
         ) {
-
+            SearchJobScreen(
+                navigateUp = navController::navigateUp,
+                navigateToDetailJob = { navController.navigateToJobDetailScreen(jobId = it) }
+            )
         }
         composableWithSlideHorizontalAnimation(
             route = Screen.AddJobScreen.route

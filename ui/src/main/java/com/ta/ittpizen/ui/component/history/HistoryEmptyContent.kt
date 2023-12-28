@@ -18,7 +18,10 @@ import com.ta.ittpizen.ui.component.text.TextBodyMedium
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
 @Composable
-fun HistoryEmptyContent(modifier: Modifier = Modifier) {
+fun HistoryEmptyContent(
+    modifier: Modifier = Modifier,
+    description: String = ""
+) {
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -29,7 +32,7 @@ fun HistoryEmptyContent(modifier: Modifier = Modifier) {
             contentDescription = null
         )
         Spacer(modifier = Modifier.height(8.dp))
-        TextBodyMedium(text = "No Friends found :(")
+        TextBodyMedium(text = description)
     }
 }
 
