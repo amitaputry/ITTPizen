@@ -85,7 +85,10 @@ fun ITTPizenNavHost(
         composableWithSlideHorizontalAnimation(
             route = Screen.AddJobScreen.route
         ) {
-            AddJobScreen()
+            AddJobScreen(
+                navigateUp = navController::navigateUp,
+                navigateToDetailJob = navController::navigateToJobDetailScreen
+            )
         }
         composableWithSlideHorizontalAnimation(
             route = Screen.SuccessAddPostScreen.route,

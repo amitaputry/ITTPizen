@@ -5,6 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -42,7 +43,6 @@ fun AddJobScreen(
     addJobGeneralViewModel: AddJobGeneralViewModel = koinViewModel(),
     addJobDetailViewModel: AddJobDetailViewModel = koinViewModel(),
     navigateUp: () -> Unit = {},
-    navigateToHomeScreen: () -> Unit = {},
     navigateToDetailJob: (String) -> Unit = {},
 ) {
 
@@ -126,8 +126,9 @@ fun AddJobScreen(
             )
             HorizontalPager(
                 state = pagerState,
-                modifier = Modifier.weight(1f),
+                userScrollEnabled = false,
                 verticalAlignment = Alignment.Top,
+                modifier = Modifier.weight(1f)
             ) { page ->
                 when (page) {
                     0 -> AddJobGeneralSection(
@@ -144,10 +145,10 @@ fun AddJobScreen(
                     )
                     2 -> AddJobDoneSection(
                         onSeePostClick = { navigateToDetailJob(postUrl) },
-                        onFinishClick = navigateToHomeScreen,
+                        onFinishClick = navigateUp,
                         modifier = Modifier
-                            .verticalScroll(scrollState)
                             .padding(horizontal = 20.dp)
+                            .fillMaxSize()
                     )
                 }
             }

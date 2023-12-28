@@ -35,7 +35,7 @@ fun AddJobStepItem(
             .clip(RoundedCornerShape(100.dp))
             .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(size = 100.dp))
             .background(background)
-            .padding(horizontal = 20.dp, vertical = 4.dp)
+            .padding(horizontal = 20.dp, vertical = 8.dp)
     )
 }
 
