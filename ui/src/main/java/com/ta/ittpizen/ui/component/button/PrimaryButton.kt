@@ -27,17 +27,19 @@ fun PrimaryButton(
 ) {
     val buttonText = if (loading) "Loading..." else text
     val buttonEnabled = if (loading) false else enable
+    val buttonBackground = if (buttonEnabled) PrimaryRed else Color(0xFFDEDEDE)
+    val textButton = if (buttonEnabled) Color.White else Color(0xFFAAAAAA)
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(size = 100.dp))
             .clickable(buttonEnabled) { onClick() }
-            .background(color = PrimaryRed)
+            .background(color = buttonBackground)
             .padding(vertical = 10.dp, horizontal = 28.dp),
         contentAlignment = Alignment.Center
     ) {
         TextBodySmall(
             text = buttonText,
-            color = Color.White
+            color = textButton
         )
     }
 }

@@ -14,6 +14,7 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.ta.ittpizen.feature_auth.login.LoginScreen
 import com.ta.ittpizen.feature_auth.register.RegisterScreen
 import com.ta.ittpizen.feature_chat.detail.DetailChatScreen
+import com.ta.ittpizen.feature_job.add.AddJobScreen
 import com.ta.ittpizen.feature_job.detail.JobDetailScreen
 import com.ta.ittpizen.feature_main.MainScreen
 import com.ta.ittpizen.feature_onboarding_screen.OnboardingScreen
@@ -31,7 +32,7 @@ import com.ta.ittpizen.feature_splash_screen.SplashScreen
 @Composable
 fun ITTPizenNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: Screen = Screen.LoginScreen
+    startDestination: Screen = Screen.AddJobScreen
 ) {
     val startDestinationRoute = startDestination.route
     NavHost(navController = navController, startDestination = startDestinationRoute) {
@@ -84,7 +85,7 @@ fun ITTPizenNavHost(
         composableWithSlideHorizontalAnimation(
             route = Screen.AddJobScreen.route
         ) {
-
+            AddJobScreen()
         }
         composableWithSlideHorizontalAnimation(
             route = Screen.SuccessAddPostScreen.route,

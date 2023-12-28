@@ -1,13 +1,11 @@
 package com.ta.ittpizen.feature_job.component
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -26,12 +24,8 @@ fun AddJobStepItem(
     step: String = "",
     active: Boolean = false
 ) {
-    val background by animateColorAsState(targetValue = if (active) Color(0xFFFFD8D8) else Color.Transparent,
-        label = "background"
-    )
-    val borderColor by animateColorAsState(targetValue = if (active) Color(0xFFFFD8D8) else DisableColorGrey,
-        label = "border-color"
-    )
+    val background = if (active) Color(0xFFFFD8D8) else Color.Transparent
+    val borderColor = if (active) Color(0xFFFFD8D8) else DisableColorGrey
     TextBodyMedium(
         text = step,
         color = PrimaryRed,

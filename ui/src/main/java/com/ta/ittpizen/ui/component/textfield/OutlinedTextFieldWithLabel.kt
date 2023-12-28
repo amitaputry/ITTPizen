@@ -30,7 +30,7 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 @Composable
 fun OutlinedTextFieldWithLabel(
     modifier: Modifier = Modifier,
-    label: String,
+    label: String = "",
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String = "",
@@ -38,14 +38,17 @@ fun OutlinedTextFieldWithLabel(
     singleLine: Boolean = true,
     isError: Boolean = false,
     isOptional: Boolean = false,
-    supportingText: String = ""
+    supportingText: String = "",
+    minLines: Int = 1,
 ) {
     Column(modifier = modifier.animateContentSize()) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            TextTitleSmall(text = label, color = Color(0xFF343433))
-            if (isOptional) {
-                Spacer(modifier = Modifier.width(4.dp))
-                TextRegular(text = "(Optional)", color = Color(0xFFAAAAAA))
+        if (label.isNotEmpty()) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                TextTitleSmall(text = label, color = Color(0xFF343433))
+                if (isOptional) {
+                    Spacer(modifier = Modifier.width(4.dp))
+                    TextRegular(text = "(Optional)", color = Color(0xFFAAAAAA))
+                }
             }
         }
         Spacer(modifier = Modifier.height(4.dp))
@@ -56,8 +59,9 @@ fun OutlinedTextFieldWithLabel(
             enabled = enabled,
             singleLine = singleLine,
             isError = isError,
-            modifier = Modifier.fillMaxWidth(),
-            supportingText = supportingText
+            supportingText = supportingText,
+            minLines = minLines,
+            modifier = Modifier.fillMaxWidth()
         )
         if (isError && supportingText.isNotEmpty()) {
             TextBodySmall(text = supportingText, color = MaterialTheme.colorScheme.error)

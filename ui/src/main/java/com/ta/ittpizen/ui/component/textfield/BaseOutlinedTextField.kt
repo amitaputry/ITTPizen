@@ -29,7 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ta.ittpizen.ui.component.text.TextBodyMedium
-import com.ta.ittpizen.ui.component.text.TextBodySmall
 import com.ta.ittpizen.ui.theme.ColorText
 import com.ta.ittpizen.ui.theme.Grey
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
@@ -52,7 +51,7 @@ val baseOutlinedTextFieldTextStyle @Composable get() = TextStyle(
 fun BaseOutlinedTextField(
     modifier: Modifier = Modifier,
     value: String = "",
-    onValueChange: (String) -> Unit,
+    onValueChange: (String) -> Unit = {},
     enabled: Boolean = true,
     readOnly: Boolean = false,
     textStyle: TextStyle = baseOutlinedTextFieldTextStyle,
@@ -69,19 +68,22 @@ fun BaseOutlinedTextField(
     minLines: Int = Int.MAX_VALUE,
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    shape: Shape = RoundedCornerShape(100.dp),
+    shape: Shape = RoundedCornerShape(20.dp),
     colors: TextFieldColors = baseOutlinedTextFieldColors,
     contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 10.dp)
 ) {
     val cursorColor = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
-    val supportingTextColor = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onBackground
-    val supportingTextComposable: @Composable (() -> Unit)? = if (supportingText?.isNotEmpty() == true) {
-        { TextBodySmall(text = "supportingText", color = supportingTextColor) }
-    } else null
+//    val supportingTextColor = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onBackground
+//    val supportingTextComposable: @Composable (() -> Unit)? = if (supportingText?.isNotEmpty() == true) {
+//        { TextBodySmall(text = supportingText, color = supportingTextColor) }
+//    } else null
+    val supportingTextComposable: @Composable (() -> Unit)? = null
+
+    val modifierOuter = if (minLines == Int.MAX_VALUE) Modifier.height(45.dp) else Modifier
 
     BasicTextField(
         value = value,
-        modifier = modifier.height(45.dp),
+        modifier = modifierOuter.then(modifier),
         onValueChange = onValueChange,
         enabled = enabled,
         readOnly = readOnly,

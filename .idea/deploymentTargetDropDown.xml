@@ -2,6 +2,12 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="PreviewAddJobDoneSection">
+        <State />
+      </entry>
+      <entry key="PreviewAddJobGeneralSection">
+        <State />
+      </entry>
       <entry key="PreviewAddJobScreen">
         <State />
       </entry>
@@ -9,12 +15,6 @@
         <State />
       </entry>
       <entry key="PreviewOutlinedTextFieldWithLabel">
-        <State />
-      </entry>
-      <entry key="PreviewPostCommentItem">
-        <State />
-      </entry>
-      <entry key="PreviewPostDetailScreen">
         <State />
       </entry>
       <entry key="app">
