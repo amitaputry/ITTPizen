@@ -1,5 +1,9 @@
 package com.ta.ittpizen.feature_profile.edit
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -10,7 +14,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,9 +38,18 @@ fun EditProfileScreen(
     viewModel: EditProfileViewModel = koinViewModel()
 ) {
 
-    val scrollState = rememberScrollState()
+    var photoFromGallery: Uri? by remember {
+        mutableStateOf(null)
+    }
 
+    val scrollState = rememberScrollState()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+    ) { uri ->
+        photoFromGallery = uri
+    }
 
     val photo = uiState.name
     val name = uiState.name
@@ -44,13 +61,22 @@ fun EditProfileScreen(
     val displayNameErrorName = uiState.displayNameErrorName
 
     val buttonEnabled by viewModel.buttonEnable.collectAsStateWithLifecycle(initialValue = false)
-
     val displayNameError by viewModel.displayNameError.collectAsStateWithLifecycle(initialValue = false)
+
+    val photoToShow: Any by remember {
+        derivedStateOf {
+            photoFromGallery ?: photo
+        }
+    }
 
     val updateDisplayName: (String) -> Unit = {
         val errorMessage = if (it.isNotEmpty()) "" else "Display name cannot be empty!"
         viewModel.updateDisplayName(it)
         viewModel.updateNameErrorMessage(errorMessage)
+    }
+
+    val launchImagePicker: () -> Unit = {
+        photoPickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     Scaffold(
@@ -69,10 +95,11 @@ fun EditProfileScreen(
         ) {
             Spacer(modifier = Modifier.height(4.dp))
             EditProfileHeader(
-                photo = photo,
+                photo = photoToShow,
                 name = name,
                 type = type,
-                studentId = studentId
+                studentId = studentId,
+                onPickImageClick = launchImagePicker
             )
             Spacer(modifier = Modifier.height(20.dp))
             EditProfileBody(

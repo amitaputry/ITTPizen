@@ -19,12 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.ta.ittpizen.feature_profile.R
 import com.ta.ittpizen.ui.component.text.TextBodyLarge
 import com.ta.ittpizen.ui.component.text.TextBodyMedium
@@ -36,7 +38,7 @@ import com.ta.ittpizen.ui.theme.SecondDarkGrey
 @Composable
 fun EditProfileHeader(
     modifier: Modifier = Modifier,
-    photo: String = "",
+    photo: Any = "",
     onPickImageClick: () -> Unit = {},
     name: String = "",
     type: String = "",
@@ -60,12 +62,17 @@ fun EditProfileHeader(
 @Composable
 fun ProfilePhotoPicker(
     modifier: Modifier = Modifier,
-    image: String = "",
+    image: Any = "",
     onPickImageClick: () -> Unit = {},
 ) {
+    val context = LocalContext.current
     Box(modifier = modifier) {
+        val model = ImageRequest.Builder(context)
+            .data(image)
+            .crossfade(true)
+            .build()
         AsyncImage(
-            model = image,
+            model = model,
             contentDescription = "profile",
             placeholder = painterResource(id = R.drawable.ic_profile_default),
             error = painterResource(id = R.drawable.ic_profile_default),
