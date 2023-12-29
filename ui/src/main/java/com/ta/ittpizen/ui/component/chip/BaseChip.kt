@@ -3,6 +3,7 @@ package com.ta.ittpizen.ui.component.chip
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
@@ -23,7 +24,8 @@ fun BaseChip(
     modifier: Modifier = Modifier,
     text: String,
     onSelected: (String) -> Unit = {},
-    selected: Boolean = false
+    selected: Boolean = false,
+    paddingValues: PaddingValues = PaddingValues(vertical = 8.dp, horizontal = 10.dp)
 ) {
     val borderColor = if (selected) PrimaryRed else DisableColorGrey
     val textColor = if (selected) Color.White else DisableColorGrey
@@ -37,7 +39,7 @@ fun BaseChip(
             .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(size = 100.dp))
             .clickable { onSelected(text) }
             .background(backgroundColor)
-            .padding(vertical = 8.dp, horizontal = 10.dp)
+            .padding(paddingValues)
     )
 }
 

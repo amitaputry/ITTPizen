@@ -35,7 +35,7 @@ fun ConnectionScreen(
     navigateToDetailUserScreen: (String) -> Unit = {},
 ) {
 
-    val options = listOf("Students", "Alumni", "Lecturer", "Staff", "Academic")
+    val options = listOf("Students", "Alumni", "Lecturer", "Staff")
     var selectedOption by remember { mutableStateOf(options[0]) }
 
     val users = remember(key1 = selectedOption) {
@@ -86,7 +86,9 @@ fun ConnectionScreen(
                     selectedOption = selectedOption,
                     options = options,
                     onSelected = onOptionClick,
-                    contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp)
+                    chipContentPadding = PaddingValues(vertical = 8.dp, horizontal = 20.dp),
+                    contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp),
+                    spaceBetweenItem = 10.dp
                 )
             }
             items(items = users, key = { it.id }) {

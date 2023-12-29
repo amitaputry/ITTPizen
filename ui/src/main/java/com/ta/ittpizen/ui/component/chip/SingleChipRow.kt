@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
@@ -23,21 +24,24 @@ fun SingleChipRow(
     selectedOption: String = "",
     options: List<String> = emptyList(),
     onSelected: (String) -> Unit = {},
-    contentPadding: PaddingValues = PaddingValues()
+    chipContentPadding: PaddingValues = PaddingValues(vertical = 8.dp, horizontal = 10.dp),
+    contentPadding: PaddingValues = PaddingValues(),
+    spaceBetweenItem: Dp = 5.dp
 ) {
     LazyRow(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .then(modifier),
         contentPadding = contentPadding,
-        horizontalArrangement = Arrangement.spacedBy(5.dp)
+        horizontalArrangement = Arrangement.spacedBy(spaceBetweenItem)
     ) {
         items(items = options) { option ->
             val isSelected = selectedOption == option
             BaseChip(
                 text = option,
                 selected = isSelected,
-                onSelected = onSelected
+                onSelected = onSelected,
+                paddingValues = chipContentPadding
             )
         }
     }

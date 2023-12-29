@@ -45,7 +45,7 @@ fun RegisterScreen(
     val scrollState = rememberScrollState()
 
     val genders = listOf("Male", "Female")
-    val status = listOf("Student", "Alumni", "Lecturer", "Staff", "Academic")
+    val status = listOf("Student", "Alumni", "Lecturer", "Staff")
 
     val uiState by viewModel.registerUiState.collectAsStateWithLifecycle()
 
