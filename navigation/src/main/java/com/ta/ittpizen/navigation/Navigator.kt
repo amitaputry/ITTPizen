@@ -152,3 +152,8 @@ fun NavHostController.navigateToNotificationScreen(userId: String) {
     navigate(Screen.NotificationScreen.generateRoute(userId))
 }
 
+@Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToSavedJobScreen(userId: String) {
+    navigate(Screen.SavedJobScreen.generateRoute(userId))
+}
+

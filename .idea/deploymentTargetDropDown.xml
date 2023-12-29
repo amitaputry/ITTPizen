@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewEditProfileBody">
-        <State />
-      </entry>
       <entry key="PreviewEditProfileScreen">
         <State />
       </entry>
@@ -15,6 +12,9 @@
         <State />
       </entry>
       <entry key="PreviewNotificationScreen">
+        <State />
+      </entry>
+      <entry key="PreviewSavedJobScreen">
         <State />
       </entry>
       <entry key="app">

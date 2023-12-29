@@ -34,7 +34,7 @@ fun ProfileScreen(
     type: ProfileScreenType = ProfileScreenType.ME,
     navigateUp: () -> Unit = {},
     navigateToEditProfile: () -> Unit = {},
-    navigateToSavedJob: (String) -> Unit = {},
+    navigateToSavedJob: () -> Unit = {},
     navigateToDetailPostScreen: (String) -> Unit = {}
 ) {
 
@@ -86,7 +86,7 @@ fun ProfileScreen(
                 item {
                     ProfileMeButtonSection(
                         onEditProfileClick = navigateToEditProfile,
-                        onSavedJobClick = { navigateToSavedJob(userId) },
+                        onSavedJobClick = navigateToSavedJob,
                         modifier = Modifier.padding(start = 20.dp, top = 20.dp, end = 20.dp, bottom = 30.dp)
                     )
                 }

@@ -17,6 +17,7 @@ import com.ta.ittpizen.feature_chat.detail.DetailChatScreen
 import com.ta.ittpizen.feature_connection.search.SearchConnectionScreen
 import com.ta.ittpizen.feature_job.add.AddJobScreen
 import com.ta.ittpizen.feature_job.detail.JobDetailScreen
+import com.ta.ittpizen.feature_job.saved.SavedJobScreen
 import com.ta.ittpizen.feature_job.search.SearchJobScreen
 import com.ta.ittpizen.feature_main.MainScreen
 import com.ta.ittpizen.feature_notification.notification.NotificationScreen
@@ -194,7 +195,7 @@ fun ITTPizenNavHost(
                 userId = userId,
                 navigateToEditProfile = { navController.navigateToEditProfileScreen(userId) },
                 navigateToDetailPostScreen = { navController.navigateToPostDetailScreen(postId = it) },
-                navigateToSavedJob = {}
+                navigateToSavedJob = { navController.navigateToSavedJobScreen(userId) }
             )
         }
         composableWithSlideHorizontalAnimation(
@@ -223,6 +224,21 @@ fun ITTPizenNavHost(
             NotificationScreen(
                 navigateUp = navController::navigateUp,
                 userId = userId
+            )
+        }
+        composableWithSlideHorizontalAnimation(
+            route = Screen.SavedJobScreen.route,
+            arguments = listOf(
+                navArgument(Screen.USER_ID) {
+                    type = NavType.StringType
+                },
+            )
+        ) {
+            val userId = it.arguments?.getString(Screen.USER_ID) ?: ""
+            SavedJobScreen(
+                navigateUp = navController::navigateUp,
+                userId = userId,
+                navigateToDetailJobScreen = { navController.navigateToJobDetailScreen(jobId = it) }
             )
         }
     }
