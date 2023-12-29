@@ -39,9 +39,10 @@ import com.ta.ittpizen.feature_splash_screen.SplashScreen
 @Composable
 fun ITTPizenNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: Screen = Screen.EditProfileScreen
+    startDestination: Screen = Screen.MainScreen
 ) {
     val startDestinationRoute = startDestination.route
+//    val startDestinationRoute = Screen.AddPostScreen.generateRoute(AddPostType.ACHIEVEMENT)
     NavHost(navController = navController, startDestination = startDestinationRoute) {
         composableWithSlideHorizontalAnimation(
             route = Screen.SplashScreen.route
