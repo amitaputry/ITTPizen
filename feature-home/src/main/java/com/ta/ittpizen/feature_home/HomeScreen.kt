@@ -40,6 +40,7 @@ fun HomeScreen(
     navigateToUserProfileScreen: (String) -> Unit = {},
     navigateToNotificationScreen: (String) -> Unit = {},
     navigateToDetailPostScreen: (String) -> Unit = {},
+    navigateToPhotoDetailScreen: (String) -> Unit = {},
 ) {
 
     val userId = "my-id"
@@ -112,8 +113,9 @@ fun HomeScreen(
                     items(items = postItems, key = { it.id }) {
                         PostItem(
                             post = it,
-                            onProfile = { navigateToUserProfileScreen(it.id) },
+                            onProfileClick = { navigateToUserProfileScreen(it.id) },
                             onClick = { navigateToDetailPostScreen(it.id) },
+                            onPhotoClick = { navigateToPhotoDetailScreen(it) },
                             modifier = Modifier
                                 .padding(top = 20.dp)
                                 .padding(horizontal = 20.dp)

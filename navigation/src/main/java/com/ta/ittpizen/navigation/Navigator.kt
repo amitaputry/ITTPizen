@@ -23,6 +23,7 @@ class MainNavigator(
     override fun navigateToAddJobScreen() = navController.navigateToAddJobScreen()
     override fun navigateToDetailJobScreen(jobId: String) = navController.navigateToJobDetailScreen(jobId = jobId)
     override fun navigateToSearchJobScreen() = navController.navigateToSearchJobScreen()
+    override fun navigateToPhotoDetailScreen(photo: String) = navController.navigateToPhotoDetailScreen(photo)
 }
 
 @Throws(IllegalArgumentException::class)
@@ -155,5 +156,10 @@ fun NavHostController.navigateToNotificationScreen(userId: String) {
 @Throws(IllegalArgumentException::class)
 fun NavHostController.navigateToSavedJobScreen(userId: String) {
     navigate(Screen.SavedJobScreen.generateRoute(userId))
+}
+
+@Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToPhotoDetailScreen(photo: String) {
+    navigate(Screen.PhotoDetailScreen.generateRoute(photo))
 }
 

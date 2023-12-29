@@ -45,6 +45,7 @@ android {
 
 dependencies {
 
+    implementation(project(":common"))
     implementation(project(":domain"))
 
     api("androidx.core:core-ktx:1.12.0")
@@ -68,6 +69,7 @@ dependencies {
     api("io.coil-kt:coil-compose:2.5.0")
 
     api("com.webtoonscorp.android:readmore-material3:1.4.4")
+    api("com.github.SmartToolFactory:Compose-Zoom:0.5.0")
 
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")

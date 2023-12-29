@@ -1,5 +1,6 @@
 package com.ta.ittpizen.ui.component.post
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +25,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
+import com.ta.ittpizen.common.encode
 import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.theme.ColorText
 import com.ta.ittpizen.ui.theme.DisableColorGrey
@@ -35,7 +37,8 @@ import com.webtoonscorp.android.readmore.material3.ReadMoreText
 fun PostBody(
     modifier: Modifier = Modifier,
     text: String = "",
-    media: String = ""
+    media: String = "",
+    onPhotoClick: (String) -> Unit = {}
 ) {
     val context = LocalContext.current
     var isExpanded by remember { mutableStateOf(false) }
@@ -72,6 +75,7 @@ fun PostBody(
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
                     .fillMaxWidth()
+                    .clickable { onPhotoClick(media.encode()) }
             )
         }
     }

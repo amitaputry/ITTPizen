@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":feature-job"))
     implementation(project(":feature-profile"))
     implementation(project(":feature-notification"))
+    implementation(project(":feature-photo-detail"))
 
     implementation(project(":feature-main"))
 

@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
@@ -22,6 +23,7 @@ import com.ta.ittpizen.feature_job.search.SearchJobScreen
 import com.ta.ittpizen.feature_main.MainScreen
 import com.ta.ittpizen.feature_notification.notification.NotificationScreen
 import com.ta.ittpizen.feature_onboarding_screen.OnboardingScreen
+import com.ta.ittpizen.feature_photo_detail.PhotoDetailScreen
 import com.ta.ittpizen.feature_post.add.AddPostScreen
 import com.ta.ittpizen.feature_post.add.AddPostType
 import com.ta.ittpizen.feature_post.detail.PostDetailScreen
@@ -39,10 +41,9 @@ import com.ta.ittpizen.feature_splash_screen.SplashScreen
 @Composable
 fun ITTPizenNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: Screen = Screen.MainScreen
+    startDestination: Screen = Screen.SplashScreen
 ) {
     val startDestinationRoute = startDestination.route
-//    val startDestinationRoute = Screen.AddPostScreen.generateRoute(AddPostType.ACHIEVEMENT)
     NavHost(navController = navController, startDestination = startDestinationRoute) {
         composableWithSlideHorizontalAnimation(
             route = Screen.SplashScreen.route
@@ -240,6 +241,20 @@ fun ITTPizenNavHost(
                 navigateUp = navController::navigateUp,
                 userId = userId,
                 navigateToDetailJobScreen = { navController.navigateToJobDetailScreen(jobId = it) }
+            )
+        }
+        composable(
+            route = Screen.PhotoDetailScreen.route,
+            arguments = listOf(
+                navArgument(Screen.PHOTO) {
+                    type = NavType.StringType
+                },
+            )
+        ) {
+             val photo = it.arguments?.getString(Screen.PHOTO) ?: ""
+            PhotoDetailScreen(
+                navigateUp = navController::navigateUp,
+                photo = photo
             )
         }
     }

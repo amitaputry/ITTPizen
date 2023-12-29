@@ -24,6 +24,9 @@ interface MainNavigator {
     fun navigateToAddJobScreen()
     fun navigateToDetailJobScreen(jobId: String)
     fun navigateToSearchJobScreen()
+
+    fun navigateToPhotoDetailScreen(photo: String)
+
 }
 
 object EmptyMainNavigator : MainNavigator {
@@ -41,4 +44,5 @@ object EmptyMainNavigator : MainNavigator {
     override fun navigateToAddJobScreen() {}
     override fun navigateToDetailJobScreen(jobId: String) {}
     override fun navigateToSearchJobScreen() {}
+    override fun navigateToPhotoDetailScreen(photo: String) {}
 }

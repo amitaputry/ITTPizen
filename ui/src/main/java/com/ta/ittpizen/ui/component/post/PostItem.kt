@@ -21,7 +21,8 @@ fun PostItem(
     post: PostItem,
     enabled: Boolean = true,
     onClick: (PostItem) -> Unit = {},
-    onProfile: (PostItem) -> Unit = {},
+    onProfileClick: (PostItem) -> Unit = {},
+    onPhotoClick: (String) -> Unit = {},
     onLike: (PostItem) -> Unit = {},
     onComment: (PostItem) -> Unit = {},
     onSend: (PostItem) -> Unit = {},
@@ -41,11 +42,12 @@ fun PostItem(
                 name = post.name,
                 type = post.type,
                 date = post.date,
-                onProfile = { onProfile(post) }
+                onProfile = { onProfileClick(post) }
             )
             PostBody(
                 text = post.text,
-                media = post.media
+                media = post.media,
+                onPhotoClick = onPhotoClick
             )
             PostFooter(
                 like = post.like,

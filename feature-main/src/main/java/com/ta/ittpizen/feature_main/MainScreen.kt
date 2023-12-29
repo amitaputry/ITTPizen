@@ -85,6 +85,7 @@ fun MainScreen(
         sheetState = sheetState,
         sheetElevation = 0.dp,
         sheetBackgroundColor = Color.Transparent,
+
         sheetContent = {
             AddPostBottomSheet(
                 closeBottomSheet = toggleBottomSheet,
@@ -115,7 +116,8 @@ fun MainScreen(
                         navigateToMyProfileScreen = mainNavigator::navigateToMyProfileScreen,
                         navigateToUserProfileScreen = mainNavigator::navigateToUserProfileScreen,
                         navigateToNotificationScreen = mainNavigator::navigateToNotificationScreen,
-                        navigateToDetailPostScreen = mainNavigator::navigateToDetailPostScreen
+                        navigateToDetailPostScreen = mainNavigator::navigateToDetailPostScreen,
+                        navigateToPhotoDetailScreen = mainNavigator::navigateToPhotoDetailScreen
                     )
                 }
                 composable(route = Screen.Connection.route) {

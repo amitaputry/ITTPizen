@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ta.ittpizen.feature_home"
+    namespace = "com.ta.ittpizen.feature_photo_detail"
     compileSdk = 34
 
     defaultConfig {
@@ -47,7 +47,6 @@ dependencies {
 
     implementation(project(":ui"))
     implementation(project(":common"))
-    implementation(project(":domain"))
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

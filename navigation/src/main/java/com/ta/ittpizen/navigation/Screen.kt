@@ -12,6 +12,7 @@ sealed class Screen(val route: String) {
         const val JOB_ID = "job_id"
         const val PROFILE_TYPE = "profile_type"
         const val USER_ID = "user_id"
+        const val PHOTO = "photo"
     }
 
     object SplashScreen : Screen(route = "splash-screen")
@@ -65,6 +66,11 @@ sealed class Screen(val route: String) {
     object SavedJobScreen : Screen(route = "saved-job-screen/{$USER_ID}") {
         fun generateRoute(userId: String): String {
             return "saved-job-screen/$userId"
+        }
+    }
+    object PhotoDetailScreen : Screen(route = "detail-photo-screen/{$PHOTO}") {
+        fun generateRoute(photo: String): String {
+            return "detail-photo-screen/$photo"
         }
     }
 }
