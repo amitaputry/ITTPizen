@@ -2,36 +2,23 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewOutlinedIconButton">
+      <entry key="PreviewEditProfileBody">
+        <State />
+      </entry>
+      <entry key="PreviewEditProfileHeader">
+        <State />
+      </entry>
+      <entry key="PreviewEditProfileScreen">
         <State />
       </entry>
       <entry key="PreviewProfileHeader">
-        <State />
-      </entry>
-      <entry key="PreviewProfileMeButtonSection">
-        <State />
-      </entry>
-      <entry key="PreviewProfilePostIndicator">
         <State />
       </entry>
       <entry key="PreviewProfileScreen">
         <State />
       </entry>
       <entry key="app">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="YX75U8IJMBYDQOHY" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-12-28T17:24:21.334351Z" />
-        </State>
+        <State />
       </entry>
     </value>
   </component>

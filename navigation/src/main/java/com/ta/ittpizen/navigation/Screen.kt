@@ -52,4 +52,9 @@ sealed class Screen(val route: String) {
             return "profile-screen/${type.name}/$userId"
         }
     }
+    object EditProfileScreen : Screen(route = "edit-profile-screen/{$USER_ID}") {
+        fun generateRoute(userId: String): String {
+            return "edit-profile-screen/$userId"
+        }
+    }
 }

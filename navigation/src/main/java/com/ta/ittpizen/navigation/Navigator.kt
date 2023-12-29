@@ -141,3 +141,8 @@ fun NavHostController.navigateToDetailChatScreen(chatId: String) {
 fun NavHostController.navigateToProfileScreen(type: ProfileScreenType, userId: String) {
     navigate(Screen.ProfileScreen.generateRoute(type, userId))
 }
+
+@Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToEditProfileScreen(userId: String) {
+    navigate(Screen.EditProfileScreen.generateRoute(userId))
+}

@@ -63,6 +63,7 @@ dependencies {
     implementation(project(":feature-chat"))
     implementation(project(":feature-post"))
     implementation(project(":feature-job"))
+    implementation(project(":feature-profile"))
 
     testImplementation("junit:junit:4.13.2")
 

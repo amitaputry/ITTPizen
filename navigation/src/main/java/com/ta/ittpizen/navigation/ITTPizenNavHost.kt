@@ -24,6 +24,7 @@ import com.ta.ittpizen.feature_post.add.AddPostScreen
 import com.ta.ittpizen.feature_post.add.AddPostType
 import com.ta.ittpizen.feature_post.detail.PostDetailScreen
 import com.ta.ittpizen.feature_post.success.SuccessAddPostScreen
+import com.ta.ittpizen.feature_profile.edit.EditProfileScreen
 import com.ta.ittpizen.feature_profile.profile.ProfileScreen
 import com.ta.ittpizen.feature_profile.profile.ProfileScreenType
 import com.ta.ittpizen.feature_splash_screen.SplashScreen
@@ -190,10 +191,25 @@ fun ITTPizenNavHost(
                 navigateUp = navController::navigateUp,
                 type = userType,
                 userId = userId,
-                navigateToEditProfile = {},
+                navigateToEditProfile = { navController.navigateToEditProfileScreen(userId) },
                 navigateToDetailPostScreen = { navController.navigateToPostDetailScreen(postId = it) },
                 navigateToSavedJob = {}
             )
         }
+        composableWithSlideHorizontalAnimation(
+            route = Screen.EditProfileScreen.route,
+            arguments = listOf(
+                navArgument(Screen.USER_ID) {
+                    type = NavType.StringType
+                },
+            )
+        ) {
+            val userId = it.arguments?.getString(Screen.USER_ID) ?: ""
+            EditProfileScreen(
+                navigateUp = navController::navigateUp,
+                userId = userId
+            )
+        }
+
     }
 }

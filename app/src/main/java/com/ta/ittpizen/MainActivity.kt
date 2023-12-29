@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.ta.ittpizen.feature_auth.di.authModule
 import com.ta.ittpizen.feature_job.di.jobModule
+import com.ta.ittpizen.feature_profile.di.profileModule
 import com.ta.ittpizen.navigation.ITTPizenNavHost
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import org.koin.compose.KoinApplication
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             KoinApplication(application = {
-                modules(authModule, jobModule)
+                modules(authModule, jobModule, profileModule)
             }) {
                 ITTPizenTheme {
                     Surface(
