@@ -14,14 +14,14 @@ class MainNavigator(
     override fun navigateToAddAchievementScreen() = navController.navigateToAddPostScreen(AddPostType.ACHIEVEMENT)
     override fun navigateToAddEventScreen() = navController.navigateToAddPostScreen(AddPostType.EVENT)
     override fun navigateToAddScholarshipScreen() = navController.navigateToAddPostScreen(AddPostType.SCHOLARSHIP)
-    override fun navigateToDetailPostScreen(id: String) = navController.navigateToPostDetailScreen(postId = id)
+    override fun navigateToDetailPostScreen(postId: String) = navController.navigateToPostDetailScreen(postId = postId)
     override fun navigateToMyProfileScreen(userId: String) = navController.navigateToProfileScreen(type = ProfileScreenType.ME, userId = userId)
     override fun navigateToUserProfileScreen(userId: String) = navController.navigateToProfileScreen(type = ProfileScreenType.FRIEND, userId = userId)
-    override fun navigateToNotificationScreen() {}
+    override fun navigateToNotificationScreen(userId: String) = navController.navigateToNotificationScreen(userId)
     override fun navigateToSearchConnectionScreen() = navController.navigateToSearchConnectionScreen()
     override fun navigateToDetailChatScreen(id: String) = navController.navigateToDetailChatScreen(id)
     override fun navigateToAddJobScreen() = navController.navigateToAddJobScreen()
-    override fun navigateToDetailJobScreen(id: String) = navController.navigateToJobDetailScreen(jobId = id)
+    override fun navigateToDetailJobScreen(jobId: String) = navController.navigateToJobDetailScreen(jobId = jobId)
     override fun navigateToSearchJobScreen() = navController.navigateToSearchJobScreen()
 }
 
@@ -146,3 +146,9 @@ fun NavHostController.navigateToProfileScreen(type: ProfileScreenType, userId: S
 fun NavHostController.navigateToEditProfileScreen(userId: String) {
     navigate(Screen.EditProfileScreen.generateRoute(userId))
 }
+
+@Throws(IllegalArgumentException::class)
+fun NavHostController.navigateToNotificationScreen(userId: String) {
+    navigate(Screen.NotificationScreen.generateRoute(userId))
+}
+

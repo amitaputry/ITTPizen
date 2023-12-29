@@ -9,10 +9,10 @@ interface MainNavigator {
     fun navigateToAddScholarshipScreen()
 
     // Home Screen Navigator
-    fun navigateToDetailPostScreen(id: String)
+    fun navigateToDetailPostScreen(postId: String)
     fun navigateToMyProfileScreen(userId: String)
     fun navigateToUserProfileScreen(userId: String)
-    fun navigateToNotificationScreen()
+    fun navigateToNotificationScreen(userId: String)
 
     // Connection Screen Navigator
     fun navigateToSearchConnectionScreen()
@@ -22,7 +22,7 @@ interface MainNavigator {
 
     // Job Screen Navigator
     fun navigateToAddJobScreen()
-    fun navigateToDetailJobScreen(id: String)
+    fun navigateToDetailJobScreen(jobId: String)
     fun navigateToSearchJobScreen()
 }
 
@@ -32,13 +32,13 @@ object EmptyMainNavigator : MainNavigator {
     override fun navigateToAddAchievementScreen() {}
     override fun navigateToAddEventScreen() {}
     override fun navigateToAddScholarshipScreen() {}
-    override fun navigateToDetailPostScreen(id: String) {}
-    override fun navigateToNotificationScreen() {}
+    override fun navigateToDetailPostScreen(postId: String) {}
+    override fun navigateToNotificationScreen(userId: String) {}
     override fun navigateToMyProfileScreen(userId: String) {}
     override fun navigateToUserProfileScreen(userId: String) {}
     override fun navigateToSearchConnectionScreen() {}
     override fun navigateToDetailChatScreen(id: String) {}
     override fun navigateToAddJobScreen() {}
-    override fun navigateToDetailJobScreen(id: String) {}
+    override fun navigateToDetailJobScreen(jobId: String) {}
     override fun navigateToSearchJobScreen() {}
 }

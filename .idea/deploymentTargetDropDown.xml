@@ -5,16 +5,16 @@
       <entry key="PreviewEditProfileBody">
         <State />
       </entry>
-      <entry key="PreviewEditProfileHeader">
-        <State />
-      </entry>
       <entry key="PreviewEditProfileScreen">
         <State />
       </entry>
-      <entry key="PreviewProfileHeader">
+      <entry key="PreviewEmptyNotificationContent">
         <State />
       </entry>
-      <entry key="PreviewProfileScreen">
+      <entry key="PreviewNotificationItem">
+        <State />
+      </entry>
+      <entry key="PreviewNotificationScreen">
         <State />
       </entry>
       <entry key="app">

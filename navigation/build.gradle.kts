@@ -56,6 +56,7 @@ dependencies {
     implementation(project(":feature-post"))
     implementation(project(":feature-job"))
     implementation(project(":feature-profile"))
+    implementation(project(":feature-notification"))
 
     implementation(project(":feature-main"))
 

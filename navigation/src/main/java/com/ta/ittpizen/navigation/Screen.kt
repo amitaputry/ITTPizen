@@ -57,4 +57,9 @@ sealed class Screen(val route: String) {
             return "edit-profile-screen/$userId"
         }
     }
+    object NotificationScreen : Screen(route = "notification-screen/{$USER_ID}") {
+        fun generateRoute(userId: String): String {
+            return "notification-screen/$userId"
+        }
+    }
 }

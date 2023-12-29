@@ -38,7 +38,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     navigateToMyProfileScreen: (String) -> Unit = {},
     navigateToUserProfileScreen: (String) -> Unit = {},
-    navigateToNotificationScreen: () -> Unit = {},
+    navigateToNotificationScreen: (String) -> Unit = {},
     navigateToDetailPostScreen: (String) -> Unit = {},
 ) {
 
@@ -85,7 +85,7 @@ fun HomeScreen(
         topBar = {
             HomeTopAppBar(
                 onProfileClick = { navigateToMyProfileScreen(userId) },
-                onNotificationClick = navigateToNotificationScreen,
+                onNotificationClick = { navigateToNotificationScreen(userId) },
                 modifier = Modifier
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
                     .zIndex(1f)
