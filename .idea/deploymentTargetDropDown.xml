@@ -8,13 +8,13 @@
       <entry key="PreviewDetailTransparentTopAppBar">
         <State />
       </entry>
-      <entry key="PreviewEditProfileHeader">
-        <State />
-      </entry>
       <entry key="PreviewEditProfileScreen">
         <State />
       </entry>
       <entry key="PreviewPhotoDetailScreen">
+        <State />
+      </entry>
+      <entry key="PreviewPostItem">
         <State />
       </entry>
       <entry key="app">

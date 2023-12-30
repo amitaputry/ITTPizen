@@ -4,10 +4,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -28,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.model.PostCommentItem
 import com.ta.ittpizen.domain.model.PostItem
+import com.ta.ittpizen.domain.utils.DataPostItem
 import com.ta.ittpizen.feature_post.component.PostDetailEmptyComment
 import com.ta.ittpizen.feature_post.component.PostDetailFooter
 import com.ta.ittpizen.ui.component.post.PostCommentItem
@@ -52,15 +54,11 @@ fun PostDetailScreen(
 
     val userId = "user123"
 
-    val postItem = PostItem(
-        name = "Amita Putry Prasasti",
-        type = "Student",
-        date = "1 hours ago",
-        profile = "",
-        text = "Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen",
-//        media = "https://imgv2-2-f.scribdassets.com/img/document/435811139/original/93f2b7f3b2/1696470516?v=1",
-        liked = true
-    )
+    var postItem by remember {
+        mutableStateOf(DataPostItem.getById(postId))
+    }
+
+    if (postItem == null) return
 
     val comments = remember { mutableStateListOf<PostCommentItem>() }
 
@@ -78,6 +76,10 @@ fun PostDetailScreen(
         scope.launch {
             lazyState.animateScrollToItem(comments.lastIndex)
         }
+    }
+
+    val onLikeClicked: (PostItem) -> Unit = { post ->
+        postItem = DataPostItem.likeOrDislikePost(post)
     }
 
     LaunchedEffect(key1 = Unit) {
@@ -107,23 +109,21 @@ fun PostDetailScreen(
                 .padding(paddingValues)
                 .fillMaxSize()
         ) {
-            LazyColumn(
-                state = lazyState,
-                verticalArrangement = Arrangement.spacedBy(20.dp)
-            ) {
+            LazyColumn(state = lazyState) {
                 item {
                     PostItem(
-                        post = postItem,
+                        post = postItem!!,
                         enabled = false,
-                        modifier = Modifier.padding(horizontal = 20.dp)
+                        onLike = onLikeClicked
                     )
                 }
+                item { Spacer(modifier = Modifier.height(10.dp)) }
                 items(items = comments, key = { it.id }) {
                     PostCommentItem(
                         post = it,
                         modifier = Modifier
                             .padding(horizontal = 20.dp)
-//                            .animateItemPlacement()
+                            .padding(vertical = 10.dp)
                     )
                 }
             }

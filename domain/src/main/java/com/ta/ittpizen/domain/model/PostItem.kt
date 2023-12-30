@@ -1,7 +1,16 @@
 package com.ta.ittpizen.domain.model
 
+enum class PostItemType {
+    TWEET,
+    ACADEMIC,
+    ACHIEVEMENT,
+    EVENT,
+    SCHOLARSHIP
+}
+
 data class PostItem(
     val id: String = "",
+    val postType: PostItemType = PostItemType.TWEET,
     val profile: String = "",
     val type: String = "",
     val name: String = "",

@@ -34,7 +34,6 @@ fun PostFooter(
     val iconLike = if (liked) R.drawable.ic_liked else R.drawable.ic_like
     Column(modifier = modifier) {
         Row(
-            modifier = modifier,
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(5.dp)
         ) {

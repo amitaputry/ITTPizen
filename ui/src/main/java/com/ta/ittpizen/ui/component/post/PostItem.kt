@@ -27,14 +27,13 @@ fun PostItem(
     onComment: (PostItem) -> Unit = {},
     onSend: (PostItem) -> Unit = {},
 ) {
-    val outerModifier = if (enabled) Modifier.clickable { onClick(post) } else
-        Modifier
+    val outerModifier = if (enabled) Modifier.clickable { onClick(post) }.then(modifier) else Modifier
     Column(
         modifier = outerModifier,
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         Column(
-            modifier = modifier.animateContentSize(),
+            modifier = Modifier.animateContentSize(),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             PostHeader(
@@ -42,12 +41,14 @@ fun PostItem(
                 name = post.name,
                 type = post.type,
                 date = post.date,
-                onProfile = { onProfileClick(post) }
+                onProfile = { onProfileClick(post) },
+                modifier = Modifier.padding(horizontal = 20.dp)
             )
             PostBody(
                 text = post.text,
                 media = post.media,
-                onPhotoClick = onPhotoClick
+                onPhotoClick = onPhotoClick,
+                modifier = Modifier.padding(horizontal = 20.dp)
             )
             PostFooter(
                 like = post.like,
@@ -56,7 +57,7 @@ fun PostItem(
                 onLike = { onLike(post) },
                 onComment = { onComment(post) },
                 onSend = { onSend(post) },
-                modifier = Modifier.padding(vertical = 10.dp)
+                modifier = Modifier.padding(vertical = 10.dp, horizontal = 20.dp)
             )
         }
         Divider(thickness = 0.5.dp, color = DisableColorGrey)

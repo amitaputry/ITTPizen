@@ -12,18 +12,19 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import com.ta.ittpizen.domain.model.PostItem
+import com.ta.ittpizen.domain.model.PostItemType
+import com.ta.ittpizen.domain.utils.DataPostItem
 import com.ta.ittpizen.ui.component.post.PostItem
 import com.ta.ittpizen.ui.component.tab.BaseScrollableTabRow
 import com.ta.ittpizen.ui.component.topappbar.HomeTopAppBar
@@ -50,30 +51,11 @@ fun HomeScreen(
     val pagerState = rememberPagerState { tabs.size }
     val scope = rememberCoroutineScope()
 
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
     val selectedTabIndex by remember(key1 = pagerState.currentPage) {
         mutableIntStateOf(pagerState.currentPage)
     }
 
-    val postItems = (1..10).map {
-        val media = when (it) {
-            1 -> "https://imgv2-2-f.scribdassets.com/img/document/435811139/original/93f2b7f3b2/1696470516?v=1"
-            3 -> "https://static.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/ayosemarang/images/post/articles/2021/04/14/75145/kuliah-gratis-institut-teknologi-telkom-purwokerto.jpg"
-            7 -> "https://cdn.rri.co.id/berita/47/images/1694653138068-W/1694653138068-W.jpeg"
-            else -> ""
-        }
-        PostItem(
-            id = it.toString(),
-            name = "Amita Putry Prasasti",
-            type = "Student",
-            date = "1 hours ago",
-            profile = "",
-            text = "Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen",
-            media = media,
-            liked = true
-        )
-    }
+    val postItems = remember { mutableStateListOf<PostItem>() }
 
     val onTabSelected: (Int) -> Unit = {
         scope.launch {
@@ -81,22 +63,32 @@ fun HomeScreen(
         }
     }
 
+    val getPostByType: (type: PostItemType) -> List<PostItem>  = { type ->
+        postItems.filter { it.postType == type }
+    }
+
+    val onLikeClicked: (PostItem) -> Unit = { post ->
+        val updatedPost = DataPostItem.likeOrDislikePost(post)!!
+        postItems.replaceAll {
+            if (it.id == updatedPost.id) updatedPost else it
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        postItems.addAll(DataPostItem.generateAllPost())
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
             HomeTopAppBar(
                 onProfileClick = { navigateToMyProfileScreen(userId) },
-                onNotificationClick = { navigateToNotificationScreen(userId) },
-                modifier = Modifier
-                    .nestedScroll(scrollBehavior.nestedScrollConnection)
-                    .zIndex(1f)
+                onNotificationClick = { navigateToNotificationScreen(userId) }
             )
         }
     ) { paddingValues ->
         Column(
-            modifier = Modifier
-                .padding(paddingValues)
-                .zIndex(2f)
+            modifier = Modifier.padding(paddingValues)
         ) {
             BaseScrollableTabRow(
                 selectedTabIndex = selectedTabIndex,
@@ -109,16 +101,24 @@ fun HomeScreen(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize()
             ) { page ->
+                val items = when (page) {
+                    0 -> postItems
+                    1 -> getPostByType(PostItemType.TWEET)
+                    2 -> getPostByType(PostItemType.ACADEMIC)
+                    3 -> getPostByType(PostItemType.ACHIEVEMENT)
+                    4 -> getPostByType(PostItemType.EVENT)
+                    else -> getPostByType(PostItemType.SCHOLARSHIP)
+                }
                 LazyColumn {
-                    items(items = postItems, key = { it.id }) {
+                    items(items = items, key = { post -> post.id }) { post ->
                         PostItem(
-                            post = it,
+                            post = post,
                             onProfileClick = { navigateToUserProfileScreen(it.id) },
                             onClick = { navigateToDetailPostScreen(it.id) },
                             onPhotoClick = { navigateToPhotoDetailScreen(it) },
-                            modifier = Modifier
-                                .padding(top = 20.dp)
-                                .padding(horizontal = 20.dp)
+                            onLike = { onLikeClicked(post) },
+                            onComment = { navigateToDetailPostScreen(post.id) },
+                            modifier = Modifier.padding(top = 20.dp)
                         )
                     }
                 }

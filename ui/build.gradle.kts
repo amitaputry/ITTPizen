@@ -67,6 +67,7 @@ dependencies {
     api("io.insert-koin:koin-androidx-compose")
 
     api("io.coil-kt:coil-compose:2.5.0")
+    api("com.github.bumptech.glide:compose:1.0.0-beta01")
 
     api("com.webtoonscorp.android:readmore-material3:1.4.4")
     api("com.github.SmartToolFactory:Compose-Zoom:0.5.0")
