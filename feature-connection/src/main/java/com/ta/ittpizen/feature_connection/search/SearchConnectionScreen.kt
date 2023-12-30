@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.UserItem
+import com.ta.ittpizen.domain.utils.DataUserItem
 import com.ta.ittpizen.ui.component.history.HistoryContent
 import com.ta.ittpizen.ui.component.history.HistoryEmptyContent
 import com.ta.ittpizen.ui.component.topappbar.DetailSearchAppBar
@@ -51,21 +52,12 @@ fun SearchConnectionScreen(
         histories.remove(histories[it])
     }
 
-    val dummyUsers = (1..20).map {
-        val connected = it == 3
-        UserItem(
-            id = it.toString(),
-            name = "Amita Putry Prasasti",
-            type = "Student",
-            connected = connected
-        )
-    }
     var users: Resource<List<UserItem>> by remember {
         mutableStateOf(Resource.Idle)
     }
 
     val onSearch: () -> Unit = {
-        users = Resource.Success(data = dummyUsers)
+        users = Resource.Success(data = DataUserItem.searchUsers(query))
     }
 
     Scaffold(
@@ -88,6 +80,10 @@ fun SearchConnectionScreen(
             HistoryContent(
                 histories = histories,
                 modifier = Modifier.padding(paddingValues),
+                onHistoryClick = {
+                    query = it
+                    onSearch()
+                },
                 onDeleteHistoryClick = onDeleteHistoryClick,
                 onDeleteAllClick = onDeleteAllClick
             )
@@ -116,7 +112,9 @@ fun SearchConnectionScreen(
                     UserItem(
                         user = userItem,
                         onClick = { navigateToDetailConnection(it.id) },
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp, vertical = 10.dp)
+                            .animateItemPlacement()
                     )
                 }
             }

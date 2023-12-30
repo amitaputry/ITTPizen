@@ -86,7 +86,7 @@ fun ITTPizenNavHost(
         ) {
             SearchConnectionScreen(
                 navigateUp = navController::navigateUp,
-                navigateToDetailConnection = {}
+                navigateToDetailConnection = { navController.navigateToProfileScreen(type = ProfileScreenType.FRIEND, it) }
             )
         }
         composableWithSlideHorizontalAnimation(

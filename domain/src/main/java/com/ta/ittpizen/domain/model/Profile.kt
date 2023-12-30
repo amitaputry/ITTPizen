@@ -2,6 +2,7 @@ package com.ta.ittpizen.domain.model
 
 data class Profile(
     val id: String = "",
+    val userId: String = "",
     val photo: String = "",
     val name: String = "",
     val type: String = "",

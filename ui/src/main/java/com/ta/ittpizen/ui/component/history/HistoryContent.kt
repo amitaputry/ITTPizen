@@ -21,7 +21,7 @@ fun HistoryContent(
     modifier: Modifier = Modifier,
     histories: List<String> = emptyList(),
     onDeleteAllClick: () -> Unit = {},
-    onHistoryClick: (Int) -> Unit = {},
+    onHistoryClick: (String) -> Unit = {},
     onDeleteHistoryClick: (Int) -> Unit = {},
     onSeeMoreClick: () -> Unit = {}
 ) {
@@ -37,7 +37,7 @@ fun HistoryContent(
         itemsIndexed(items = histories) { index, history ->
             HistoryItem(
                 text = history,
-                onClick = { onHistoryClick(index) },
+                onClick = { onHistoryClick(history) },
                 onDelete = { onDeleteHistoryClick(index) },
                 modifier = Modifier
                     .padding(horizontal = 20.dp)

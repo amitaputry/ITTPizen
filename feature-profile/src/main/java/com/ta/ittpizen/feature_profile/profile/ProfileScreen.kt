@@ -9,12 +9,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.domain.model.PostItem
-import com.ta.ittpizen.domain.model.Profile
+import com.ta.ittpizen.domain.utils.DataPostItem
+import com.ta.ittpizen.domain.utils.DataProfile
+import com.ta.ittpizen.domain.utils.DataUserItem
 import com.ta.ittpizen.feature_profile.component.ProfileFriendButtonSection
 import com.ta.ittpizen.feature_profile.component.ProfileHeader
 import com.ta.ittpizen.feature_profile.component.ProfileMeButtonSection
@@ -38,46 +43,36 @@ fun ProfileScreen(
     navigateToDetailPostScreen: (String) -> Unit = {}
 ) {
 
-    val profile = Profile(
-        name = "Amita Putry Prasasti",
-        type = "Student",
-        bio = "I am Software Engineering Student at Telkom Institute of Technology Purwokerto IG @amt_p3",
-        post = 1,
-        followers = 100,
-        following = 10
-    )
-
-    val postItems = (1..10).map {
-        val media = when (it) {
-            3 -> "https://static.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/ayosemarang/images/post/articles/2021/04/14/75145/kuliah-gratis-institut-teknologi-telkom-purwokerto.jpg"
-            7 -> "https://cdn.rri.co.id/berita/47/images/1694653138068-W/1694653138068-W.jpeg"
-            else -> ""
-        }
-        PostItem(
-            id = it.toString(),
-            name = "Amita Putry Prasasti",
-            type = "Student",
-            date = "1 hours ago",
-            profile = "",
-            text = "Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen",
-            media = media,
-            liked = true
-        )
+    var profile by remember {
+        val user = DataUserItem.getUserById(id = userId)
+        DataProfile.updateConnectState(user!!.id, user.connected)
+        val profile = DataProfile.getProfileById(userId)
+        mutableStateOf(profile)
     }
 
-    val primaryText = "Connected"
+    if (profile == null) return
+
+    val primaryText by remember(key1 = profile) {
+        val text = if (profile!!.connected) "Connected" else "Connect"
+        mutableStateOf(text)
+    }
     val secondaryText = "Message"
 
-    Scaffold(
-        modifier = modifier
-    ) { paddingValues ->
+    val postItems = DataPostItem.getByUserId(userId)
+
+    val onConnectOnClick: () -> Unit = {
+        val updatedProfile = DataProfile.connectToProfile(profile!!)
+        profile = updatedProfile
+    }
+
+    Scaffold(modifier = modifier) { paddingValues ->
         LazyColumn(
             contentPadding = paddingValues,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item { 
                 ProfileHeader(
-                    profile = profile,
+                    profile = profile!!,
                     navigateUp = navigateUp,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -96,6 +91,7 @@ fun ProfileScreen(
                     ProfileFriendButtonSection(
                         primaryText = primaryText,
                         secondaryText = secondaryText,
+                        onPrimaryClick = onConnectOnClick,
                         modifier = Modifier.padding(start = 20.dp, top = 20.dp, end = 20.dp, bottom = 30.dp)
                     )
                 }
@@ -108,9 +104,6 @@ fun ProfileScreen(
                 PostItem(
                     post = it,
                     onClick = { navigateToDetailPostScreen(it.id) },
-                    modifier = Modifier
-                        .padding(top = 20.dp)
-                        .padding(horizontal = 20.dp)
                 )
             }
 

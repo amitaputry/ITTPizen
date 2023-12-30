@@ -8,6 +8,7 @@ object DataPostItem {
     private val allPosts = mutableListOf(
         PostItem(
             id = "1",
+            userId = "34",
             postType = PostItemType.ACHIEVEMENT,
             type = "Lecturer",
             name = "Novanda Alim Setya N..",
@@ -19,6 +20,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "2",
+            userId = "2",
             postType = PostItemType.TWEET,
             type = "Student",
             name = "Abdul Hafiz Ramadan",
@@ -31,6 +33,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "3",
+            userId = "33",
             postType = PostItemType.SCHOLARSHIP,
             type = "Staff",
             name = "Kemahasiswaan ITTP",
@@ -44,6 +47,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "4",
+            userId = "6",
             postType = PostItemType.TWEET,
             type = "Student",
             name = "Ahmad Nawawi",
@@ -54,6 +58,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "5",
+            userId = "33",
             postType = PostItemType.EVENT,
             type = "Staff",
             name = "Kemahasiswaan ITTP",
@@ -68,6 +73,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "6",
+            userId = "123",
             postType = PostItemType.EVENT,
             type = "Student",
             name = "GDSC IT Telkom Purwo..",
@@ -81,6 +87,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "7",
+            userId = "0",
             type = "Student",
             name = "Amita Putry Prasasti",
             date = "1 hours ago",
@@ -90,6 +97,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "8",
+            userId = "17",
             type = "Lecturer",
             name = "Gita Fadila Fitriana",
             date = "1 hours ago",
@@ -99,6 +107,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "9",
+            userId = "17",
             type = "Lecturer",
             name = "Gita Fadila Fitriana",
             date = "1 hours ago",
@@ -108,6 +117,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "10",
+            userId = "5",
             type = "Student",
             name = "Ajib Syah Abad",
             date = "1 hours ago",
@@ -117,6 +127,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "11",
+            userId = "1",
             type = "Student",
             name = "Daffa Rayhan Riadi",
             date = "15 hours ago",
@@ -126,6 +137,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "12",
+            userId = "3",
             type = "Student",
             name = "Afifatunni’mah",
             date = "10 hours ago",
@@ -135,6 +147,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "13",
+            userId = "33",
             postType = PostItemType.ACADEMIC,
             type = "Staff",
             name = "Kemahasiswaan ITTP",
@@ -149,6 +162,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "14",
+            userId = "33",
             postType = PostItemType.ACADEMIC,
             type = "Staff",
             name = "Kemahasiswaan ITTP",
@@ -161,6 +175,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "15",
+            userId = "35",
             postType = PostItemType.ACADEMIC,
             type = "Staff",
             name = "Pusat Karir ITTP",
@@ -173,6 +188,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "16",
+            userId = "35",
             postType = PostItemType.ACHIEVEMENT,
             type = "Staff",
             name = "Pusat Karir ITTP",
@@ -185,6 +201,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "17",
+            userId = "33",
             postType = PostItemType.ACHIEVEMENT,
             type = "Staff",
             name = "Kemahasiswaan ITTP",
@@ -197,6 +214,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "18",
+            userId = "33",
             postType = PostItemType.ACHIEVEMENT,
             type = "Staff",
             name = "Kemahasiswaan ITTP",
@@ -210,6 +228,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "19",
+            userId = "33",
             postType = PostItemType.ACHIEVEMENT,
             type = "Staff",
             name = "Kemahasiswaan ITTP",
@@ -223,6 +242,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "20",
+            userId = "33",
             postType = PostItemType.EVENT,
             type = "Staff",
             name = "Kemahasiswaan ITTP",
@@ -248,20 +268,21 @@ object DataPostItem {
             like = 1,
             comment = 0
         ),
-        PostItem(
-            id = "22",
-            postType = PostItemType.EVENT,
-            type = "Staff",
-            name = "ESport ITTP",
-            date = "50 minutes ago",
-            text = "HELLO GOOD PEOPLE!\n" +
-                    "Let's join in the fun of ITTP E SPORTS CHAMPIONSHIP SEASON 3!!",
-            media = "https://s3-alpha-sig.figma.com/img/26b1/35c8/056379fca5ff4354ad463ff52b4556ab?Expires=1704672000&Signature=Wy9qYXTVSvfJMQ6qnLi4syFfcgHa5t~S4XiW6i9FAkVFTIPkVFqEcmX10TJgFOe1crSzhagFpJcyeBe65APQHi7sOlx2L55wy0GJ4JuuS-wLWdIXYpM7j~-~wQSaVgLt12jsiOMo2Z~ci~xUSBxrE1Dn074mjaTkLETIShnVp3VpnT6XRWQtiAEiHwzL5lBs-0wmmgM2WV-9Mfx8ZWHTxJXMHhXf5vAH9LxVivNbMjSiT9vD5D1YmFdYA-mJLFbh669RPqsPgkiglH2NUE4PMB1jyI4Gk93tKqrmWYJYpQXL68ZH-J4MT4OMffnE-4wdiSlGbr5cH~r2ZijjsQVz~A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
-            like = 1,
-            comment = 0
-        ),
+//        PostItem(
+//            id = "22",
+//            postType = PostItemType.EVENT,
+//            type = "Staff",
+//            name = "ESport ITTP",
+//            date = "50 minutes ago",
+//            text = "HELLO GOOD PEOPLE!\n" +
+//                    "Let's join in the fun of ITTP E SPORTS CHAMPIONSHIP SEASON 3!!",
+//            media = "https://s3-alpha-sig.figma.com/img/26b1/35c8/056379fca5ff4354ad463ff52b4556ab?Expires=1704672000&Signature=Wy9qYXTVSvfJMQ6qnLi4syFfcgHa5t~S4XiW6i9FAkVFTIPkVFqEcmX10TJgFOe1crSzhagFpJcyeBe65APQHi7sOlx2L55wy0GJ4JuuS-wLWdIXYpM7j~-~wQSaVgLt12jsiOMo2Z~ci~xUSBxrE1Dn074mjaTkLETIShnVp3VpnT6XRWQtiAEiHwzL5lBs-0wmmgM2WV-9Mfx8ZWHTxJXMHhXf5vAH9LxVivNbMjSiT9vD5D1YmFdYA-mJLFbh669RPqsPgkiglH2NUE4PMB1jyI4Gk93tKqrmWYJYpQXL68ZH-J4MT4OMffnE-4wdiSlGbr5cH~r2ZijjsQVz~A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4",
+//            like = 1,
+//            comment = 0
+//        ),
         PostItem(
             id = "23",
+            userId = "33",
             postType = PostItemType.EVENT,
             type = "Staff",
             name = "Kemahasiswaan ITTP",
@@ -273,6 +294,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "24",
+            userId = "33",
             postType = PostItemType.SCHOLARSHIP,
             type = "Staff",
             name = "Kemahasiswaan ITTP",
@@ -286,6 +308,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "25",
+            userId = "33",
             postType = PostItemType.SCHOLARSHIP,
             type = "Staff",
             name = "Kemahasiswaan ITTP",
@@ -299,6 +322,7 @@ object DataPostItem {
         ),
         PostItem(
             id = "26",
+            userId = "33",
             postType = PostItemType.SCHOLARSHIP,
             type = "Staff",
             name = "Kemahasiswaan ITTP",
@@ -331,5 +355,7 @@ object DataPostItem {
     fun getById(id: String): PostItem? {
         return allPosts.find { it.id == id }
     }
+
+    fun getByUserId(userId: String): List<PostItem> = allPosts.filter { it.userId == userId }
 
 }

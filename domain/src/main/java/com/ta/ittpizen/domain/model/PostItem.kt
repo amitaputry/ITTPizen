@@ -10,6 +10,7 @@ enum class PostItemType {
 
 data class PostItem(
     val id: String = "",
+    val userId: String = "",
     val postType: PostItemType = PostItemType.TWEET,
     val profile: String = "",
     val type: String = "",

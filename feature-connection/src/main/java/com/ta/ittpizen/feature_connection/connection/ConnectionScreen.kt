@@ -20,6 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.model.UserItem
+import com.ta.ittpizen.domain.model.UserItemType
+import com.ta.ittpizen.domain.utils.DataUserItem
 import com.ta.ittpizen.ui.component.chip.SingleChipRow
 import com.ta.ittpizen.ui.component.searchbar.DummySearchBar
 import com.ta.ittpizen.ui.component.topappbar.BaseTopAppBar
@@ -37,20 +39,19 @@ fun ConnectionScreen(
 
     val options = listOf("Students", "Alumni", "Lecturer", "Staff")
     var selectedOption by remember { mutableStateOf(options[0]) }
+    val currentUserItemType by remember(key1 = selectedOption) {
+        val userItemType = when (selectedOption) {
+            options[0] -> UserItemType.Student
+            options[1] -> UserItemType.Alumni
+            options[2] -> UserItemType.Lecturer
+            else -> UserItemType.Staff
+        }
+        mutableStateOf(userItemType)
+    }
 
-    val users = remember(key1 = selectedOption) {
+    val users = remember(key1 = currentUserItemType) {
         val users = mutableStateListOf<UserItem>()
-        users.addAll(
-            (1..20).map {
-                val connected = it == 3
-                UserItem(
-                    id = it.toString(),
-                    name = "Amita Putry Prasasti",
-                    type = selectedOption,
-                    connected = connected
-                )
-            }
-        )
+        users.addAll(DataUserItem.generateUsersByType(currentUserItemType))
         users
     }
 
@@ -59,11 +60,9 @@ fun ConnectionScreen(
     }
 
     val onButtonConnection: (UserItem) -> Unit = { user ->
-        val updatedUser = users.map {
-            if (user.id == it.id) user.copy(connected = user.connected.not()) else it
-        }
+        DataUserItem.connectToUser(user)
         users.clear()
-        users.addAll(updatedUser)
+        users.addAll(DataUserItem.generateUsersByType(currentUserItemType))
     }
 
     Scaffold(modifier = modifier) { paddingValues ->

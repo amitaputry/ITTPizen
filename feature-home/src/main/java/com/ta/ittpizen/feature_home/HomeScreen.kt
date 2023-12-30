@@ -113,7 +113,7 @@ fun HomeScreen(
                     items(items = items, key = { post -> post.id }) { post ->
                         PostItem(
                             post = post,
-                            onProfileClick = { navigateToUserProfileScreen(it.id) },
+                            onProfileClick = { navigateToUserProfileScreen(it.userId) },
                             onClick = { navigateToDetailPostScreen(it.id) },
                             onPhotoClick = { navigateToPhotoDetailScreen(it) },
                             onLike = { onLikeClicked(post) },
