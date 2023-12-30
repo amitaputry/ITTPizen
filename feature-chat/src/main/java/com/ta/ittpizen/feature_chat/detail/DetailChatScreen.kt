@@ -33,6 +33,9 @@ import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.common.toChatDateFormat
 import com.ta.ittpizen.common.toChatTimeFormat
 import com.ta.ittpizen.domain.model.ChatBubble
+import com.ta.ittpizen.domain.utils.DataChatBubble
+import com.ta.ittpizen.domain.utils.DataChatItem
+import com.ta.ittpizen.domain.utils.DataUserItem
 import com.ta.ittpizen.feature_chat.R
 import com.ta.ittpizen.feature_chat.component.DetailChatFooter
 import com.ta.ittpizen.feature_chat.component.EmptyDetailChatContent
@@ -51,7 +54,8 @@ import java.util.UUID
 fun DetailChatScreen(
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit = {},
-    id: String = ""
+    chatId: String = "",
+    friendId: String = "",
 ) {
 
     val scrollState = rememberLazyListState()
@@ -61,16 +65,11 @@ fun DetailChatScreen(
 
     var message by remember { mutableStateOf("") }
 
-    val userId = "user123"
+    val userId = "0"
 
-//    val friend = UserItem(
-//        name = "Amita Putry Prasasti",
-//        type = "Student"
-//    )
+    val friend = DataUserItem.getUserById(friendId) ?: return
 
-    val chats = remember {
-        mutableStateListOf<ChatBubble>()
-    }
+    val chats = remember { mutableStateListOf<ChatBubble>() }
 
     val groupingChats = chats.groupBy { it.date }
 
@@ -92,6 +91,12 @@ fun DetailChatScreen(
     }
 
     LaunchedEffect(key1 = Unit) {
+        val chatBubbles = DataChatBubble.getChatBubbleByChatId(chatId = chatId)
+        chats.clear()
+        chats.addAll(chatBubbles)
+    }
+
+    LaunchedEffect(key1 = Unit) {
         if (chats.isEmpty()) return@LaunchedEffect
         scrollState.animateScrollToItem(chats.lastIndex)
     }
@@ -100,8 +105,8 @@ fun DetailChatScreen(
         topBar = {
             ChatTopAppBar(
                 onNavigateClick = navigateUp,
-                name = "Amita Putry Prasasti",
-                type = "Student"
+                name = friend.name,
+                type = friend.type
             )
         },
         bottomBar = {

@@ -19,7 +19,7 @@ class MainNavigator(
     override fun navigateToUserProfileScreen(userId: String) = navController.navigateToProfileScreen(type = ProfileScreenType.FRIEND, userId = userId)
     override fun navigateToNotificationScreen(userId: String) = navController.navigateToNotificationScreen(userId)
     override fun navigateToSearchConnectionScreen() = navController.navigateToSearchConnectionScreen()
-    override fun navigateToDetailChatScreen(id: String) = navController.navigateToDetailChatScreen(id)
+    override fun navigateToDetailChatScreen(chatId: String, friendId: String) = navController.navigateToDetailChatScreen(chatId, friendId)
     override fun navigateToAddJobScreen() = navController.navigateToAddJobScreen()
     override fun navigateToDetailJobScreen(jobId: String) = navController.navigateToJobDetailScreen(jobId = jobId)
     override fun navigateToSearchJobScreen() = navController.navigateToSearchJobScreen()
@@ -134,8 +134,8 @@ fun NavHostController.navigateToAddPostScreen(type: AddPostType) {
 }
 
 @Throws(IllegalArgumentException::class)
-fun NavHostController.navigateToDetailChatScreen(chatId: String) {
-    navigate(Screen.DetailChatScreen.generateRoute(chatId))
+fun NavHostController.navigateToDetailChatScreen(chatId: String, friendId: String) {
+    navigate(Screen.DetailChatScreen.generateRoute(chatId, friendId))
 }
 
 @Throws(IllegalArgumentException::class)

@@ -18,7 +18,7 @@ interface MainNavigator {
     fun navigateToSearchConnectionScreen()
 
     // Chat Screen Navigator
-    fun navigateToDetailChatScreen(id: String)
+    fun navigateToDetailChatScreen(chatId: String, friendId: String)
 
     // Job Screen Navigator
     fun navigateToAddJobScreen()
@@ -40,7 +40,7 @@ object EmptyMainNavigator : MainNavigator {
     override fun navigateToMyProfileScreen(userId: String) {}
     override fun navigateToUserProfileScreen(userId: String) {}
     override fun navigateToSearchConnectionScreen() {}
-    override fun navigateToDetailChatScreen(id: String) {}
+    override fun navigateToDetailChatScreen(chatId: String, friendId: String) {}
     override fun navigateToAddJobScreen() {}
     override fun navigateToDetailJobScreen(jobId: String) {}
     override fun navigateToSearchJobScreen() {}

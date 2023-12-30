@@ -128,7 +128,9 @@ fun MainScreen(
                 }
                 composable(route = Screen.Chat.route) {
                     ChatScreen(
-                        navigateToDetailChatScreen = mainNavigator::navigateToDetailChatScreen
+                        navigateToDetailChatScreen = { chatId, friendId ->
+                            mainNavigator.navigateToDetailChatScreen(chatId, friendId)
+                        }
                     )
                 }
                 composable(route = Screen.Job.route) {

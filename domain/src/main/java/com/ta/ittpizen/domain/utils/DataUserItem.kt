@@ -7,6 +7,11 @@ object DataUserItem {
 
     private val allUsers = mutableListOf<UserItem>(
         UserItem(
+            id = "0",
+            name = "Amita Putry Prasasti",
+            type = "Student"
+        ),
+        UserItem(
             id = "1",
             name = "Daffa Rayhan Riadi",
             type = "Student"

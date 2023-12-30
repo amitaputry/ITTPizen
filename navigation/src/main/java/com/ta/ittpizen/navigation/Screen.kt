@@ -8,6 +8,7 @@ sealed class Screen(val route: String) {
     companion object {
         const val ADD_POST_TYPE = "add_post_type"
         const val POST_ID = "post_id"
+        const val FRIEND_ID = "friend_id"
         const val CHAT_ID = "chat_id"
         const val JOB_ID = "job_id"
         const val PROFILE_TYPE = "profile_type"
@@ -38,9 +39,9 @@ sealed class Screen(val route: String) {
             return "post-detail-screen/$postId"
         }
     }
-    object DetailChatScreen : Screen(route = "detail-chat-screen/{$CHAT_ID}") {
-        fun generateRoute(chatId: String): String {
-            return "detail-chat-screen/$chatId"
+    object DetailChatScreen : Screen(route = "detail-chat-screen/{$CHAT_ID}/{$FRIEND_ID}") {
+        fun generateRoute(chatId: String, friendId: String): String {
+            return "detail-chat-screen/$chatId/$friendId"
         }
     }
     object JobDetailScreen : Screen(route = "detail-job-screen/{$JOB_ID}") {

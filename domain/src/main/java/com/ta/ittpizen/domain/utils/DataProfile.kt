@@ -6,6 +6,13 @@ object DataProfile {
 
     private val allProfile = mutableListOf(
         Profile(
+            id = "0",
+            userId = "0",
+            name = "Amita Putry Prasasti",
+            type = "Student",
+            bio = "I am Software Engineering Student at Telkom Institute of Technology Purwokerto"
+        ),
+        Profile(
             id = "1",
             userId = "1",
             name = "Daffa Rayhan Riadi",
@@ -268,7 +275,10 @@ object DataProfile {
 
         val selectedProfile = allProfile.find { it.id == userItem.id }  ?: return null
         val connected = selectedProfile.connected
-        val updatedUser = selectedProfile.copy(connected = connected.not())
+        val updatedUser = selectedProfile.copy(
+            connected = connected.not(),
+            followers = if (connected.not()) selectedProfile.followers + 1 else selectedProfile.followers - 1
+        )
         allProfile.replaceAll {
             if (it.id == userItem.id) updatedUser else it
         }

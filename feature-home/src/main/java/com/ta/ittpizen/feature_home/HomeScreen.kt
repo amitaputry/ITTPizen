@@ -44,7 +44,7 @@ fun HomeScreen(
     navigateToPhotoDetailScreen: (String) -> Unit = {},
 ) {
 
-    val userId = "my-id"
+    val userId = "0"
 
     val tabs = listOf("All Post", "Tweet", "Academic", "#PrestasiITTP", "Events", "Scholarship")
 

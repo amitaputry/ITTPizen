@@ -9,7 +9,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -17,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ta.ittpizen.domain.model.PostItem
 import com.ta.ittpizen.domain.utils.DataPostItem
 import com.ta.ittpizen.domain.utils.DataProfile
 import com.ta.ittpizen.domain.utils.DataUserItem
@@ -40,7 +43,8 @@ fun ProfileScreen(
     navigateUp: () -> Unit = {},
     navigateToEditProfile: () -> Unit = {},
     navigateToSavedJob: () -> Unit = {},
-    navigateToDetailPostScreen: (String) -> Unit = {}
+    navigateToDetailPostScreen: (String) -> Unit = {},
+    navigateToDetailChatScreen: (chatId: String, friendId: String) -> Unit = { _, _ -> },
 ) {
 
     var profile by remember {
@@ -58,11 +62,26 @@ fun ProfileScreen(
     }
     val secondaryText = "Message"
 
-    val postItems = DataPostItem.getByUserId(userId)
+    val postItems = remember { mutableStateListOf<PostItem>() }
 
-    val onConnectOnClick: () -> Unit = {
+    val onConnectClick: () -> Unit = {
         val updatedProfile = DataProfile.connectToProfile(profile!!)
         profile = updatedProfile
+    }
+
+    val onMessageClick: () -> Unit = {
+        navigateToDetailChatScreen("-", userId)
+    }
+
+    val onLikeClicked: (PostItem) -> Unit = { post ->
+        val updatedPost = DataPostItem.likeOrDislikePost(post)!!
+        postItems.replaceAll {
+            if (it.id == updatedPost.id) updatedPost else it
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        postItems.addAll(DataPostItem.getByUserId(userId))
     }
 
     Scaffold(modifier = modifier) { paddingValues ->
@@ -91,7 +110,8 @@ fun ProfileScreen(
                     ProfileFriendButtonSection(
                         primaryText = primaryText,
                         secondaryText = secondaryText,
-                        onPrimaryClick = onConnectOnClick,
+                        onPrimaryClick = onConnectClick,
+                        onSecondaryClick = onMessageClick,
                         modifier = Modifier.padding(start = 20.dp, top = 20.dp, end = 20.dp, bottom = 30.dp)
                     )
                 }
@@ -104,6 +124,8 @@ fun ProfileScreen(
                 PostItem(
                     post = it,
                     onClick = { navigateToDetailPostScreen(it.id) },
+                    onLike = onLikeClicked,
+                    onComment = { navigateToDetailPostScreen(it.id) }
                 )
             }
 

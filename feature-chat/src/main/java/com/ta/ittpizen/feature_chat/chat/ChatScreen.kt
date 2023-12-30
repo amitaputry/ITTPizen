@@ -20,6 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.model.ChatItem
+import com.ta.ittpizen.domain.utils.DataChatBubble
+import com.ta.ittpizen.domain.utils.DataChatItem
 import com.ta.ittpizen.feature_chat.component.EmptyChatContent
 import com.ta.ittpizen.ui.component.chat.ChatItem
 import com.ta.ittpizen.ui.component.searchbar.FilledSearchBar
@@ -31,24 +33,21 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 @Composable
 fun ChatScreen(
     modifier: Modifier = Modifier,
-    navigateToDetailChatScreen: (String) -> Unit = {}
+    navigateToDetailChatScreen: (chatId: String, friendId: String) -> Unit = { _, _ -> }
 ) {
 
     var query by remember { mutableStateOf("") }
 
-    val chats = remember {
-        (1..10).map {
-            ChatItem(
-                name = "Amita Putry Prasasti",
-                message = "Yorem ipsum dolor sit amet, consectetur ..",
-                date = "6/12/2023",
-                unReadChat = it-1,
-                id = it.toString()
-            )
-        }
-//        emptyList<ChatItem>()
+    val chats by remember {
+        val lastChat = DataChatBubble.getLastMessage()
+        val chatItems = DataChatItem.getAllChatItems()
+            .map {
+                it.copy(
+                    message = lastChat.text
+                )
+            }
+        mutableStateOf(chatItems)
     }
-
     Scaffold(modifier = modifier) { paddingValues ->
         LazyColumn(contentPadding = paddingValues) {
             item {
@@ -77,7 +76,7 @@ fun ChatScreen(
             items(items = chats, key = { it.id }) {
                 ChatItem(
                     chat = it,
-                    onClick = { navigateToDetailChatScreen(it.id) },
+                    onClick = { navigateToDetailChatScreen(it.id, it.userId) },
                     modifier = Modifier
                         .padding(horizontal = 20.dp, vertical = 10.dp)
                         .fillMaxWidth()

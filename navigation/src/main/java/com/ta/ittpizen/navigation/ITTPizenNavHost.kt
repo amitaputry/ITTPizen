@@ -138,15 +138,20 @@ fun ITTPizenNavHost(
         composableWithSlideHorizontalAnimation(
             route = Screen.DetailChatScreen.route,
             arguments = listOf(
+                navArgument(Screen.FRIEND_ID) {
+                    type = NavType.StringType
+                },
                 navArgument(Screen.CHAT_ID) {
                     type = NavType.StringType
-                }
-            )
+                },
+            ),
         ) {
+            val friendId = it.arguments?.getString(Screen.FRIEND_ID) ?: ""
             val chatId = it.arguments?.getString(Screen.CHAT_ID) ?: ""
             DetailChatScreen(
                 navigateUp = navController::navigateUp,
-                id = chatId,
+                friendId = friendId,
+                chatId = chatId
             )
         }
         composableWithSlideHorizontalAnimation(
@@ -197,7 +202,10 @@ fun ITTPizenNavHost(
                 userId = userId,
                 navigateToEditProfile = { navController.navigateToEditProfileScreen(userId) },
                 navigateToDetailPostScreen = { navController.navigateToPostDetailScreen(postId = it) },
-                navigateToSavedJob = { navController.navigateToSavedJobScreen(userId) }
+                navigateToSavedJob = { navController.navigateToSavedJobScreen(userId) },
+                navigateToDetailChatScreen = { chatId, friendId ->
+                    navController.navigateToDetailChatScreen(chatId, friendId)
+                }
             )
         }
         composableWithSlideHorizontalAnimation(
