@@ -43,6 +43,10 @@ object DataJobItem {
         it.saved
     }
 
+    fun searchJob(query: String): List<JobItem> = allJobs.filter {
+        it.name.contains(query) || it.location.contains(query)
+    }
+
     fun savedOrUnsavedJob(job: JobItem): JobItem? {
         val selectedPost = allJobs.find { it.id == job.id }  ?: return null
         val saved = selectedPost.saved

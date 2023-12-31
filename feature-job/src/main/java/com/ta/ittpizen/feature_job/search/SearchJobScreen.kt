@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.model.JobItem
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.UserItem
+import com.ta.ittpizen.domain.utils.DataJobItem
 import com.ta.ittpizen.ui.component.history.HistoryContent
 import com.ta.ittpizen.ui.component.history.HistoryEmptyContent
 import com.ta.ittpizen.ui.component.job.JobItem
@@ -43,7 +44,7 @@ fun SearchJobScreen(
     var query by remember { mutableStateOf("") }
 
     val histories = remember {
-        mutableStateListOf("abdul hafiz ramadan", "amita", "afifa")
+        mutableStateListOf("management", "web", "android developer")
     }
 
     val onDeleteAllClick: () -> Unit = {
@@ -54,23 +55,23 @@ fun SearchJobScreen(
         histories.remove(histories[it])
     }
 
-    val dummyJobs = (1..20).map {
-        JobItem(
-            id = it.toString(),
-            name = "Asisten Praktikum Basis Data",
-            characteristics = listOf("Onsite", "Part time", "0 - 1 year", "Min D3"),
-            company = "Fakultas Informatika",
-            date = "12 days ago",
-            location = "Jl. DI Panjaitan No.128, Banyumas, Jawa Tengah",
-            saved = it == 3
-        )
-    }
     var jobs: Resource<List<JobItem>> by remember {
         mutableStateOf(Resource.Idle)
     }
 
     val onSearch: () -> Unit = {
-        jobs = Resource.Success(data = dummyJobs)
+        jobs = Resource.Success(data = DataJobItem.searchJob(query))
+    }
+
+    val onButtonSaveClick: (JobItem) -> Unit = { jobItem ->
+        val updatedJob = DataJobItem.savedOrUnsavedJob(jobItem)
+        if (updatedJob != null && jobs is Resource.Success<List<JobItem>>) {
+            val mutableJob = (jobs as Resource.Success<List<JobItem>>).data.toMutableList()
+            mutableJob.replaceAll {
+                if (it.id == jobItem.id) updatedJob else it
+            }
+            jobs = Resource.Success(mutableJob)
+        }
     }
 
     Scaffold(
@@ -121,6 +122,7 @@ fun SearchJobScreen(
                     JobItem(
                         jobItem = jobItem,
                         onClick = { navigateToDetailJob(it.id) },
+                        onSaveClick = onButtonSaveClick,
                         modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
                     )
                 }
