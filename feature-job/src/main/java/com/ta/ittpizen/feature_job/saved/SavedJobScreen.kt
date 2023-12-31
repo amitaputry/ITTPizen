@@ -1,5 +1,7 @@
 package com.ta.ittpizen.feature_job.saved
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,16 +10,22 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.model.JobItem
 import com.ta.ittpizen.domain.model.Resource
+import com.ta.ittpizen.domain.utils.DataJobItem
 import com.ta.ittpizen.feature_job.component.EmptySavedJobContent
 import com.ta.ittpizen.ui.component.job.JobItem
 import com.ta.ittpizen.ui.component.topappbar.DetailTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
+@ExperimentalFoundationApi
 @ExperimentalLayoutApi
 @ExperimentalMaterial3Api
 @Composable
@@ -28,19 +36,18 @@ fun SavedJobScreen(
     navigateToDetailJobScreen: (String) -> Unit = {},
 ) {
 
-    val dummyJobs = (1..10).map {
-        JobItem(
-            id = it.toString(),
-            name = "Asisten Praktikum Basis Data",
-            characteristics = listOf("Onsite", "Part time", "0 - 1 year", "Min D3"),
-            company = "Fakultas Informatika",
-            date = "12 days ago",
-            location = "Jl. DI Panjaitan No.128, Banyumas, Jawa Tengah",
-            saved = true
-        )
+    var jobs: Resource<List<JobItem>> by remember {
+        mutableStateOf(Resource.Success(DataJobItem.getSavedJobs()))
     }
 
-    val jobs: Resource<List<JobItem>> = Resource.Success(dummyJobs)
+    val unSaveJobItem: (JobItem) -> Unit = {
+        val job = DataJobItem.savedOrUnsavedJob(it)
+        if (job != null && jobs is Resource.Success<List<JobItem>>) {
+            val mutableJob = (jobs as Resource.Success<List<JobItem>>).data.toMutableList()
+            mutableJob.remove(it)
+            jobs = Resource.Success(mutableJob)
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -51,18 +58,22 @@ fun SavedJobScreen(
         },
         modifier = modifier
     ) { paddingValues ->
-        if (jobs is Resource.Success && jobs.data.isEmpty()) {
+        AnimatedVisibility(jobs is Resource.Success && (jobs as Resource.Success<List<JobItem>>).data.isEmpty()) {
             EmptySavedJobContent(
                 modifier = Modifier.padding(paddingValues)
             )
         }
-        if (jobs is Resource.Success && jobs.data.isNotEmpty()) {
+        AnimatedVisibility (jobs is Resource.Success && (jobs as Resource.Success<List<JobItem>>).data.isNotEmpty()) {
+            val data = (jobs as Resource.Success<List<JobItem>>).data
             LazyColumn(modifier = Modifier.padding(paddingValues)) {
-                items(items = jobs.data, key = { it.id }) { job ->
+                items(items = data, key = { it.id }) { job ->
                     JobItem(
                         jobItem = job,
                         onClick = { navigateToDetailJobScreen(it.id) },
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
+                        onSaveClick = unSaveJobItem,
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp, vertical = 10.dp)
+                            .animateItemPlacement()
                     )
                 }
             }
@@ -70,6 +81,7 @@ fun SavedJobScreen(
     }
 }
 
+@ExperimentalFoundationApi
 @ExperimentalMaterial3Api
 @ExperimentalLayoutApi
 @Preview

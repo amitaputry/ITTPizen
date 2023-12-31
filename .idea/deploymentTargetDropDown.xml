@@ -2,19 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewDetailPhotoScreen">
-        <State />
-      </entry>
-      <entry key="PreviewDetailTransparentTopAppBar">
-        <State />
-      </entry>
-      <entry key="PreviewEditProfileScreen">
-        <State />
-      </entry>
-      <entry key="PreviewPhotoDetailScreen">
-        <State />
-      </entry>
-      <entry key="PreviewPostItem">
+      <entry key="PreviewChatScreen">
         <State />
       </entry>
       <entry key="app">
