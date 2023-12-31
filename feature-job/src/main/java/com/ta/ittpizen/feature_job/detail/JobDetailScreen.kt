@@ -13,8 +13,12 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,10 +45,17 @@ fun JobDetailScreen(
     val scope = rememberCoroutineScope()
     val snackBarHostState = remember { SnackbarHostState() }
 
-    val job = DataJobDetail.getJobDetailById(jobId) ?: return
+    var job by remember { mutableStateOf(DataJobDetail.getJobDetailById(jobId)) }
+
+    if (job == null) return
+
+    var saveButtonText by remember(key1 = job) {
+        val text = if (job?.saved == true) "Saved" else "Save"
+        mutableStateOf(text)
+    }
 
     val onApplyNowClick: () -> Unit = {
-        val intentView = Intent(Intent.ACTION_VIEW, Uri.parse(job.link))
+        val intentView = Intent(Intent.ACTION_VIEW, Uri.parse(job!!.link))
         context.startActivity(intentView)
     }
 
@@ -53,6 +64,9 @@ fun JobDetailScreen(
         if (jobItem != null) {
             scope.launch {
                 val updatedJobItem = DataJobItem.savedOrUnsavedJob(jobItem)
+                job = job?.copy(
+                    saved = updatedJobItem?.saved ?: false
+                )
                 if (updatedJobItem?.saved == false) {
                     snackBarHostState.showSnackbar("Job delete from saved job!")
                 } else {
@@ -60,6 +74,11 @@ fun JobDetailScreen(
                 }
             }
         }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        val jobItem = DataJobItem.getJobItemById(jobId)
+        saveButtonText = if (jobItem?.saved == true) "Saved" else "Save"
     }
 
     Scaffold(
@@ -71,6 +90,7 @@ fun JobDetailScreen(
         },
         bottomBar = {
             JobDetailFooter(
+                saveButtonText = saveButtonText,
                 onApplyNowClick = onApplyNowClick,
                 onSaveClick = onSaveClick
             )
@@ -84,9 +104,9 @@ fun JobDetailScreen(
                 .padding(horizontal = 20.dp)
                 .verticalScroll(scrollState)
         ) {
-            JobDetailHeader(job = job, modifier = Modifier.padding(vertical = 20.dp))
+            JobDetailHeader(job = job!!, modifier = Modifier.padding(vertical = 20.dp))
             Divider(thickness = 0.5.dp, color = DisableColorGrey)
-            JobDetailContent(job = job, modifier = Modifier.padding(vertical = 20.dp))
+            JobDetailContent(job = job!!, modifier = Modifier.padding(vertical = 20.dp))
         }
     }
 }

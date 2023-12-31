@@ -1,5 +1,6 @@
 package com.ta.ittpizen.feature_home
 
+import android.content.Intent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -20,6 +21,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.model.PostItem
@@ -48,6 +50,7 @@ fun HomeScreen(
 
     val tabs = listOf("All Post", "Tweet", "Academic", "#PrestasiITTP", "Events", "Scholarship")
 
+    val context = LocalContext.current
     val pagerState = rememberPagerState { tabs.size }
     val scope = rememberCoroutineScope()
 
@@ -72,6 +75,22 @@ fun HomeScreen(
         postItems.replaceAll {
             if (it.id == updatedPost.id) updatedPost else it
         }
+    }
+
+    val onShareClicked: (PostItem) -> Unit = { post ->
+        val text = buildString {
+            append(post.text)
+            append("\n\n")
+            append("By ITTPizen")
+        }
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, text)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        context.startActivity(shareIntent)
     }
 
     LaunchedEffect(key1 = Unit) {
@@ -118,6 +137,7 @@ fun HomeScreen(
                             onPhotoClick = { navigateToPhotoDetailScreen(it) },
                             onLike = { onLikeClicked(post) },
                             onComment = { navigateToDetailPostScreen(post.id) },
+                            onSend = onShareClicked,
                             modifier = Modifier.padding(top = 20.dp)
                         )
                     }

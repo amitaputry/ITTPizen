@@ -17,6 +17,7 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 @Composable
 fun JobDetailFooter(
     modifier: Modifier = Modifier,
+    saveButtonText: String = "",
     onApplyNowClick: () -> Unit = {},
     onSaveClick: () -> Unit = {}
 ) {
@@ -32,7 +33,7 @@ fun JobDetailFooter(
         )
         Spacer(modifier = Modifier.width(10.dp))
         LargePrimaryOutlinedButton(
-            text = "Save",
+            text = saveButtonText,
             onClick = onSaveClick,
             modifier = Modifier.weight(1f)
         )

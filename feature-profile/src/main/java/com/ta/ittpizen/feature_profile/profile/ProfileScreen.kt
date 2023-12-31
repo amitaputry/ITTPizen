@@ -1,5 +1,6 @@
 package com.ta.ittpizen.feature_profile.profile
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.model.PostItem
@@ -45,8 +47,11 @@ fun ProfileScreen(
     navigateToEditProfile: () -> Unit = {},
     navigateToSavedJob: () -> Unit = {},
     navigateToDetailPostScreen: (String) -> Unit = {},
+    navigateToDetailPhotoScreen: (String) -> Unit = {},
     navigateToDetailChatScreen: (chatId: String, friendId: String) -> Unit = { _, _ -> },
 ) {
+
+    val context = LocalContext.current
 
     var profile by remember {
         val user = DataUserItem.getUserById(id = userId)
@@ -83,6 +88,22 @@ fun ProfileScreen(
         postItems.replaceAll {
             if (it.id == updatedPost.id) updatedPost else it
         }
+    }
+
+    val onShareClicked: (PostItem) -> Unit = { post ->
+        val text = buildString {
+            append(post.text)
+            append("\n\n")
+            append("By ITTPizen")
+        }
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, text)
+            this.type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        context.startActivity(shareIntent)
     }
 
     LaunchedEffect(key1 = Unit) {
@@ -132,7 +153,9 @@ fun ProfileScreen(
                     post = it,
                     onClick = { navigateToDetailPostScreen(it.id) },
                     onLike = onLikeClicked,
-                    onComment = { navigateToDetailPostScreen(it.id) }
+                    onComment = { navigateToDetailPostScreen(it.id) },
+                    onSend = onShareClicked,
+                    onPhotoClick = navigateToDetailPhotoScreen
                 )
             }
 

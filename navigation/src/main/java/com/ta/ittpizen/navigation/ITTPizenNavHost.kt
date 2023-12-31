@@ -203,6 +203,7 @@ fun ITTPizenNavHost(
                 navigateToEditProfile = { navController.navigateToEditProfileScreen(userId) },
                 navigateToDetailPostScreen = { navController.navigateToPostDetailScreen(postId = it) },
                 navigateToSavedJob = { navController.navigateToSavedJobScreen(userId) },
+                navigateToDetailPhotoScreen = navController::navigateToPhotoDetailScreen,
                 navigateToDetailChatScreen = { chatId, friendId ->
                     navController.navigateToDetailChatScreen(chatId, friendId)
                 },
