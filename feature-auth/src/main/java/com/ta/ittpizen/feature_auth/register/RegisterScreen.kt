@@ -71,22 +71,22 @@ fun RegisterScreen(
     val buttonRegisterEnable by viewModel.buttonRegisterEnable.collectAsStateWithLifecycle(initialValue = false)
 
     val updateFullName: (String) -> Unit = {
-        val errorMessage = if (it.isNotEmpty()) "" else "Nama tidak boleh kosong!"
+        val errorMessage = if (it.isNotEmpty()) "" else "Nama cannot be empty!"
         viewModel.updateFullName(it)
         viewModel.updateFullNameErrorMessage(errorMessage)
     }
     val updateEmail: (String) -> Unit = {
-        val errorMessage = if (it.isValidEmail() || it.isEmpty()) "" else "Email kamu tidak valid!"
+        val errorMessage = if (it.isValidEmail() || it.isEmpty()) "" else "Email format not valid!"
         viewModel.updateEmail(it)
         viewModel.updateEmailErrorMessage(errorMessage)
     }
     val updatePassword: (String) -> Unit = {
-        val errorMessage = if (it.length >= 6 || it.isEmpty()) "" else "Password minimal 6 karakter!"
+        val errorMessage = if (it.length >= 6 || it.isEmpty()) "" else "Password must be at least 6 characters!"
         viewModel.updatePassword(it)
         viewModel.updatePasswordErrorMessage(errorMessage)
     }
     val updateConfirmPassword: (String) -> Unit = {
-        val errorMessage = if (it == password) "" else "Password tidak sama!"
+        val errorMessage = if (it == password) "" else "Password not same!"
         viewModel.updateConfirmPassword(it)
         viewModel.updateConfirmPasswordErrorMessage(errorMessage)
     }

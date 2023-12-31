@@ -11,9 +11,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -33,6 +37,7 @@ import com.ta.ittpizen.ui.component.textfield.OutlinedTextFieldWithLabel
 import com.ta.ittpizen.ui.component.textfield.PasswordTextFieldWithLabel
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import com.ta.ittpizen.ui.theme.PrimaryRed
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinApplication
 
@@ -44,6 +49,10 @@ fun LoginScreen(
     navigateToRegisterScreen: () -> Unit = {},
     navigateToMainScreen: () -> Unit = {}
 ) {
+
+    val snackBarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
     val uiState by viewModel.registerUiState.collectAsStateWithLifecycle()
 
     val email = uiState.email
@@ -59,18 +68,32 @@ fun LoginScreen(
     )
 
     val updateEmail: (String) -> Unit = {
-        val errorMessage = if (it.isValidEmail() || it.isEmpty()) "" else "Email kamu tidak valid!"
+        val errorMessage = if (it.isValidEmail() || it.isEmpty()) "" else "Email format not valid!"
         viewModel.updateEmail(it)
         viewModel.updateEmailErrorMessage(errorMessage)
     }
 
     val updatePassword: (String) -> Unit = {
-        val errorMessage = if (it.length >= 6 || it.isEmpty()) "" else "Password minimal 6 karakter!"
+        val errorMessage = if (it.length >= 6 || it.isEmpty()) "" else "Password must be at least 6 characters!"
         viewModel.updatePassword(it)
         viewModel.updatePasswordErrorMessage(errorMessage)
     }
 
-    Scaffold(modifier = modifier) { paddingValues ->
+    val onLoginClick: () -> Unit = {
+        if (email == "adminittp@gmail.com" && password == "12345678") {
+            navigateToMainScreen()
+        } else {
+            scope.launch {
+                snackBarHostState.showSnackbar("Email or password wrong!")
+                viewModel.updatePassword("")
+            }
+        }
+    }
+
+    Scaffold(
+        modifier = modifier,
+        snackbarHost = { SnackbarHost(snackBarHostState) }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues)
@@ -114,7 +137,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(20.dp))
             LargePrimaryButton(
                 text = "Login",
-                onClick = navigateToMainScreen,
+                onClick = onLoginClick,
                 enable = buttonRegisterEnable,
                 modifier = Modifier.fillMaxWidth()
             )
