@@ -205,6 +205,9 @@ fun ITTPizenNavHost(
                 navigateToSavedJob = { navController.navigateToSavedJobScreen(userId) },
                 navigateToDetailChatScreen = { chatId, friendId ->
                     navController.navigateToDetailChatScreen(chatId, friendId)
+                },
+                navigateToLoginScreen = {
+                    navController.navigateToLoginScreen(from = Screen.MainScreen)
                 }
             )
         }

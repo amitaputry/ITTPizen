@@ -41,6 +41,7 @@ fun ProfileScreen(
     userId: String = "",
     type: ProfileScreenType = ProfileScreenType.ME,
     navigateUp: () -> Unit = {},
+    navigateToLoginScreen: () -> Unit = {},
     navigateToEditProfile: () -> Unit = {},
     navigateToSavedJob: () -> Unit = {},
     navigateToDetailPostScreen: (String) -> Unit = {},
@@ -55,6 +56,10 @@ fun ProfileScreen(
     }
 
     if (profile == null) return
+
+    val logoutButtonVisible = remember {
+        type == ProfileScreenType.ME
+    }
 
     val primaryText by remember(key1 = profile) {
         val text = if (profile!!.connected) "Connected" else "Connect"
@@ -93,6 +98,8 @@ fun ProfileScreen(
                 ProfileHeader(
                     profile = profile!!,
                     navigateUp = navigateUp,
+                    showLogOutButton = logoutButtonVisible,
+                    onLogoutClicked = navigateToLoginScreen,
                     modifier = Modifier.fillMaxWidth()
                 )
             }

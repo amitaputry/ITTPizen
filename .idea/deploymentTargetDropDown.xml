@@ -5,6 +5,9 @@
       <entry key="PreviewChatScreen">
         <State />
       </entry>
+      <entry key="PreviewLogoutButton">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>
