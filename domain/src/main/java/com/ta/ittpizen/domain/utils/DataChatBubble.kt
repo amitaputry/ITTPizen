@@ -45,6 +45,38 @@ object DataChatBubble {
             time = "22:02",
             text = "Wah makasih Amita"
         ),
+        ChatBubble(
+            id = "6",
+            chatId = "2",
+            userId = "3",
+            date = "06 December 2023",
+            time = "21:59",
+            text = "Halo apa Kabar?"
+        ),
+        ChatBubble(
+            id = "7",
+            chatId = "2",
+            userId = "0",
+            date = "06 December 2023",
+            time = "21:59",
+            text = "Hi, Baik, Ada apa ya?"
+        ),
+        ChatBubble(
+            id = "8",
+            chatId = "3",
+            userId = "0",
+            date = "06 December 2023",
+            time = "21:59",
+            text = "Hi kak yolanda, apa kabar?"
+        ),
+        ChatBubble(
+            id = "8",
+            chatId = "3",
+            userId = "9",
+            date = "06 December 2023",
+            time = "21:59",
+            text = "Hi kabar baik nihh"
+        ),
     )
 
     fun getLastMessage(): ChatBubble = allChatBubbles.last()

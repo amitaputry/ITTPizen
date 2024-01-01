@@ -10,6 +10,18 @@ object DataChatItem {
             userId = "3",
             name = "Afifatunni’mah",
             date = "6/12/2023"
+        ),
+        ChatItem(
+            id = "2",
+            userId = "2",
+            name = "Abdul Hafiz Ramadan",
+            date = "1/12/2023"
+        ),
+        ChatItem(
+            id = "3",
+            userId = "9",
+            name = "Yolanda Al Hidayah Pasaribu",
+            date = "3/12/2023"
         )
     )
 

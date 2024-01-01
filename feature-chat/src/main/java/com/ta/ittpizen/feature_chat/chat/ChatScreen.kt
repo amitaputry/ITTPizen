@@ -19,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.domain.model.ChatItem
 import com.ta.ittpizen.domain.utils.DataChatBubble
 import com.ta.ittpizen.domain.utils.DataChatItem
 import com.ta.ittpizen.feature_chat.component.EmptyChatContent
@@ -38,16 +37,23 @@ fun ChatScreen(
 
     var query by remember { mutableStateOf("") }
 
-    val chats by remember {
-        val lastChat = DataChatBubble.getLastMessage()
-        val chatItems = DataChatItem.getAllChatItems()
-            .map {
-                it.copy(
-                    message = lastChat.text
-                )
-            }
+    val lastChat = DataChatBubble.getLastMessage()
+    val chatItems = DataChatItem.getAllChatItems()
+        .map {
+            it.copy(
+                message = lastChat.text
+            )
+        }
+
+    var chats by remember {
         mutableStateOf(chatItems)
     }
+
+    val onSearch: (String) -> Unit = { search ->
+        query = search
+        chats = chatItems.filter { it.name.contains(search, true) }
+    }
+
     Scaffold(modifier = modifier) { paddingValues ->
         LazyColumn(contentPadding = paddingValues) {
             item {
@@ -56,7 +62,7 @@ fun ChatScreen(
             stickyHeader {
                 FilledSearchBar(
                     query = query,
-                    onQueryChange = { query = it },
+                    onQueryChange = onSearch,
                     placeholder = "Search",
                     modifier = Modifier
                         .background(MaterialTheme.colorScheme.background)
@@ -80,6 +86,7 @@ fun ChatScreen(
                     modifier = Modifier
                         .padding(horizontal = 20.dp, vertical = 10.dp)
                         .fillMaxWidth()
+                        .animateItemPlacement()
                 )
             }
         }
