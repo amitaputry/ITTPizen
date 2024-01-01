@@ -59,7 +59,8 @@ fun UserItem(
             TextBodyLarge(
                 text = user.name,
                 color = ColorText,
-                fontWeight = FontWeight(500)
+                fontWeight = FontWeight(500),
+                maxLines = 1
             )
             Spacer(modifier = Modifier.height(2.dp))
             TextBodySmall(

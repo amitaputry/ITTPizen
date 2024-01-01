@@ -43,7 +43,7 @@ fun MainScreen(
     navController: NavHostController = rememberNavController()
 ) {
 
-    val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+    val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden, skipHalfExpanded = true)
     val scope = rememberCoroutineScope()
 
     val toggleBottomSheet: () -> Unit = {

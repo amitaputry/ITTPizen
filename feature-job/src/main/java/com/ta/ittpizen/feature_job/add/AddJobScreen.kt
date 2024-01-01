@@ -51,7 +51,7 @@ fun AddJobScreen(
     val buttonNextGeneralEnabled by addJobGeneralViewModel.buttonNextGeneralEnabled.collectAsStateWithLifecycle(initialValue = false)
     val buttonPostDetailEnabled by addJobDetailViewModel.buttonPostDetailEnabled.collectAsStateWithLifecycle(initialValue = false)
 
-    val postUrl = "new-job-id"
+    val postUrl = "0"
 
     val scrollState = rememberScrollState()
     val pagerState = rememberPagerState(pageCount = steps::size)

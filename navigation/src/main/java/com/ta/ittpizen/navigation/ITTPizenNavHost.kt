@@ -41,7 +41,7 @@ import com.ta.ittpizen.feature_splash_screen.SplashScreen
 @Composable
 fun ITTPizenNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: Screen = Screen.MainScreen
+    startDestination: Screen = Screen.SplashScreen
 ) {
     val startDestinationRoute = startDestination.route
     NavHost(navController = navController, startDestination = startDestinationRoute) {
@@ -203,8 +203,12 @@ fun ITTPizenNavHost(
                 navigateToEditProfile = { navController.navigateToEditProfileScreen(userId) },
                 navigateToDetailPostScreen = { navController.navigateToPostDetailScreen(postId = it) },
                 navigateToSavedJob = { navController.navigateToSavedJobScreen(userId) },
+                navigateToDetailPhotoScreen = navController::navigateToPhotoDetailScreen,
                 navigateToDetailChatScreen = { chatId, friendId ->
                     navController.navigateToDetailChatScreen(chatId, friendId)
+                },
+                navigateToLoginScreen = {
+                    navController.navigateToLoginScreen(from = Screen.MainScreen)
                 }
             )
         }

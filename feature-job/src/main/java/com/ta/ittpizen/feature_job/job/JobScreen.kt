@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.model.JobItem
+import com.ta.ittpizen.domain.utils.DataJobItem
 import com.ta.ittpizen.ui.component.chip.SingleChipRow
 import com.ta.ittpizen.ui.component.job.JobItem
 import com.ta.ittpizen.ui.component.searchbar.DummySearchBarWithIconButton
@@ -45,19 +46,11 @@ fun JobScreen(
 
     val jobItems = remember(key1 = selectedOption) {
         val users = mutableStateListOf<JobItem>()
-        users.addAll(
-            (1..20).map {
-                JobItem(
-                    id = it.toString(),
-                    name = "Asisten Praktikum Basis Data",
-                    characteristics = listOf("Onsite", "Part time", "0 - 1 year", "Min D3"),
-                    company = "Fakultas Informatika",
-                    date = "12 days ago",
-                    location = "Jl. DI Panjaitan No.128, Banyumas, Jawa Tengah",
-                    saved = it == 3
-                )
-            }
-        )
+        val jobs = when (selectedOption) {
+            options[0] -> DataJobItem.getAllJobsItem()
+            else -> DataJobItem.getJobsItemByCharacteristic(selectedOption)
+        }
+        users.addAll(jobs)
         users
     }
 
@@ -66,11 +59,10 @@ fun JobScreen(
     }
 
     val onButtonSaveClick: (JobItem) -> Unit = { jobItem ->
-        val updatedUser = jobItems.map {
-            if (jobItem.id == it.id) jobItem.copy(saved = jobItem.saved.not()) else it
+        val updatedJob = DataJobItem.savedOrUnsavedJob(jobItem)!!
+        jobItems.replaceAll {
+            if (it.id == updatedJob.id) updatedJob else it
         }
-        jobItems.clear()
-        jobItems.addAll(updatedUser)
     }
 
     Scaffold(modifier = modifier) { paddingValues ->
@@ -106,7 +98,9 @@ fun JobScreen(
                     jobItem = it,
                     onClick = { navigateToDetailJobScreen(it.id) },
                     onSaveClick = onButtonSaveClick,
-                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp, vertical = 10.dp)
+                        .animateItemPlacement()
                 )
             }
         }

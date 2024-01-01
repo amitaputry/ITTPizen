@@ -43,15 +43,19 @@ import com.ta.ittpizen.ui.theme.SecondDarkGrey
 fun ProfileHeader(
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit = {},
-    profile: Profile
+    onLogoutClicked: () -> Unit = {},
+    profile: Profile,
+    showLogOutButton: Boolean = false
 ) {
     Box(modifier = modifier.fillMaxWidth()) {
         Column(modifier = Modifier) {
             ProfileHeaderBackground(
                 navigateUp = navigateUp,
+                showLogOutButton = showLogOutButton,
+                onLogoutClicked = onLogoutClicked
             )
             ProfileHeaderContent(
-                profile = profile,
+                profile = profile
             )
         }
         AsyncImage(
@@ -72,7 +76,9 @@ fun ProfileHeader(
 @Composable
 fun ProfileHeaderBackground(
     modifier: Modifier = Modifier,
-    navigateUp: () -> Unit = {}
+    navigateUp: () -> Unit = {},
+    showLogOutButton: Boolean = false,
+    onLogoutClicked: () -> Unit = {}
 ) {
     Box(
         modifier = modifier
@@ -123,14 +129,24 @@ fun ProfileHeaderBackground(
                 )
             }
         }
-        Image(
-            painter = painterResource(id = R.drawable.logo_ittp),
-            contentDescription = null,
-            modifier = Modifier
-                .size(15.dp)
-                .align(Alignment.TopEnd)
-                .offset(x = (-10).dp, y = (24).dp)
-        )
+        if (!showLogOutButton) {
+            Image(
+                painter = painterResource(id = R.drawable.logo_ittp),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(15.dp)
+                    .align(Alignment.TopEnd)
+                    .offset(x = (-10).dp, y = (24).dp)
+            )
+        }
+        if (showLogOutButton) {
+            LogoutButton(
+                onClick = onLogoutClicked,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .offset(x = (-10).dp, y = (20).dp)
+            )
+        }
     }
 }
 

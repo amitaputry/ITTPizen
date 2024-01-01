@@ -53,7 +53,7 @@ object DataUserItem {
         ),
         UserItem(
             id = "123",
-            name = "GDSC IT Telkom Purwo..",
+            name = "GDSC IT Telkom Purworkerto",
             type = "Student"
         ),
         UserItem(
@@ -209,7 +209,7 @@ object DataUserItem {
         UserItem(
             id = "34",
             userType = UserItemType.Staff,
-            name = "Novanda Alim Setya N..",
+            name = "Novanda Alim Setya Nugraha",
             type = "Staff"
         ),
         UserItem(
