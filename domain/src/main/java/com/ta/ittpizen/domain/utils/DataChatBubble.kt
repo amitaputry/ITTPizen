@@ -70,7 +70,7 @@ object DataChatBubble {
             text = "Hi kak yolanda, apa kabar?"
         ),
         ChatBubble(
-            id = "8",
+            id = "9",
             chatId = "3",
             userId = "9",
             date = "06 December 2023",
