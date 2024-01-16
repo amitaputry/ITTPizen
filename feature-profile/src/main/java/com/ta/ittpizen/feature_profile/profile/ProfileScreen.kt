@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -22,14 +21,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.model.PostItem
+import com.ta.ittpizen.domain.model.Profile
 import com.ta.ittpizen.domain.utils.DataPostItem
-import com.ta.ittpizen.domain.utils.DataProfile
-import com.ta.ittpizen.domain.utils.DataUserItem
 import com.ta.ittpizen.feature_profile.component.ProfileFriendButtonSection
 import com.ta.ittpizen.feature_profile.component.ProfileHeader
 import com.ta.ittpizen.feature_profile.component.ProfileMeButtonSection
 import com.ta.ittpizen.feature_profile.component.ProfilePostIndicator
-import com.ta.ittpizen.ui.component.post.PostItem
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
 enum class ProfileScreenType {
@@ -54,10 +51,10 @@ fun ProfileScreen(
     val context = LocalContext.current
 
     var profile by remember {
-        val user = DataUserItem.getUserById(id = userId)
-        DataProfile.updateConnectState(user!!.id, user.connected)
-        val profile = DataProfile.getProfileById(userId)
-        mutableStateOf(profile)
+//        val user = DataUserItem.getUserById(id = userId)
+//        DataProfile.updateConnectState(user!!.id, user.connected)
+//        val profile = DataProfile
+        mutableStateOf(Profile())
     }
 
     if (profile == null) return
@@ -75,8 +72,8 @@ fun ProfileScreen(
     val postItems = remember { mutableStateListOf<PostItem>() }
 
     val onConnectClick: () -> Unit = {
-        val updatedProfile = DataProfile.connectToProfile(profile!!)
-        profile = updatedProfile
+//        val updatedProfile = DataProfile.connectToProfile(profile!!)
+//        profile = updatedProfile
     }
 
     val onMessageClick: () -> Unit = {
@@ -148,16 +145,16 @@ fun ProfileScreen(
                 ProfilePostIndicator()
             }
             item { Spacer(modifier = Modifier.height(30.dp)) }
-            items(items = postItems, key = { it.id }) {
-                PostItem(
-                    post = it,
-                    onClick = { navigateToDetailPostScreen(it.id) },
-                    onLike = onLikeClicked,
-                    onComment = { navigateToDetailPostScreen(it.id) },
-                    onSend = onShareClicked,
-                    onPhotoClick = navigateToDetailPhotoScreen
-                )
-            }
+//            items(items = postItems, key = { it.id }) {
+//                PostItem(
+//                    post = it,
+//                    onClick = { navigateToDetailPostScreen(it.id) },
+//                    onLike = onLikeClicked,
+//                    onComment = { navigateToDetailPostScreen(it.id) },
+//                    onSend = onShareClicked,
+//                    onPhotoClick = navigateToDetailPhotoScreen
+//                )
+//            }
 
         }
     }

@@ -5,7 +5,7 @@ import com.ta.ittpizen.domain.model.post.Post
 import com.ta.ittpizen.domain.model.post.PostType
 import kotlinx.coroutines.flow.Flow
 
-interface PagedIttpizenUseCase {
+interface IttpizenPagedUseCase {
 
     fun getAllPost(
         token: String,

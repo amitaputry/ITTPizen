@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -16,10 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
@@ -31,6 +32,7 @@ fun HomeTopAppBar(
     onNotificationClick: () -> Unit = {},
     onProfileClick: () -> Unit = {}
 ) {
+    val context = LocalContext.current
     Row(
         modifier = modifier
             .padding(horizontal = 20.dp)
@@ -49,11 +51,15 @@ fun HomeTopAppBar(
                 .clickable { onNotificationClick() }
         )
         Spacer(modifier = Modifier.width(10.dp))
+        val request = ImageRequest.Builder(context)
+            .data(profile)
+            .placeholder(R.drawable.ic_profile_default)
+            .error(R.drawable.ic_profile_default)
+            .crossfade(true)
+            .build()
         AsyncImage(
-            model = profile,
+            model = request,
             contentDescription = "Profile",
-            placeholder = painterResource(id = R.drawable.ic_profile_default),
-            error = painterResource(id = R.drawable.ic_profile_default),
             modifier = Modifier
                 .size(26.dp)
                 .clip(CircleShape)

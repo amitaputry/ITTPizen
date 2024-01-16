@@ -19,8 +19,11 @@ class UserPreferenceRepositoryImpl(
     override suspend fun updateUserPreference(userPreference: UserPreferenceDomain) {
         userPreferenceSetting.updateData { preference ->
             preference.toBuilder()
+                .setUserId(userPreference.userId)
+                .setPhoto(userPreference.photo)
                 .setName(userPreference.name)
                 .setEmail(userPreference.email)
+                .setType(userPreference.type)
                 .setAccessToken(userPreference.accessToken)
                 .build()
         }

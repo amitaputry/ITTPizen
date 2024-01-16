@@ -86,10 +86,28 @@ class IttpizenRepositoryImpl(
     }
 
     override fun createPostLike(token: String, postId: String): Flow<Resource<Boolean>> = flow {
-
+        emit(Resource.Loading)
+        when (val response = remoteDataSource.createPostLike(token, postId)) {
+            is NetworkResponse.Success -> emit(Resource.Success(true))
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+    }.catch {
+        emit(Resource.Error(message = it.message))
     }
 
     override fun deletePostLike(token: String, postId: String): Flow<Resource<Boolean>> = flow {
-
+        emit(Resource.Loading)
+        when (val response = remoteDataSource.deletePostLike(token, postId)) {
+            is NetworkResponse.Success -> emit(Resource.Success(true))
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+    }.catch {
+        emit(Resource.Error(message = it.message))
     }
 }

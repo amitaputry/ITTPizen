@@ -15,6 +15,7 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.ta.ittpizen.data.di.dataModule
 import com.ta.ittpizen.domain.di.domainModule
 import com.ta.ittpizen.feature_auth.di.authModule
+import com.ta.ittpizen.feature_home.di.homeModule
 import com.ta.ittpizen.feature_job.di.jobModule
 import com.ta.ittpizen.feature_onboarding_screen.di.onboardingModule
 import com.ta.ittpizen.feature_profile.di.profileModule
@@ -41,6 +42,7 @@ class MainActivity : ComponentActivity() {
                     splashModule,
                     onboardingModule,
                     authModule,
+                    homeModule,
                     jobModule,
                     profileModule
                 )

@@ -67,6 +67,7 @@ fun PostBody(
                 .scale(Scale.FIT)
                 .placeholder(R.drawable.img_media_placeholder)
                 .error(R.drawable.img_media_placeholder)
+                .memoryCacheKey(media)
                 .build()
             AsyncImage(
                 model = model,

@@ -11,21 +11,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.domain.model.PostItem
+import com.ta.ittpizen.domain.model.post.Post
 import com.ta.ittpizen.ui.theme.DisableColorGrey
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
 @Composable
 fun PostItem(
     modifier: Modifier = Modifier,
-    post: PostItem,
+    post: Post,
     enabled: Boolean = true,
-    onClick: (PostItem) -> Unit = {},
-    onProfileClick: (PostItem) -> Unit = {},
+    onClick: (Post) -> Unit = {},
+    onProfileClick: (Post) -> Unit = {},
     onPhotoClick: (String) -> Unit = {},
-    onLike: (PostItem) -> Unit = {},
-    onComment: (PostItem) -> Unit = {},
-    onSend: (PostItem) -> Unit = {},
+    onLike: (Post) -> Unit = {},
+    onComment: (Post) -> Unit = {},
+    onSend: (Post) -> Unit = {},
 ) {
     val outerModifier = if (enabled) Modifier.clickable { onClick(post) }.then(modifier) else Modifier
     Column(
@@ -37,10 +37,10 @@ fun PostItem(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             PostHeader(
-                profile = post.profile,
-                name = post.name,
+                profile = post.user.photo,
+                name = post.user.name,
                 type = post.type,
-                date = post.date,
+                date = post.createdAt,
                 onProfile = { onProfileClick(post) },
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
@@ -51,8 +51,8 @@ fun PostItem(
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
             PostFooter(
-                like = post.like,
-                comment = post.comment,
+                like = post.likes,
+                comment = post.comments,
                 liked = post.liked,
                 onLike = { onLike(post) },
                 onComment = { onComment(post) },
@@ -69,11 +69,11 @@ fun PostItem(
 fun PreviewPostItem() {
     ITTPizenTheme {
         Surface {
-            val postItem = PostItem(
-                name = "Amita Putry Prasasti",
+            val postItem = Post(
+//                name = "Amita Putry Prasasti",
                 type = "Student",
-                date = "1 hours ago",
-                profile = "",
+//                date = "1 hours ago",
+//                profile = "",
                 text = "Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen. Haloo, salam kenal, mari saling koneksi temen-temen",
                 media = "https://serayunews.com/_next/image?url=https%3A%2F%2Fserayunews.pw%2Fwp-content%2Fuploads%2F2023%2F07%2FWhatsApp-Image-2023-07-02-at-14.44.51.jpeg&w=640&q=75",
                 liked = true

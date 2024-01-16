@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,14 +23,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.ta.ittpizen.domain.model.PostItem
 import com.ta.ittpizen.domain.model.PostItemType
+import com.ta.ittpizen.domain.model.post.Post
+import com.ta.ittpizen.domain.model.preference.UserPreference
 import com.ta.ittpizen.domain.utils.DataPostItem
 import com.ta.ittpizen.ui.component.post.PostItem
 import com.ta.ittpizen.ui.component.tab.BaseScrollableTabRow
 import com.ta.ittpizen.ui.component.topappbar.HomeTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @ExperimentalFoundationApi
 @ExperimentalLayoutApi
@@ -39,6 +43,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = koinViewModel(),
     navigateToMyProfileScreen: (String) -> Unit = {},
     navigateToUserProfileScreen: (String) -> Unit = {},
     navigateToNotificationScreen: (String) -> Unit = {},
@@ -46,13 +51,17 @@ fun HomeScreen(
     navigateToPhotoDetailScreen: (String) -> Unit = {},
 ) {
 
-    val userId = "0"
-
     val tabs = listOf("All Post", "Tweet", "Academic", "#PrestasiITTP", "Events", "Scholarship")
 
     val context = LocalContext.current
     val pagerState = rememberPagerState { tabs.size }
     val scope = rememberCoroutineScope()
+
+    val userPreference by viewModel.userPreference.collectAsStateWithLifecycle(initialValue = UserPreference())
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val allPostLoaded = uiState.allPostLoaded
+    val allPost = uiState.allPost.collectAsLazyPagingItems()
 
     val selectedTabIndex by remember(key1 = pagerState.currentPage) {
         mutableIntStateOf(pagerState.currentPage)
@@ -70,14 +79,16 @@ fun HomeScreen(
         postItems.filter { it.postType == type }
     }
 
-    val onLikeClicked: (PostItem) -> Unit = { post ->
-        val updatedPost = DataPostItem.likeOrDislikePost(post)!!
-        postItems.replaceAll {
-            if (it.id == updatedPost.id) updatedPost else it
+    val onLikeClicked: (Post) -> Unit = { post ->
+        if (post.liked) {
+            viewModel.deletePostLike(token = userPreference.accessToken, postId = post.id)
+        } else {
+            viewModel.createPostLike(token = userPreference.accessToken, postId = post.id)
         }
+        allPost.refresh()
     }
 
-    val onShareClicked: (PostItem) -> Unit = { post ->
+    val onShareClicked: (Post) -> Unit = { post ->
         val text = buildString {
             append(post.text)
             append("\n\n")
@@ -97,12 +108,19 @@ fun HomeScreen(
         postItems.addAll(DataPostItem.generateAllPost())
     }
 
+    LaunchedEffect(key1 = userPreference) {
+        if (userPreference.accessToken.isEmpty()) return@LaunchedEffect
+        if (allPostLoaded) return@LaunchedEffect
+        viewModel.getAllPost(token = userPreference.accessToken)
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
             HomeTopAppBar(
-                onProfileClick = { navigateToMyProfileScreen(userId) },
-                onNotificationClick = { navigateToNotificationScreen(userId) }
+                onProfileClick = { navigateToMyProfileScreen(userPreference.userId) },
+                onNotificationClick = { navigateToNotificationScreen(userPreference.userId) },
+                profile = userPreference.photo
             )
         }
     ) { paddingValues ->
@@ -120,26 +138,21 @@ fun HomeScreen(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize()
             ) { page ->
-                val items = when (page) {
-                    0 -> postItems
-                    1 -> getPostByType(PostItemType.TWEET)
-                    2 -> getPostByType(PostItemType.ACADEMIC)
-                    3 -> getPostByType(PostItemType.ACHIEVEMENT)
-                    4 -> getPostByType(PostItemType.EVENT)
-                    else -> getPostByType(PostItemType.SCHOLARSHIP)
-                }
                 LazyColumn {
-                    items(items = items, key = { post -> post.id }) { post ->
-                        PostItem(
-                            post = post,
-                            onProfileClick = { navigateToUserProfileScreen(it.userId) },
-                            onClick = { navigateToDetailPostScreen(it.id) },
-                            onPhotoClick = { navigateToPhotoDetailScreen(it) },
-                            onLike = { onLikeClicked(post) },
-                            onComment = { navigateToDetailPostScreen(post.id) },
-                            onSend = onShareClicked,
-                            modifier = Modifier.padding(top = 20.dp)
-                        )
+                    items(count = allPost.itemCount, key = { it }) {
+                        val post = allPost[it]
+                        if (post != null) {
+                            PostItem(
+                                post = post,
+                                onProfileClick = { navigateToUserProfileScreen(it.user.id) },
+                                onClick = { navigateToDetailPostScreen(it.id) },
+                                onPhotoClick = { navigateToPhotoDetailScreen(it) },
+                                onLike = { onLikeClicked(post) },
+                                onComment = { navigateToDetailPostScreen(post.id) },
+                                onSend = onShareClicked,
+                                modifier = Modifier.padding(top = 20.dp)
+                            )
+                        }
                     }
                 }
             }

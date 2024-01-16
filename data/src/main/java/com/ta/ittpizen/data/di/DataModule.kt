@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
 import com.ta.ittpizen.data.BuildConfig
+import com.ta.ittpizen.data.IttpizenPagedRepositoryImpl
 import com.ta.ittpizen.data.IttpizenRepositoryImpl
 import com.ta.ittpizen.data.SettingPreferenceRepositoryImpl
 import com.ta.ittpizen.data.UserPreference
@@ -13,6 +14,7 @@ import com.ta.ittpizen.data.datastore.SettingPreferenceDataStore
 import com.ta.ittpizen.data.datastore.userPreferenceDataStore
 import com.ta.ittpizen.data.remote.RemoteDataSource
 import com.ta.ittpizen.data.remote.service.IttpizenService
+import com.ta.ittpizen.domain.repository.IttpizenPagedRepository
 import com.ta.ittpizen.domain.repository.IttpizenRepository
 import com.ta.ittpizen.domain.repository.SettingPreferenceRepository
 import com.ta.ittpizen.domain.repository.UserPreferenceRepository
@@ -47,6 +49,7 @@ val dataModule = module {
     single { RemoteDataSource(get()) }
 
     single<IttpizenRepository> { IttpizenRepositoryImpl(get()) }
+    single<IttpizenPagedRepository> { IttpizenPagedRepositoryImpl(get()) }
     single<SettingPreferenceRepository> { SettingPreferenceRepositoryImpl(get()) }
     single<UserPreferenceRepository> { UserPreferenceRepositoryImpl(get()) }
 

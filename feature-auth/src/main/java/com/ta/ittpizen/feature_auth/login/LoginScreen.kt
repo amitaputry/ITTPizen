@@ -105,6 +105,7 @@ fun LoginScreen(
             val result = (loginResult as Resource.Success<LoginResult>).data
             val userPreference = UserPreference(
                 userId = result.id,
+                photo = result.photo,
                 name = result.name,
                 type = result.type,
                 email = result.email,

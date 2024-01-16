@@ -33,7 +33,6 @@ import com.ta.ittpizen.domain.utils.DataPostItem
 import com.ta.ittpizen.feature_post.component.PostDetailEmptyComment
 import com.ta.ittpizen.feature_post.component.PostDetailFooter
 import com.ta.ittpizen.ui.component.post.PostCommentItem
-import com.ta.ittpizen.ui.component.post.PostItem
 import com.ta.ittpizen.ui.component.topappbar.DetailTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import kotlinx.coroutines.launch
@@ -111,11 +110,11 @@ fun PostDetailScreen(
         ) {
             LazyColumn(state = lazyState) {
                 item {
-                    PostItem(
-                        post = postItem!!,
-                        enabled = false,
-                        onLike = onLikeClicked
-                    )
+//                    PostItem(
+//                        post = postItem!!,
+//                        enabled = false,
+//                        onLike = onLikeClicked
+//                    )
                 }
                 item { Spacer(modifier = Modifier.height(10.dp)) }
                 items(items = comments, key = { it.id }) {
