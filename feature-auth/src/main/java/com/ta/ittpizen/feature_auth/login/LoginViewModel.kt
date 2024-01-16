@@ -1,50 +1,73 @@
 package com.ta.ittpizen.feature_auth.login
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ta.ittpizen.domain.model.Resource
+import com.ta.ittpizen.domain.model.auth.LoginResult
+import com.ta.ittpizen.domain.usecase.IttpizenUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(
+    private val useCase: IttpizenUseCase
+) : ViewModel() {
 
-    private val _registerUiState = MutableStateFlow(LoginUiState())
-    val registerUiState: StateFlow<LoginUiState> get() = _registerUiState
+    private val _loginUiState = MutableStateFlow(LoginUiState())
+    val loginUiState: StateFlow<LoginUiState> get() = _loginUiState
 
-    val buttonRegisterEnable get() = _registerUiState.map {
+    private val _loginResult = MutableStateFlow<Resource<LoginResult>>(Resource.Idle)
+    val loginResult: StateFlow<Resource<LoginResult>> get() = _loginResult
+
+    val buttonLoadingLoading get() = _loginResult.map {
+        it is Resource.Loading
+    }
+
+    val buttonLoginEnabled get() = _loginUiState.map {
         it.email.isNotEmpty() && it.password.length >= 6
     }
 
-    val emailError get() = _registerUiState.map {
+    val emailError get() = _loginUiState.map {
         it.emailErrorMessage.isNotEmpty()
     }
 
-    val passwordError get() = _registerUiState.map {
+    val passwordError get() = _loginUiState.map {
         it.passwordErrorMessage.isNotEmpty()
     }
 
     fun updateEmail(email: String) {
-        _registerUiState.update {
+        _loginUiState.update {
             it.copy(email = email)
         }
     }
 
     fun updatePassword(password: String) {
-        _registerUiState.update {
+        _loginUiState.update {
             it.copy(password = password)
         }
     }
 
     fun updateEmailErrorMessage(message: String) {
-        _registerUiState.update {
+        _loginUiState.update {
             it.copy(emailErrorMessage = message)
         }
     }
 
     fun updatePasswordErrorMessage(message: String) {
-        _registerUiState.update {
+        _loginUiState.update {
             it.copy(passwordErrorMessage = message)
         }
     }
 
+    fun login() {
+        val email = _loginUiState.value.email
+        val password = _loginUiState.value.password
+        viewModelScope.launch {
+            useCase.login(email, password).collect { result ->
+                _loginResult.update { result }
+            }
+        }
+    }
 }

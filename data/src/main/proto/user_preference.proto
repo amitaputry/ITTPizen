@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "com.ta.ittpizen.data";
+option java_multiple_files = true;
+
+message UserPreference {
+    string user_id = 1;
+    string photo = 2;
+    string name = 3;
+    string type = 4;
+    string email = 5;
+    string access_token = 6;
+}
