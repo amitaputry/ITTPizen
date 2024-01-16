@@ -7,6 +7,7 @@ fun LoginResponse.toDomain(): LoginResult = LoginResult(
     id = id ?: "",
     photo = photo ?: "",
     name = name ?: "",
+    type = type ?: "",
     email = email ?: "",
     accessToken = accessToken ?: "",
     refreshToken = refreshToken ?: ""

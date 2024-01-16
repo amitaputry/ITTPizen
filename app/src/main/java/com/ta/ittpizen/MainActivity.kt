@@ -16,7 +16,9 @@ import com.ta.ittpizen.data.di.dataModule
 import com.ta.ittpizen.domain.di.domainModule
 import com.ta.ittpizen.feature_auth.di.authModule
 import com.ta.ittpizen.feature_job.di.jobModule
+import com.ta.ittpizen.feature_onboarding_screen.di.onboardingModule
 import com.ta.ittpizen.feature_profile.di.profileModule
+import com.ta.ittpizen.feature_splash_screen.di.splashModule
 import com.ta.ittpizen.navigation.ITTPizenNavHost
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import org.koin.android.ext.koin.androidContext
@@ -36,6 +38,8 @@ class MainActivity : ComponentActivity() {
                 modules(
                     dataModule,
                     domainModule,
+                    splashModule,
+                    onboardingModule,
                     authModule,
                     jobModule,
                     profileModule

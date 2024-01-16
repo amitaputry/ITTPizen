@@ -1,9 +1,9 @@
-package com.ta.ittpizen.domain.usecase
+package com.ta.ittpizen.domain.repository
 
 import com.ta.ittpizen.domain.model.preference.UserPreference
 import kotlinx.coroutines.flow.Flow
 
-interface UserPreferenceUseCase {
+interface UserPreferenceRepository {
 
     val userPreference: Flow<UserPreference>
 

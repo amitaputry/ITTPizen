@@ -4,7 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.auth.LoginResult
+import com.ta.ittpizen.domain.model.preference.UserPreference
 import com.ta.ittpizen.domain.usecase.IttpizenUseCase
+import com.ta.ittpizen.domain.usecase.SettingPreferenceUseCase
+import com.ta.ittpizen.domain.usecase.UserPreferenceUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -12,7 +15,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val useCase: IttpizenUseCase
+    private val useCase: IttpizenUseCase,
+    private val settingUseCase: SettingPreferenceUseCase,
+    private val userPreferenceUseCase: UserPreferenceUseCase
 ) : ViewModel() {
 
     private val _loginUiState = MutableStateFlow(LoginUiState())
@@ -22,7 +27,7 @@ class LoginViewModel(
     val loginResult: StateFlow<Resource<LoginResult>> get() = _loginResult
 
     val buttonLoadingLoading get() = _loginResult.map {
-        it is Resource.Loading
+        it is Resource.Loading || it is Resource.Success
     }
 
     val buttonLoginEnabled get() = _loginUiState.map {
@@ -70,4 +75,17 @@ class LoginViewModel(
             }
         }
     }
+
+    fun updateIsLoginState(state: Boolean) {
+        viewModelScope.launch {
+            settingUseCase.updateIsLoginState(state)
+        }
+    }
+
+    fun updateUserPreference(userPreference: UserPreference) {
+        viewModelScope.launch {
+            userPreferenceUseCase.updateUserPreference(userPreference)
+        }
+    }
+
 }

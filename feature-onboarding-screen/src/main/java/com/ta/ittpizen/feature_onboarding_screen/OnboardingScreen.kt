@@ -25,14 +25,23 @@ import com.ta.ittpizen.feature_onboarding_screen.component.OnboardingFooter
 import com.ta.ittpizen.feature_onboarding_screen.component.OnboardingHeader
 import com.ta.ittpizen.feature_onboarding_screen.domain.Onboarding
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
+import org.koin.androidx.compose.koinViewModel
 
 @ExperimentalFoundationApi
 @Composable
 fun OnboardingScreen(
     modifier: Modifier = Modifier,
+    viewModel: OnboardingViewModel = koinViewModel(),
     navigateToLoginScreen: () -> Unit = {}
 ) {
+
     val scrollState = rememberScrollState()
+
+    val navigateToNextScreen: () -> Unit = {
+        viewModel.updateFirstOpenState(false)
+        navigateToLoginScreen()
+    }
+
     val onBoardings = listOf(
         Onboarding(
             image = R.drawable.img_onboarding_1,
@@ -69,7 +78,7 @@ fun OnboardingScreen(
         ) {
             OnboardingHeader(
                 modifier = Modifier.align(Alignment.End),
-                onSkipClick = navigateToLoginScreen,
+                onSkipClick = navigateToNextScreen,
                 buttonSkipVisibility = buttonSkipVisibility
             )
             Spacer(modifier = Modifier.height(52.dp))
@@ -81,7 +90,7 @@ fun OnboardingScreen(
                 count = pagerState.pageCount,
                 activePage = pagerState.currentPage,
                 buttonFinishVisibility = buttonFinishVisibility,
-                onFinishClick = navigateToLoginScreen,
+                onFinishClick = navigateToNextScreen,
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .fillMaxWidth()

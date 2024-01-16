@@ -37,6 +37,7 @@ import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.ta.ittpizen.common.isValidEmail
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.auth.LoginResult
+import com.ta.ittpizen.domain.model.preference.UserPreference
 import com.ta.ittpizen.feature_auth.R
 import com.ta.ittpizen.feature_auth.di.authModule
 import com.ta.ittpizen.ui.component.button.LargePrimaryButton
@@ -98,29 +99,24 @@ fun LoginScreen(
         viewModel.updatePasswordErrorMessage(errorMessage)
     }
 
-//    val onLoginClick: () -> Unit = {
-//        viewModel.login()
-//        if (email == "adminittp@gmail.com" && password == "12345678") {
-//            navigateToMainScreen()
-//        } else {
-//            scope.launch {
-//                snackBarHostState.showSnackbar("Email or password wrong!")
-//                viewModel.updatePassword("")
-//            }
-//        }
-//    }
-
     LaunchedEffect(key1 = loginResult) {
         if (loginResult is Resource.Error) {
             dialogTitle = "Login Failed!"
             dialogMessage = (loginResult as Resource.Error<LoginResult>).message ?: ""
             dialogState.show()
         }
-        when (loginResult) {
-            Resource.Idle -> {}
-            Resource.Loading -> Log.d("TAG", "LoginScreen: Loading...")
-            is Resource.Error -> Log.d("TAG", "LoginScreen: Error = ${(loginResult as Resource.Error<LoginResult>).message}")
-            is Resource.Success -> Log.d("TAG", "LoginScreen: Success ${(loginResult as Resource.Success<LoginResult>).data}")
+        if (loginResult is Resource.Success) {
+            val result = (loginResult as Resource.Success<LoginResult>).data
+            val userPreference = UserPreference(
+                userId = result.id,
+                name = result.name,
+                type = result.type,
+                email = result.email,
+                accessToken = result.accessToken
+            )
+            viewModel.updateIsLoginState(true)
+            viewModel.updateUserPreference(userPreference)
+            navigateToMainScreen()
         }
     }
     

@@ -49,7 +49,9 @@ fun ITTPizenNavHost(
             route = Screen.SplashScreen.route
         ) {
             SplashScreen(
-                navigateToNextScreen = navController::navigateToOnboardingScreen
+                navigateToOnboardingScreen = navController::navigateToOnboardingScreen,
+                navigateToLoginScreen = { navController.navigateToLoginScreen(from = Screen.SplashScreen) },
+                navigateToMainScreen = { navController.navigateToMainScreen(from = Screen.SplashScreen) }
             )
         }
         composableWithSlideHorizontalAnimation(

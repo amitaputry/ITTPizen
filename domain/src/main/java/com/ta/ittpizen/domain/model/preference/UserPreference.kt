@@ -1,7 +1,8 @@
-package com.ta.ittpizen.domain.model
+package com.ta.ittpizen.domain.model.preference
 
 data class UserPreference(
     val userId: String = "",
+    val photo: String = "",
     val name: String = "",
     val type: String = "",
     val email: String = "",
