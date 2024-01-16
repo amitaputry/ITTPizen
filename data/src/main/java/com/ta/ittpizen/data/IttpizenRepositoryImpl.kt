@@ -22,7 +22,7 @@ class IttpizenRepositoryImpl(
         emit(Resource.Loading)
         when (val response = remoteDataSource.login(email, password)) {
             is NetworkResponse.Success -> {
-                val result = response.body.toDomain()
+                val result = response.body.data.toDomain()
                 emit(Resource.Success(result))
             }
             is NetworkResponse.Error -> {
@@ -56,7 +56,7 @@ class IttpizenRepositoryImpl(
         )
         when (response) {
             is NetworkResponse.Success -> {
-                val result = response.body.toDomain()
+                val result = response.body.data.toDomain()
                 emit(Resource.Success(result))
             }
             is NetworkResponse.Error -> {

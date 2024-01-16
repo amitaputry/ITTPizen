@@ -15,22 +15,34 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.maxkeppeker.sheets.core.CoreDialog
+import com.maxkeppeker.sheets.core.models.CoreSelection
+import com.maxkeppeker.sheets.core.models.base.SelectionButton
+import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.ta.ittpizen.common.isValidEmail
+import com.ta.ittpizen.domain.model.Resource
+import com.ta.ittpizen.domain.model.auth.RegisterResult
 import com.ta.ittpizen.feature_auth.di.authModule
 import com.ta.ittpizen.ui.component.button.LargePrimaryButton
+import com.ta.ittpizen.ui.component.text.TextBodyMedium
 import com.ta.ittpizen.ui.component.text.TextBodySmall
+import com.ta.ittpizen.ui.component.text.TextTitleSmall
 import com.ta.ittpizen.ui.component.textbutton.TextButton
 import com.ta.ittpizen.ui.component.textfield.DropDownTextFieldWithLabel
 import com.ta.ittpizen.ui.component.textfield.OutlinedTextFieldWithLabel
 import com.ta.ittpizen.ui.component.textfield.PasswordTextFieldWithLabel
 import com.ta.ittpizen.ui.component.topappbar.DetailTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
+import com.ta.ittpizen.ui.theme.SecondDarkGrey
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinApplication
 
@@ -43,11 +55,16 @@ fun RegisterScreen(
     navigateToLoginScreen: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
+    val dialogState = rememberUseCaseState()
+
+    var dialogTitle by remember { mutableStateOf("") }
+    var dialogMessage by remember { mutableStateOf("") }
 
     val genders = listOf("Male", "Female")
     val status = listOf("Student", "Alumni", "Lecturer", "Staff")
 
     val uiState by viewModel.registerUiState.collectAsStateWithLifecycle()
+    val registerResult by viewModel.registerResult.collectAsStateWithLifecycle()
 
     val fullName = uiState.fullName
     val studentIdOrLectureId = uiState.studentIdOrLectureId
@@ -68,7 +85,12 @@ fun RegisterScreen(
     val passwordError by viewModel.passwordError.collectAsStateWithLifecycle(initialValue = false)
     val confirmPasswordError by viewModel.confirmPasswordError.collectAsStateWithLifecycle(initialValue = false)
 
-    val buttonRegisterEnable by viewModel.buttonRegisterEnable.collectAsStateWithLifecycle(initialValue = false)
+    val buttonRegisterEnabled by viewModel.buttonRegisterEnabled.collectAsStateWithLifecycle(initialValue = false)
+    val buttonRegisterLoading by viewModel.buttonRegisterLoading.collectAsStateWithLifecycle(initialValue = false)
+
+    val registerSuccess by remember(key1 = registerResult) {
+        mutableStateOf(registerResult is Resource.Success)
+    }
 
     val updateFullName: (String) -> Unit = {
         val errorMessage = if (it.isNotEmpty()) "" else "Nama cannot be empty!"
@@ -91,10 +113,46 @@ fun RegisterScreen(
         viewModel.updateConfirmPasswordErrorMessage(errorMessage)
     }
 
+    val onPositiveButtonDialogClicked: () -> Unit = {
+        if (registerSuccess) {
+            navigateToLoginScreen()
+        } else dialogState.finish()
+    }
+
     LaunchedEffect(key1 = Unit) {
         viewModel.updateGender(genders[0])
         viewModel.updateStatus(status[0])
     }
+
+    LaunchedEffect(key1 = registerResult) {
+        if (registerResult is Resource.Error) {
+            dialogTitle = "Register Failed!"
+            dialogMessage = (registerResult as Resource.Error<RegisterResult>).message ?: ""
+            dialogState.show()
+        }
+        if (registerResult is Resource.Success) {
+            val message = "Registered $email successfully"
+            dialogTitle = "Register Success!"
+            dialogMessage = message
+            dialogState.show()
+        }
+    }
+
+    CoreDialog(
+        state = dialogState,
+        body = {
+            TextTitleSmall(text = dialogTitle)
+            Spacer(modifier = Modifier.height(16.dp))
+            TextBodyMedium(text = dialogMessage, color = SecondDarkGrey)
+        },
+        selection = CoreSelection(
+            negativeButton = null,
+            positiveButton = SelectionButton(
+                text = "Ok"
+            ),
+            onPositiveClick = onPositiveButtonDialogClicked
+        )
+    )
 
     Scaffold(
         topBar = {
@@ -188,8 +246,9 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(20.dp))
             LargePrimaryButton(
                 text = "Register",
-                onClick = navigateToLoginScreen,
-                enable = buttonRegisterEnable,
+                onClick = viewModel::register,
+                enable = buttonRegisterEnabled,
+                loading = buttonRegisterLoading,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(10.dp))

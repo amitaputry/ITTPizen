@@ -1,19 +1,33 @@
 package com.ta.ittpizen.feature_auth.register
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ta.ittpizen.domain.model.Resource
+import com.ta.ittpizen.domain.model.auth.RegisterResult
+import com.ta.ittpizen.domain.usecase.IttpizenUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel(
+    private val useCase: IttpizenUseCase
+) : ViewModel() {
 
     private val _registerUiState = MutableStateFlow(RegisterUiState())
     val registerUiState: StateFlow<RegisterUiState> get() = _registerUiState
 
-    val buttonRegisterEnable = _registerUiState.map {
+    private val _registerResult = MutableStateFlow<Resource<RegisterResult>>(Resource.Idle)
+    val registerResult: StateFlow<Resource<RegisterResult>> get() = _registerResult
+
+    val buttonRegisterEnabled = _registerUiState.map {
         it.fullName.isNotEmpty() && it.email.isNotEmpty() && it.gender.isNotEmpty() &&
         it.status.isNotEmpty() && it.password.length >= 6 && it.password == it.confirmPassword
+    }
+
+    val buttonRegisterLoading = _registerResult.map {
+        it is Resource.Loading
     }
 
     val fullNameError get() = _registerUiState.map {
@@ -92,4 +106,20 @@ class RegisterViewModel : ViewModel() {
             it.copy(confirmPasswordErrorMessage = message)
         }
     }
+
+    fun register() {
+        val name = _registerUiState.value.fullName
+        val studentOrLectureId = _registerUiState.value.studentIdOrLectureId
+        val email = _registerUiState.value.email
+        val phone = _registerUiState.value.phone
+        val gender = _registerUiState.value.gender
+        val status = _registerUiState.value.status
+        val password = _registerUiState.value.password
+        viewModelScope.launch {
+            useCase.register(name, studentOrLectureId, email, phone, gender, status, password).collect { result ->
+                _registerResult.update { result }
+            }
+        }
+    }
+
 }

@@ -18,7 +18,7 @@ class RemoteDataSource(private val service: IttpizenService) {
     suspend fun login(
         email: String,
         password: String
-    ): NetworkResponse<LoginResponse, CommonErrorResponse> {
+    ): NetworkResponse<CommonResponse<LoginResponse>, CommonErrorResponse> {
         val request = LoginRequest(email, password)
         return service.login(request)
     }
@@ -31,7 +31,7 @@ class RemoteDataSource(private val service: IttpizenService) {
         gender: String,
         type: String,
         password: String
-    ): NetworkResponse<RegisterResponse, CommonErrorResponse> {
+    ): NetworkResponse<CommonResponse<RegisterResponse>, CommonErrorResponse> {
         val request = RegisterRequest(name, studentOrLectureId, email, phone, gender, type, password)
         return service.register(request)
     }

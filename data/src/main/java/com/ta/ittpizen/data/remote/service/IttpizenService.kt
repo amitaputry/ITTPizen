@@ -26,12 +26,12 @@ interface IttpizenService {
     @POST("user/login")
     suspend fun login(
         @Body request: LoginRequest
-    ): NetworkResponse<LoginResponse, CommonErrorResponse>
+    ): NetworkResponse<CommonResponse<LoginResponse>, CommonErrorResponse>
 
     @POST("user/register")
     suspend fun register(
         @Body request: RegisterRequest
-    ): NetworkResponse<RegisterResponse, CommonErrorResponse>
+    ): NetworkResponse<CommonResponse<RegisterResponse>, CommonErrorResponse>
 
     @GET("post")
     suspend fun getAllPost(
