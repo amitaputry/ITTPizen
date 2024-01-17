@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -24,6 +25,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.maxkeppeker.sheets.core.CoreDialog
+import com.maxkeppeker.sheets.core.models.CoreSelection
+import com.maxkeppeker.sheets.core.models.base.SelectionButton
+import com.maxkeppeker.sheets.core.models.base.rememberUseCaseState
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.connection.DetailConnection
 import com.ta.ittpizen.domain.model.post.Post
@@ -33,8 +38,11 @@ import com.ta.ittpizen.feature_profile.component.ProfileHeader
 import com.ta.ittpizen.feature_profile.component.ProfileMeButtonSection
 import com.ta.ittpizen.feature_profile.component.ProfilePostIndicator
 import com.ta.ittpizen.ui.component.post.PostItem
+import com.ta.ittpizen.ui.component.text.TextBodyMedium
+import com.ta.ittpizen.ui.component.text.TextTitleSmall
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import com.ta.ittpizen.ui.theme.PrimaryRed
+import com.ta.ittpizen.ui.theme.SecondDarkGrey
 import org.koin.androidx.compose.koinViewModel
 
 enum class ProfileScreenType {
@@ -42,6 +50,7 @@ enum class ProfileScreenType {
     FRIEND
 }
 
+@ExperimentalMaterial3Api
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
@@ -58,6 +67,10 @@ fun ProfileScreen(
 ) {
 
     val context = LocalContext.current
+    val dialogState = rememberUseCaseState()
+
+    var dialogTitle by remember { mutableStateOf("") }
+    var dialogMessage by remember { mutableStateOf("") }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val userPreference by viewModel.userPreference.collectAsStateWithLifecycle(initialValue = UserPreference())
@@ -77,6 +90,17 @@ fun ProfileScreen(
         mutableStateOf(text)
     }
     val secondaryText = "Message"
+
+    val onLogoutClick: () -> Unit = {
+        dialogTitle = "Warning message!"
+        dialogMessage = "Are you sure you want to log out?"
+        dialogState.show()
+    }
+
+    val logout: () -> Unit = {
+        viewModel.logout()
+        navigateToLoginScreen()
+    }
 
     val onConnectClick: () -> Unit = {
 //        val updatedProfile = DataProfile.connectToProfile(profileData)
@@ -126,6 +150,21 @@ fun ProfileScreen(
         }
     }
 
+    CoreDialog(
+        state = dialogState,
+        body = {
+            TextTitleSmall(text = dialogTitle)
+            Spacer(modifier = Modifier.height(16.dp))
+            TextBodyMedium(text = dialogMessage, color = SecondDarkGrey)
+        },
+        selection = CoreSelection(
+            positiveButton = SelectionButton(
+                text = "Logout"
+            ),
+            onPositiveClick = logout
+        )
+    )
+
     Scaffold(modifier = modifier) { paddingValues ->
         LazyColumn(
             contentPadding = paddingValues,
@@ -136,7 +175,7 @@ fun ProfileScreen(
                     profile = profileData,
                     navigateUp = navigateUp,
                     showLogOutButton = logoutButtonVisible,
-                    onLogoutClicked = navigateToLoginScreen,
+                    onLogoutClicked = onLogoutClick,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -186,7 +225,8 @@ fun ProfileScreen(
                             onLike = onLikeClicked,
                             onComment = { navigateToDetailPostScreen(it.id) },
                             onSend = onShareClicked,
-                            onPhotoClick = navigateToDetailPhotoScreen
+                            onPhotoClick = navigateToDetailPhotoScreen,
+                            modifier = Modifier.padding(top = 20.dp)
                         )
                     }
                 }
@@ -195,6 +235,7 @@ fun ProfileScreen(
     }
 }
 
+@ExperimentalMaterial3Api
 @Preview
 @Composable
 fun PreviewProfileScreen() {
