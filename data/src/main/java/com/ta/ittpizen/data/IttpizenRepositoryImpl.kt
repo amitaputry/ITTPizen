@@ -4,8 +4,10 @@ import com.haroldadmin.cnradapter.NetworkResponse
 import com.ta.ittpizen.common.reduceFileImage
 import com.ta.ittpizen.data.mapper.auth.toDomain
 import com.ta.ittpizen.data.mapper.connection.toDomain
+import com.ta.ittpizen.data.mapper.job.toDomain
 import com.ta.ittpizen.data.mapper.post.toDomain
 import com.ta.ittpizen.data.remote.RemoteDataSource
+import com.ta.ittpizen.data.remote.response.job.CreateJobResult
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.auth.LoginResult
 import com.ta.ittpizen.domain.model.auth.RegisterResult
@@ -165,6 +167,37 @@ class IttpizenRepositoryImpl(
     ): Flow<Resource<DetailConnection>> = flow {
         emit(Resource.Loading)
         when (val response = remoteDataSource.getConnectionById(token, userId)) {
+            is NetworkResponse.Success -> {
+                val result = response.body.data.toDomain()
+                emit(Resource.Success(result))
+            }
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+    }.catch {
+        emit(Resource.Error(message = it.message))
+    }
+
+    override fun createJob(
+        token: String,
+        title: String,
+        company: String,
+        street: String,
+        city: String,
+        province: String,
+        workplaceType: String,
+        jobType: String,
+        description: String,
+        skills: List<String>,
+        experience: String,
+        graduates: String,
+        link: String
+    ): Flow<Resource<CreateJobResult>> = flow {
+        emit(Resource.Loading)
+        val response = remoteDataSource.createJob(token, title, company, street, city, province, workplaceType, jobType, description, skills, experience, graduates, link)
+        when (response) {
             is NetworkResponse.Success -> {
                 val result = response.body.data.toDomain()
                 emit(Resource.Success(result))

@@ -3,6 +3,7 @@ package com.ta.ittpizen.data.remote
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.ta.ittpizen.data.remote.request.auth.LoginRequest
 import com.ta.ittpizen.data.remote.request.auth.RegisterRequest
+import com.ta.ittpizen.data.remote.request.job.CreateJobRequest
 import com.ta.ittpizen.data.remote.response.CommonErrorResponse
 import com.ta.ittpizen.data.remote.response.CommonResponse
 import com.ta.ittpizen.data.remote.response.PagedCommonResponse
@@ -10,6 +11,7 @@ import com.ta.ittpizen.data.remote.response.auth.LoginResponse
 import com.ta.ittpizen.data.remote.response.auth.RegisterResponse
 import com.ta.ittpizen.data.remote.response.connection.ConnectionResponse
 import com.ta.ittpizen.data.remote.response.connection.DetailConnectionResponse
+import com.ta.ittpizen.data.remote.response.job.CreateJobResponse
 import com.ta.ittpizen.data.remote.response.job.JobResponse
 import com.ta.ittpizen.data.remote.response.job.SaveJobResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostCommentResponse
@@ -130,6 +132,26 @@ class RemoteDataSource(private val service: IttpizenService) {
     ): NetworkResponse<CommonResponse<DetailConnectionResponse>, CommonErrorResponse> {
         val authorization = "Bearer $token"
         return service.getConnectionById(authorization, userId)
+    }
+
+    suspend fun createJob(
+        token: String,
+        title: String,
+        company: String,
+        street: String,
+        city: String,
+        province: String,
+        workplaceType: String,
+        jobType: String,
+        description: String,
+        skills: List<String>,
+        experience: String,
+        graduates: String,
+        link: String
+    ): NetworkResponse<CommonResponse<CreateJobResponse>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        val request = CreateJobRequest(skills, province, city, graduates, street, link, description, company, workplaceType, title, jobType, experience)
+        return service.createJob(authorization, request)
     }
 
     suspend fun getAllJob(

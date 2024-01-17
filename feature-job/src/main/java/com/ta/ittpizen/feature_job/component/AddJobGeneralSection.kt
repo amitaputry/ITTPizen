@@ -29,7 +29,7 @@ fun AddJobGeneralSection(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val workplaceTypes = listOf("Onsite", "Remote")
-    val jobTypes = listOf("Full Time", "Part Time", "Contract", "Volunteer", "Internship")
+    val jobTypes = listOf("FullTime", "PartTime", "Contract", "Volunteer", "Internship")
 
     val jobTitle = uiState.jobTitle
     val companyName = uiState.companyName

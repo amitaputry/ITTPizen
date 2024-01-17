@@ -3,6 +3,7 @@ package com.ta.ittpizen.data.remote.service
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.ta.ittpizen.data.remote.request.auth.LoginRequest
 import com.ta.ittpizen.data.remote.request.auth.RegisterRequest
+import com.ta.ittpizen.data.remote.request.job.CreateJobRequest
 import com.ta.ittpizen.data.remote.response.CommonErrorResponse
 import com.ta.ittpizen.data.remote.response.CommonResponse
 import com.ta.ittpizen.data.remote.response.PagedCommonResponse
@@ -10,6 +11,7 @@ import com.ta.ittpizen.data.remote.response.auth.LoginResponse
 import com.ta.ittpizen.data.remote.response.auth.RegisterResponse
 import com.ta.ittpizen.data.remote.response.connection.ConnectionResponse
 import com.ta.ittpizen.data.remote.response.connection.DetailConnectionResponse
+import com.ta.ittpizen.data.remote.response.job.CreateJobResponse
 import com.ta.ittpizen.data.remote.response.job.JobResponse
 import com.ta.ittpizen.data.remote.response.job.SaveJobResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostCommentResponse
@@ -155,6 +157,14 @@ interface IttpizenService {
         @Query("size")
         size: Int
     ): NetworkResponse<PagedCommonResponse<List<JobResponse>>, CommonErrorResponse>
+
+    @POST("job")
+    suspend fun createJob(
+        @Header("Authorization")
+        authorization: String,
+        @Body
+        request: CreateJobRequest,
+    ): NetworkResponse<CommonResponse<CreateJobResponse>, CommonErrorResponse>
 
     @POST("job/save/{jobId}")
     suspend fun saveJob(

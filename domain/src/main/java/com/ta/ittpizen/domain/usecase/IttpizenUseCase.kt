@@ -1,5 +1,6 @@
 package com.ta.ittpizen.domain.usecase
 
+import com.ta.ittpizen.data.remote.response.job.CreateJobResult
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.auth.LoginResult
 import com.ta.ittpizen.domain.model.auth.RegisterResult
@@ -62,6 +63,22 @@ interface IttpizenUseCase {
         token: String,
         userId: String
     ): Flow<Resource<DetailConnection>>
+
+    fun createJob(
+        token: String,
+        title: String,
+        company: String,
+        street: String,
+        city: String,
+        province: String,
+        workplaceType: String,
+        jobType: String,
+        description: String,
+        skills: List<String> = emptyList(),
+        experience: String,
+        graduates: String,
+        link: String,
+    ): Flow<Resource<CreateJobResult>>
 
     fun saveJob(
         token: String,

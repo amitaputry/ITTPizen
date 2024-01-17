@@ -20,6 +20,7 @@ fun AddJobFooter(
     primaryButtonText: String = "",
     secondaryButtonText: String = "",
     primaryButtonEnabled: Boolean = false,
+    primaryButtonLoading: Boolean = false,
     onPrimaryButtonClick: () -> Unit = {},
     onSecondaryButtonClick: () -> Unit = {}
 ) {
@@ -38,6 +39,7 @@ fun AddJobFooter(
             text = primaryButtonText,
             onClick = onPrimaryButtonClick,
             enable = primaryButtonEnabled,
+            loading = primaryButtonLoading,
             modifier = Modifier.weight(1f)
         )
     }

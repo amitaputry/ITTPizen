@@ -1,5 +1,6 @@
 package com.ta.ittpizen.domain.interactor
 
+import com.ta.ittpizen.data.remote.response.job.CreateJobResult
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.auth.LoginResult
 import com.ta.ittpizen.domain.model.auth.RegisterResult
@@ -71,6 +72,26 @@ class IttpizenInteractor(
         userId: String
     ): Flow<Resource<DetailConnection>> {
         return repository.getConnectionById(token, userId)
+    }
+
+    override fun createJob(
+        token: String,
+        title: String,
+        company: String,
+        street: String,
+        city: String,
+        province: String,
+        workplaceType: String,
+        jobType: String,
+        description: String,
+        skills: List<String>,
+        experience: String,
+        graduates: String,
+        link: String
+    ): Flow<Resource<CreateJobResult>> {
+        return repository.createJob(
+            token, title, company, street, city, province, workplaceType, jobType, description, skills, experience, graduates, link
+        )
     }
 
     override fun saveJob(token: String, jobId: String): Flow<Resource<Boolean>> {

@@ -38,8 +38,8 @@ fun AddJobDetailSection(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val experiences = listOf("Full Time", "Part Time", "Contract", "Volunteer", "Internship")
-    val graduates = listOf("0 - 1 year", "1 - 2 year", "3 - 4 year")
+    val experiences = listOf("0 - 1 year", "1 - 2 year", "3 - 4 year")
+    val graduates = listOf("Min SMA/SMK", "Min Diploma 3 (D3)", "Min Sarjana (S1)")
 
     val description = uiState.description
     val skills = uiState.skills

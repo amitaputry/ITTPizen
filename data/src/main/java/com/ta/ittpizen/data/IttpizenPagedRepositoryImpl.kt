@@ -35,7 +35,7 @@ class IttpizenPagedRepositoryImpl(
 
     override fun getAllConnection(token: String, type: String): Flow<PagingData<Connection>> {
         return Pager(
-            config = PagingConfig(ConnectionPagingSource.DEFAULT_PAGE),
+            config = PagingConfig(ConnectionPagingSource.DEFAULT_SIZE),
             pagingSourceFactory = { ConnectionPagingSource(token, type, remoteDataSource) }
         ).flow
     }
@@ -46,7 +46,7 @@ class IttpizenPagedRepositoryImpl(
         jobType: String
     ): Flow<PagingData<Job>> {
         return Pager(
-            config = PagingConfig(JobPagingSource.DEFAULT_PAGE),
+            config = PagingConfig(JobPagingSource.DEFAULT_SIZE),
             pagingSourceFactory = { JobPagingSource(token, workplaceType, jobType, remoteDataSource) }
         ).flow
     }
