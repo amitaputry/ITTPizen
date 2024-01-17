@@ -8,6 +8,7 @@ import com.ta.ittpizen.data.remote.response.CommonResponse
 import com.ta.ittpizen.data.remote.response.PagedCommonResponse
 import com.ta.ittpizen.data.remote.response.auth.LoginResponse
 import com.ta.ittpizen.data.remote.response.auth.RegisterResponse
+import com.ta.ittpizen.data.remote.response.connection.ConnectionResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostCommentResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostResponse
 import com.ta.ittpizen.data.remote.response.post.PostCommentResponse
@@ -15,6 +16,8 @@ import com.ta.ittpizen.data.remote.response.post.PostResponse
 import com.ta.ittpizen.data.remote.service.IttpizenService
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.http.Header
+import retrofit2.http.Query
 
 class RemoteDataSource(private val service: IttpizenService) {
 
@@ -106,6 +109,16 @@ class RemoteDataSource(private val service: IttpizenService) {
     ): NetworkResponse<CommonResponse<String>, CommonErrorResponse> {
         val authorization = "Bearer $token"
         return service.deletePostLike(authorization, postId)
+    }
+
+    suspend fun getAllConnection(
+        token: String,
+        type: String,
+        page: Int,
+        size: Int
+    ): NetworkResponse<PagedCommonResponse<List<ConnectionResponse>>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.getAllConnection(authorization, type, page, size)
     }
 
 }
