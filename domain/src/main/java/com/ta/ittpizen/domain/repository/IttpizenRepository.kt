@@ -4,9 +4,11 @@ import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.auth.LoginResult
 import com.ta.ittpizen.domain.model.auth.RegisterResult
 import com.ta.ittpizen.domain.model.post.CreatePostCommentResult
+import com.ta.ittpizen.domain.model.post.CreatePostResult
 import com.ta.ittpizen.domain.model.post.Post
 import com.ta.ittpizen.domain.model.post.PostComment
 import kotlinx.coroutines.flow.Flow
+import java.io.File
 
 interface IttpizenRepository {
 
@@ -21,6 +23,13 @@ interface IttpizenRepository {
         type: String,
         password: String
     ): Flow<Resource<RegisterResult>>
+
+    fun createPost(
+        token: String,
+        media: File?,
+        text: String,
+        type: String
+    ): Flow<Resource<CreatePostResult>>
 
     fun getPostById(
         token: String,

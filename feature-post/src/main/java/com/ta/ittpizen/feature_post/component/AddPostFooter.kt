@@ -36,6 +36,8 @@ import com.ta.ittpizen.ui.theme.SecondDarkGrey
 fun AddPostFooter(
     modifier: Modifier = Modifier,
     type: AddPostType = AddPostType.TWEET,
+    postEnabled: Boolean = false,
+    postLoading: Boolean = false,
     onAddPhotoClick: () -> Unit = {},
     onPostClick: () -> Unit = {}
 ) {
@@ -73,6 +75,8 @@ fun AddPostFooter(
         }
         LargePrimaryButton(
             text = "Post",
+            enable = postEnabled,
+            loading = postLoading,
             onClick = onPostClick,
             contentPaddingValues = PaddingValues(horizontal = 32.dp, vertical = 8.dp),
         )

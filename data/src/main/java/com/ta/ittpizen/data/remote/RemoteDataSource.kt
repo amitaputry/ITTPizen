@@ -9,9 +9,12 @@ import com.ta.ittpizen.data.remote.response.PagedCommonResponse
 import com.ta.ittpizen.data.remote.response.auth.LoginResponse
 import com.ta.ittpizen.data.remote.response.auth.RegisterResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostCommentResponse
+import com.ta.ittpizen.data.remote.response.post.CreatePostResponse
 import com.ta.ittpizen.data.remote.response.post.PostCommentResponse
 import com.ta.ittpizen.data.remote.response.post.PostResponse
 import com.ta.ittpizen.data.remote.service.IttpizenService
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class RemoteDataSource(private val service: IttpizenService) {
 
@@ -34,6 +37,16 @@ class RemoteDataSource(private val service: IttpizenService) {
     ): NetworkResponse<CommonResponse<RegisterResponse>, CommonErrorResponse> {
         val request = RegisterRequest(name, studentOrLectureId, email, phone, gender, type, password)
         return service.register(request)
+    }
+
+    suspend fun createPost(
+        token: String,
+        type: RequestBody,
+        text: RequestBody,
+        media: MultipartBody.Part? = null
+    ): NetworkResponse<CommonResponse<CreatePostResponse>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.createPost(authorization, type, text, media)
     }
 
     suspend fun getAllPost(

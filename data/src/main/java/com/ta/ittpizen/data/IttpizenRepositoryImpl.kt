@@ -1,18 +1,29 @@
 package com.ta.ittpizen.data
 
 import com.haroldadmin.cnradapter.NetworkResponse
+import com.ta.ittpizen.common.reduceFileImage
 import com.ta.ittpizen.data.mapper.auth.toDomain
+import com.ta.ittpizen.data.mapper.post.toDomain
 import com.ta.ittpizen.data.remote.RemoteDataSource
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.auth.LoginResult
 import com.ta.ittpizen.domain.model.auth.RegisterResult
 import com.ta.ittpizen.domain.model.post.CreatePostCommentResult
+import com.ta.ittpizen.domain.model.post.CreatePostResult
 import com.ta.ittpizen.domain.model.post.Post
 import com.ta.ittpizen.domain.model.post.PostComment
 import com.ta.ittpizen.domain.repository.IttpizenRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 class IttpizenRepositoryImpl(
     private val remoteDataSource: RemoteDataSource
@@ -65,6 +76,41 @@ class IttpizenRepositoryImpl(
             }
 
         }
+    }.catch {
+        emit(Resource.Error(message = it.message))
+    }
+
+    override fun createPost(
+        token: String,
+        media: File?,
+        text: String,
+        type: String
+    ): Flow<Resource<CreatePostResult>> = flow {
+        emit(Resource.Loading)
+
+        val compressedFile = withContext(Dispatchers.IO) { media?.reduceFileImage() }
+        val textRequestBody = text.toRequestBody("text/plain".toMediaType())
+        val typeRequestBody = type.toRequestBody("text/plain".toMediaType())
+        val mediaRequestBody = compressedFile?.asRequestBody("image/jpeg".toMediaTypeOrNull())
+        val mediaMultipart = mediaRequestBody?.let {
+            MultipartBody.Part.createFormData(
+                "media",
+                filename = compressedFile.name,
+                body = mediaRequestBody
+            )
+        }
+
+        when (val response = remoteDataSource.createPost(token, typeRequestBody, textRequestBody, mediaMultipart)) {
+            is NetworkResponse.Success -> {
+                val result = response.body.data.toDomain()
+                emit(Resource.Success(result))
+            }
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+
     }.catch {
         emit(Resource.Error(message = it.message))
     }

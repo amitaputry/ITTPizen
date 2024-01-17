@@ -37,6 +37,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.exifinterface:exifinterface:1.3.7")
 
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs_nio:2.0.4")
 

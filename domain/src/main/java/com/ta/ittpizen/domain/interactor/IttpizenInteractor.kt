@@ -4,11 +4,13 @@ import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.auth.LoginResult
 import com.ta.ittpizen.domain.model.auth.RegisterResult
 import com.ta.ittpizen.domain.model.post.CreatePostCommentResult
+import com.ta.ittpizen.domain.model.post.CreatePostResult
 import com.ta.ittpizen.domain.model.post.Post
 import com.ta.ittpizen.domain.model.post.PostComment
 import com.ta.ittpizen.domain.repository.IttpizenRepository
 import com.ta.ittpizen.domain.usecase.IttpizenUseCase
 import kotlinx.coroutines.flow.Flow
+import java.io.File
 
 class IttpizenInteractor(
     private val ittpizenRepository: IttpizenRepository
@@ -28,6 +30,15 @@ class IttpizenInteractor(
         password: String
     ): Flow<Resource<RegisterResult>> {
         return ittpizenRepository.register(name, studentOrLectureId, email, phone, gender, type, password)
+    }
+
+    override fun createPost(
+        token: String,
+        media: File?,
+        text: String,
+        type: String
+    ): Flow<Resource<CreatePostResult>> {
+        return ittpizenRepository.createPost(token, media, text, type)
     }
 
     override fun getPostById(token: String, postId: String): Flow<Resource<Post>> {

@@ -38,6 +38,7 @@ android {
 
 dependencies {
 
+    implementation(project(":common"))
     implementation(project(":domain"))
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

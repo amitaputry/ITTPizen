@@ -18,6 +18,7 @@ import com.ta.ittpizen.feature_auth.di.authModule
 import com.ta.ittpizen.feature_home.di.homeModule
 import com.ta.ittpizen.feature_job.di.jobModule
 import com.ta.ittpizen.feature_onboarding_screen.di.onboardingModule
+import com.ta.ittpizen.feature_post.di.postModule
 import com.ta.ittpizen.feature_profile.di.profileModule
 import com.ta.ittpizen.feature_splash_screen.di.splashModule
 import com.ta.ittpizen.navigation.ITTPizenNavHost
@@ -43,6 +44,7 @@ class MainActivity : ComponentActivity() {
                     onboardingModule,
                     authModule,
                     homeModule,
+                    postModule,
                     jobModule,
                     profileModule
                 )

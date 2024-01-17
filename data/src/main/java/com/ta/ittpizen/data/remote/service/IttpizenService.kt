@@ -9,15 +9,20 @@ import com.ta.ittpizen.data.remote.response.PagedCommonResponse
 import com.ta.ittpizen.data.remote.response.auth.LoginResponse
 import com.ta.ittpizen.data.remote.response.auth.RegisterResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostCommentResponse
+import com.ta.ittpizen.data.remote.response.post.CreatePostResponse
 import com.ta.ittpizen.data.remote.response.post.PostCommentResponse
 import com.ta.ittpizen.data.remote.response.post.PostResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -32,6 +37,19 @@ interface IttpizenService {
     suspend fun register(
         @Body request: RegisterRequest
     ): NetworkResponse<CommonResponse<RegisterResponse>, CommonErrorResponse>
+
+    @Multipart
+    @POST("post")
+    suspend fun createPost(
+        @Header("Authorization")
+        authorization: String,
+        @Part("type")
+        type: RequestBody,
+        @Part("text")
+        text: RequestBody,
+        @Part
+        media: MultipartBody.Part? = null
+    ): NetworkResponse<CommonResponse<CreatePostResponse>, CommonErrorResponse>
 
     @GET("post")
     suspend fun getAllPost(
