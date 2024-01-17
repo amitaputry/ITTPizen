@@ -6,6 +6,7 @@ import com.ta.ittpizen.data.mapper.auth.toDomain
 import com.ta.ittpizen.data.mapper.connection.toDomain
 import com.ta.ittpizen.data.mapper.job.toDomain
 import com.ta.ittpizen.data.mapper.post.toDomain
+import com.ta.ittpizen.data.mapper.post.toDomains
 import com.ta.ittpizen.data.remote.RemoteDataSource
 import com.ta.ittpizen.data.remote.response.job.CreateJobResult
 import com.ta.ittpizen.domain.model.Resource
@@ -30,9 +31,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
-class IttpizenRepositoryImpl(
-    private val remoteDataSource: RemoteDataSource
-) : IttpizenRepository {
+class IttpizenRepositoryImpl(private val remoteDataSource: RemoteDataSource) : IttpizenRepository {
 
     override fun login(email: String, password: String): Flow<Resource<LoginResult>> = flow {
         emit(Resource.Loading)
@@ -121,11 +120,35 @@ class IttpizenRepositoryImpl(
     }
 
     override fun getPostById(token: String, postId: String): Flow<Resource<Post>> = flow {
-
+        emit(Resource.Loading)
+        when (val response = remoteDataSource.getPostById(token, postId)) {
+            is NetworkResponse.Success -> {
+                val result = response.body.data.toDomain()
+                emit(Resource.Success(result))
+            }
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+    }.catch {
+        emit(Resource.Error(message = it.message))
     }
 
     override fun getPostComment(token: String, postId: String): Flow<Resource<List<PostComment>>> = flow {
-
+        emit(Resource.Loading)
+        when (val response = remoteDataSource.getPostComment(token, postId)) {
+            is NetworkResponse.Success -> {
+                val result = response.body.data.toDomains()
+                emit(Resource.Success(result))
+            }
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+    }.catch {
+        emit(Resource.Error(message = it.message))
     }
 
     override fun createPostComment(
@@ -133,7 +156,18 @@ class IttpizenRepositoryImpl(
         postId: String,
         comment: String
     ): Flow<Resource<CreatePostCommentResult>> = flow {
-
+        emit(Resource.Loading)
+        when (val response = remoteDataSource.createPostComment(token, postId, comment)) {
+            is NetworkResponse.Success -> {
+//                emit(Resource.Success(true))
+            }
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+    }.catch {
+        emit(Resource.Error(message = it.message))
     }
 
     override fun createPostLike(token: String, postId: String): Flow<Resource<Boolean>> = flow {

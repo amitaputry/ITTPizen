@@ -49,7 +49,7 @@ dependencies {
     implementation(project(":domain"))
 
     api("androidx.core:core-ktx:1.12.0")
-    api("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    api("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     api("androidx.activity:activity-compose:1.8.2")
 
     api(platform("androidx.compose:compose-bom:2023.10.01"))
@@ -59,7 +59,7 @@ dependencies {
     api("androidx.compose.material:material")
     api("androidx.compose.material3:material3")
 
-    api("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+    api("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
 
     api("io.insert-koin:koin-bom:3.5.1")
     api("io.insert-koin:koin-core")

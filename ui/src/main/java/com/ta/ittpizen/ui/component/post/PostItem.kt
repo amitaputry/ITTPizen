@@ -49,7 +49,8 @@ fun PostItem(
     }
     val outerModifier = if (enabled) Modifier
         .clickable { onClick(post) }
-        .then(modifier) else Modifier
+        .then(modifier)
+    else Modifier
     Column(
         modifier = outerModifier,
         verticalArrangement = Arrangement.spacedBy(10.dp),

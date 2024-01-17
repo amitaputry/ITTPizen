@@ -27,16 +27,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.domain.model.PostCommentItem
-import com.ta.ittpizen.domain.model.PostItem
-import com.ta.ittpizen.domain.utils.DataPostItem
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ta.ittpizen.domain.model.Resource
+import com.ta.ittpizen.domain.model.post.Post
+import com.ta.ittpizen.domain.model.post.PostComment
+import com.ta.ittpizen.domain.model.preference.UserPreference
 import com.ta.ittpizen.feature_post.component.PostDetailEmptyComment
 import com.ta.ittpizen.feature_post.component.PostDetailFooter
 import com.ta.ittpizen.ui.component.post.PostCommentItem
+import com.ta.ittpizen.ui.component.post.PostItem
 import com.ta.ittpizen.ui.component.topappbar.DetailTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
-import kotlinx.coroutines.launch
-import java.util.UUID
+import org.koin.androidx.compose.koinViewModel
 
 @ExperimentalFoundationApi
 @ExperimentalMaterial3Api
@@ -44,46 +46,63 @@ import java.util.UUID
 fun PostDetailScreen(
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit = {},
+    viewModel: PostDetailViewModel = koinViewModel(),
     postId: String = ""
 ) {
 
     val lazyState = rememberLazyListState()
     val scope = rememberCoroutineScope()
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val userPreference by viewModel.userPreference.collectAsStateWithLifecycle(initialValue = UserPreference())
+    val buttonEnabled by viewModel.buttonEnabled.collectAsStateWithLifecycle(initialValue = false)
+
+    val post = uiState.post
+    var postData by remember { mutableStateOf(Post()) }
+
+    val postComment = uiState.postComment
+    val postCommentData = remember { mutableStateListOf<PostComment>() }
+
     var message by remember { mutableStateOf("") }
 
-    val userId = "user123"
-
-    var postItem by remember {
-        mutableStateOf(DataPostItem.getById(postId))
+    val onSendButtonClick: () -> Unit = {
+//        comments.add(commentItem)
+//        message = ""
+//        scope.launch {
+//            lazyState.animateScrollToItem(comments.lastIndex)
+//        }
     }
 
-    if (postItem == null) return
-
-    val comments = remember { mutableStateListOf<PostCommentItem>() }
-
-    val onSendButtonClick: () -> Unit = {
-        val commentItem = PostCommentItem(
-            id = UUID.randomUUID().toString(),
-            userId = userId,
-            name = "Abdul Hafiz Ramadan",
-            type = "Student",
-            date = "1 hours ago",
-            text = message
-        )
-        comments.add(commentItem)
-        message = ""
-        scope.launch {
-            lazyState.animateScrollToItem(comments.lastIndex)
+    val onLikeClicked: (Post) -> Unit = {
+        val token = userPreference.accessToken
+        if (it.liked) {
+            viewModel.deletePostLike(token, postId)
+        } else {
+            viewModel.createPostLike(token, postId)
         }
     }
 
-    val onLikeClicked: (PostItem) -> Unit = { post ->
-        postItem = DataPostItem.likeOrDislikePost(post)
+    LaunchedEffect(key1 = userPreference) {
+        if (userPreference.accessToken.isEmpty()) return@LaunchedEffect
+        val token = userPreference.accessToken
+        viewModel.getPostById(token = token, postId = postId)
+        viewModel.getPostComment(token = token, postId = postId)
     }
 
-    LaunchedEffect(key1 = Unit) {
-        if (comments.isEmpty()) return@LaunchedEffect
-        lazyState.animateScrollToItem(comments.lastIndex)
+    LaunchedEffect(key1 = post) {
+        if (post is Resource.Success) {
+            postData = post.data
+        }
+    }
+
+    LaunchedEffect(key1 = postComment) {
+        if (postComment is Resource.Success) {
+            postCommentData.clear()
+            postCommentData.addAll(postComment.data)
+
+            if (postCommentData.isEmpty()) return@LaunchedEffect
+            lazyState.animateScrollToItem(postCommentData.lastIndex)
+        }
     }
 
     Scaffold(
@@ -98,6 +117,7 @@ fun PostDetailScreen(
                 onValueChange = { message = it },
                 placeholder = "Add a comment...",
                 onSendClick = onSendButtonClick,
+                enabled = buttonEnabled,
                 modifier = Modifier.fillMaxWidth()
             )
         },
@@ -110,14 +130,14 @@ fun PostDetailScreen(
         ) {
             LazyColumn(state = lazyState) {
                 item {
-//                    PostItem(
-//                        post = postItem!!,
-//                        enabled = false,
-//                        onLike = onLikeClicked
-//                    )
+                    PostItem(
+                        post = postData,
+                        enabled = false,
+                        onLike = onLikeClicked
+                    )
                 }
                 item { Spacer(modifier = Modifier.height(10.dp)) }
-                items(items = comments, key = { it.id }) {
+                items(items = postCommentData, key = { it.id }) {
                     PostCommentItem(
                         post = it,
                         modifier = Modifier
@@ -127,7 +147,7 @@ fun PostDetailScreen(
                 }
             }
             AnimatedVisibility(
-                visible = comments.isEmpty(),
+                visible = postCommentData.isEmpty(),
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
