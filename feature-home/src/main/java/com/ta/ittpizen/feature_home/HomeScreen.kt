@@ -130,7 +130,10 @@ fun HomeScreen(
 
     LaunchedEffect(key1 = userPreference) {
         if (userPreference.accessToken.isEmpty()) return@LaunchedEffect
-        if (allPostLoaded) return@LaunchedEffect
+        if (allPostLoaded) {
+            allPost.refresh()
+            return@LaunchedEffect
+        }
         viewModel.getAllPost(token = userPreference.accessToken)
     }
 

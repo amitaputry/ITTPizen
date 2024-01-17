@@ -66,11 +66,6 @@ fun PostDetailScreen(
     var message by remember { mutableStateOf("") }
 
     val onSendButtonClick: () -> Unit = {
-//        comments.add(commentItem)
-//        message = ""
-//        scope.launch {
-//            lazyState.animateScrollToItem(comments.lastIndex)
-//        }
     }
 
     val onLikeClicked: (Post) -> Unit = {
