@@ -10,6 +10,8 @@ import com.ta.ittpizen.data.remote.response.auth.LoginResponse
 import com.ta.ittpizen.data.remote.response.auth.RegisterResponse
 import com.ta.ittpizen.data.remote.response.connection.ConnectionResponse
 import com.ta.ittpizen.data.remote.response.connection.DetailConnectionResponse
+import com.ta.ittpizen.data.remote.response.job.JobResponse
+import com.ta.ittpizen.data.remote.response.job.SaveJobResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostCommentResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostResponse
 import com.ta.ittpizen.data.remote.response.post.PostCommentResponse
@@ -140,5 +142,34 @@ interface IttpizenService {
         userId: String
     ): NetworkResponse<CommonResponse<DetailConnectionResponse>, CommonErrorResponse>
 
+    @GET("job")
+    suspend fun getAllJob(
+        @Header("Authorization")
+        authorization: String,
+        @Query("workplaceType")
+        workplaceType: String,
+        @Query("jobType")
+        jobType: String,
+        @Query("page")
+        page: Int,
+        @Query("size")
+        size: Int
+    ): NetworkResponse<PagedCommonResponse<List<JobResponse>>, CommonErrorResponse>
+
+    @POST("job/save/{jobId}")
+    suspend fun saveJob(
+        @Header("Authorization")
+        authorization: String,
+        @Path("jobId")
+        jobId: String,
+    ): NetworkResponse<CommonResponse<SaveJobResponse>, CommonErrorResponse>
+
+    @DELETE("job/save/{jobId}")
+    suspend fun unSaveJob(
+        @Header("Authorization")
+        authorization: String,
+        @Path("jobId")
+        jobId: String,
+    ): NetworkResponse<CommonResponse<Unit>, CommonErrorResponse>
 
 }

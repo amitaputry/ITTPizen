@@ -2,6 +2,7 @@ package com.ta.ittpizen.domain.usecase
 
 import androidx.paging.PagingData
 import com.ta.ittpizen.domain.model.connection.Connection
+import com.ta.ittpizen.domain.model.job.Job
 import com.ta.ittpizen.domain.model.post.Post
 import com.ta.ittpizen.domain.model.post.PostType
 import kotlinx.coroutines.flow.Flow
@@ -22,5 +23,11 @@ interface IttpizenPagedUseCase {
         token: String,
         type: String
     ): Flow<PagingData<Connection>>
+
+    fun getAllJob(
+        token: String,
+        workplaceType: String,
+        jobType: String,
+    ): Flow<PagingData<Job>>
 
 }

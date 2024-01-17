@@ -177,4 +177,31 @@ class IttpizenRepositoryImpl(
     }.catch {
         emit(Resource.Error(message = it.message))
     }
+
+    override fun saveJob(token: String, jobId: String): Flow<Resource<Boolean>> = flow {
+        emit(Resource.Loading)
+        when (val response = remoteDataSource.saveJob(token, jobId)) {
+            is NetworkResponse.Success -> emit(Resource.Success(true))
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+    }.catch {
+        emit(Resource.Error(message = it.message))
+    }
+
+    override fun unSaveJob(token: String, jobId: String): Flow<Resource<Boolean>> = flow {
+        emit(Resource.Loading)
+        when (val response = remoteDataSource.unSaveJob(token, jobId)) {
+            is NetworkResponse.Success -> emit(Resource.Success(true))
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+    }.catch {
+        emit(Resource.Error(message = it.message))
+    }
+
 }

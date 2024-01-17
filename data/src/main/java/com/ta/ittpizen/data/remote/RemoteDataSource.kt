@@ -10,6 +10,8 @@ import com.ta.ittpizen.data.remote.response.auth.LoginResponse
 import com.ta.ittpizen.data.remote.response.auth.RegisterResponse
 import com.ta.ittpizen.data.remote.response.connection.ConnectionResponse
 import com.ta.ittpizen.data.remote.response.connection.DetailConnectionResponse
+import com.ta.ittpizen.data.remote.response.job.JobResponse
+import com.ta.ittpizen.data.remote.response.job.SaveJobResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostCommentResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostResponse
 import com.ta.ittpizen.data.remote.response.post.PostCommentResponse
@@ -128,6 +130,33 @@ class RemoteDataSource(private val service: IttpizenService) {
     ): NetworkResponse<CommonResponse<DetailConnectionResponse>, CommonErrorResponse> {
         val authorization = "Bearer $token"
         return service.getConnectionById(authorization, userId)
+    }
+
+    suspend fun getAllJob(
+        token: String,
+        workplaceType: String,
+        jobType: String,
+        page: Int,
+        size: Int
+    ): NetworkResponse<PagedCommonResponse<List<JobResponse>>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.getAllJob(authorization, workplaceType, jobType, page, size)
+    }
+
+    suspend fun saveJob(
+        token: String,
+        jobId: String,
+    ): NetworkResponse<CommonResponse<SaveJobResponse>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.saveJob(authorization, jobId)
+    }
+
+    suspend fun unSaveJob(
+        token: String,
+        jobId: String,
+    ): NetworkResponse<CommonResponse<Unit>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.unSaveJob(authorization, jobId)
     }
 
 }

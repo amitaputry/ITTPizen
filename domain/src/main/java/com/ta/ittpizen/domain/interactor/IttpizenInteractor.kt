@@ -72,4 +72,12 @@ class IttpizenInteractor(
     ): Flow<Resource<DetailConnection>> {
         return repository.getConnectionById(token, userId)
     }
+
+    override fun saveJob(token: String, jobId: String): Flow<Resource<Boolean>> {
+        return repository.saveJob(token, jobId)
+    }
+
+    override fun unSaveJob(token: String, jobId: String): Flow<Resource<Boolean>> {
+        return repository.unSaveJob(token, jobId)
+    }
 }

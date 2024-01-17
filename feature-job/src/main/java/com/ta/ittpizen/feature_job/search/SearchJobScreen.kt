@@ -27,7 +27,6 @@ import com.ta.ittpizen.domain.model.UserItem
 import com.ta.ittpizen.domain.utils.DataJobItem
 import com.ta.ittpizen.ui.component.history.HistoryContent
 import com.ta.ittpizen.ui.component.history.HistoryEmptyContent
-import com.ta.ittpizen.ui.component.job.JobItem
 import com.ta.ittpizen.ui.component.topappbar.DetailSearchAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
@@ -119,12 +118,12 @@ fun SearchJobScreen(
                 modifier = Modifier.padding(paddingValues),
             ) {
                 items(items = data, key = { it.id }) { jobItem ->
-                    JobItem(
-                        jobItem = jobItem,
-                        onClick = { navigateToDetailJob(it.id) },
-                        onSaveClick = onButtonSaveClick,
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
-                    )
+//                    JobItem(
+//                        jobItem = jobItem,
+//                        onClick = { navigateToDetailJob(it.id) },
+//                        onSaveClick = onButtonSaveClick,
+//                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
+//                    )
                 }
             }
         }

@@ -16,12 +16,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.ta.ittpizen.domain.model.JobItem
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.utils.DataJobItem
 import com.ta.ittpizen.feature_job.component.EmptySavedJobContent
-import com.ta.ittpizen.ui.component.job.JobItem
 import com.ta.ittpizen.ui.component.topappbar.DetailTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
@@ -67,14 +65,14 @@ fun SavedJobScreen(
             val data = (jobs as Resource.Success<List<JobItem>>).data
             LazyColumn(modifier = Modifier.padding(paddingValues)) {
                 items(items = data, key = { it.id }) { job ->
-                    JobItem(
-                        jobItem = job,
-                        onClick = { navigateToDetailJobScreen(it.id) },
-                        onSaveClick = unSaveJobItem,
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp, vertical = 10.dp)
-                            .animateItemPlacement()
-                    )
+//                    JobItem(
+//                        jobItem = job,
+//                        onClick = { navigateToDetailJobScreen(it.id) },
+//                        onSaveClick = unSaveJobItem,
+//                        modifier = Modifier
+//                            .padding(horizontal = 20.dp, vertical = 10.dp)
+//                            .animateItemPlacement()
+//                    )
                 }
             }
         }
