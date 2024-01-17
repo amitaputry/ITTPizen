@@ -1,6 +1,7 @@
 package com.ta.ittpizen.feature_job.job
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -17,11 +19,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.ta.ittpizen.domain.model.job.Job
 import com.ta.ittpizen.domain.model.preference.UserPreference
@@ -30,6 +34,7 @@ import com.ta.ittpizen.ui.component.job.JobItem
 import com.ta.ittpizen.ui.component.searchbar.DummySearchBarWithIconButton
 import com.ta.ittpizen.ui.component.topappbar.BaseTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
+import com.ta.ittpizen.ui.theme.PrimaryRed
 import org.koin.androidx.compose.koinViewModel
 
 @ExperimentalLayoutApi
@@ -47,9 +52,10 @@ fun JobScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val userPreference by viewModel.userPreference.collectAsStateWithLifecycle(initialValue = UserPreference())
 
+    val jobLoaded = uiState.jobLoaded
     val jobs = uiState.jobs.collectAsLazyPagingItems()
 
-    val options = listOf("For you", "Remote", "Onsite", "Full time", "Part Time", "Internship", "Volunteer")
+    val options = listOf("For you", "Remote", "Onsite", "FullTime", "PartTime", "Internship", "Volunteer")
     var selectedOption by remember { mutableStateOf(options[0]) }
 
     val onOptionClick: (String) -> Unit = {
@@ -68,6 +74,7 @@ fun JobScreen(
 
     LaunchedEffect(key1 = userPreference) {
         if (userPreference.accessToken.isEmpty()) return@LaunchedEffect
+        if (jobLoaded) return@LaunchedEffect
         viewModel.getAllJob(userPreference.accessToken, workplaceType = "", jobType = "")
     }
 
@@ -98,6 +105,18 @@ fun JobScreen(
                     onSelected = onOptionClick,
                     contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp)
                 )
+            }
+            if (jobs.loadState.refresh is LoadState.Loading) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .height(250.dp)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.BottomCenter
+                    ) {
+                        CircularProgressIndicator(color = PrimaryRed)
+                    }
+                }
             }
             items(count = jobs.itemCount) {
                 val job = jobs[it]

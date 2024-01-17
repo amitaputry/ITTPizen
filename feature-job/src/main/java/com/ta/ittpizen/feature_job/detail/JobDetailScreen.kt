@@ -17,68 +17,76 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.domain.utils.DataJobDetail
-import com.ta.ittpizen.domain.utils.DataJobItem
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ta.ittpizen.domain.model.Resource
+import com.ta.ittpizen.domain.model.job.DetailJobResult
+import com.ta.ittpizen.domain.model.preference.UserPreference
 import com.ta.ittpizen.feature_job.component.JobDetailContent
 import com.ta.ittpizen.feature_job.component.JobDetailFooter
 import com.ta.ittpizen.feature_job.component.JobDetailHeader
 import com.ta.ittpizen.ui.component.topappbar.DetailTopAppBar
 import com.ta.ittpizen.ui.theme.DisableColorGrey
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
-import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @ExperimentalMaterial3Api
 @Composable
 fun JobDetailScreen(
     modifier: Modifier = Modifier,
+    viewModel: JobDetailViewModel = koinViewModel(),
     navigateUp: () -> Unit = {},
     jobId: String = ""
 ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
-    val scope = rememberCoroutineScope()
     val snackBarHostState = remember { SnackbarHostState() }
 
-    var job by remember { mutableStateOf(DataJobDetail.getJobDetailById(jobId)) }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val userPreference by viewModel.userPreference.collectAsStateWithLifecycle(initialValue = UserPreference())
 
-    if (job == null) return
+    val detailJob = uiState.detailJob
+    var detailJobData by remember { mutableStateOf(DetailJobResult()) }
 
-    var saveButtonText by remember(key1 = job) {
-        val text = if (job?.saved == true) "Saved" else "Save"
+    val buttonEnabled by viewModel.buttonEnabled.collectAsStateWithLifecycle(initialValue = false)
+    val buttonSaveLoading by viewModel.buttonSaveLoading.collectAsStateWithLifecycle(initialValue = false)
+
+    var jobSaved by remember { mutableStateOf(false) }
+
+    val saveButtonText by remember(key1 = jobSaved) {
+        val text = if (jobSaved) "Saved" else "Save"
         mutableStateOf(text)
     }
 
     val onApplyNowClick: () -> Unit = {
-        val intentView = Intent(Intent.ACTION_VIEW, Uri.parse(job!!.link))
+        val intentView = Intent(Intent.ACTION_VIEW, Uri.parse(detailJobData.link))
         context.startActivity(intentView)
     }
 
     val onSaveClick: () -> Unit = {
-        val jobItem = DataJobItem.getJobItemById(jobId)
-        if (jobItem != null) {
-            scope.launch {
-                val updatedJobItem = DataJobItem.savedOrUnsavedJob(jobItem)
-                job = job?.copy(
-                    saved = updatedJobItem?.saved ?: false
-                )
-                if (updatedJobItem?.saved == false) {
-                    snackBarHostState.showSnackbar("Job delete from saved job!")
-                } else {
-                    snackBarHostState.showSnackbar("Job saved!")
-                }
-            }
+        val token = userPreference.accessToken
+        if (jobSaved) {
+            viewModel.unSaveJob(token, jobId)
+        } else {
+            viewModel.saveJob(token, jobId)
         }
+        jobSaved = jobSaved.not()
     }
 
-    LaunchedEffect(key1 = Unit) {
-        val jobItem = DataJobItem.getJobItemById(jobId)
-        saveButtonText = if (jobItem?.saved == true) "Saved" else "Save"
+    LaunchedEffect(key1 = userPreference) {
+        if (userPreference.accessToken.isEmpty()) return@LaunchedEffect
+        viewModel.getJobById(token = userPreference.accessToken, jobId = jobId)
+    }
+
+    LaunchedEffect(key1 = detailJob) {
+        if (detailJob is Resource.Success) {
+            detailJobData = detailJob.data
+            jobSaved = detailJob.data.saved
+        }
     }
 
     Scaffold(
@@ -91,6 +99,8 @@ fun JobDetailScreen(
         bottomBar = {
             JobDetailFooter(
                 saveButtonText = saveButtonText,
+                buttonEnabled = buttonEnabled,
+                saveButtonLoading = buttonSaveLoading,
                 onApplyNowClick = onApplyNowClick,
                 onSaveClick = onSaveClick
             )
@@ -104,9 +114,9 @@ fun JobDetailScreen(
                 .padding(horizontal = 20.dp)
                 .verticalScroll(scrollState)
         ) {
-            JobDetailHeader(job = job!!, modifier = Modifier.padding(vertical = 20.dp))
+            JobDetailHeader(job = detailJobData, modifier = Modifier.padding(vertical = 20.dp))
             Divider(thickness = 0.5.dp, color = DisableColorGrey)
-            JobDetailContent(job = job!!, modifier = Modifier.padding(vertical = 20.dp))
+            JobDetailContent(job = detailJobData, modifier = Modifier.padding(vertical = 20.dp))
         }
     }
 }

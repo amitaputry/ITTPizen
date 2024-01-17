@@ -5,6 +5,7 @@ import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.auth.LoginResult
 import com.ta.ittpizen.domain.model.auth.RegisterResult
 import com.ta.ittpizen.domain.model.connection.DetailConnection
+import com.ta.ittpizen.domain.model.job.DetailJobResult
 import com.ta.ittpizen.domain.model.post.CreatePostCommentResult
 import com.ta.ittpizen.domain.model.post.CreatePostResult
 import com.ta.ittpizen.domain.model.post.Post
@@ -28,10 +29,10 @@ class IttpizenInteractor(
         email: String,
         phone: String,
         gender: String,
-        type: String,
+        status: String,
         password: String
     ): Flow<Resource<RegisterResult>> {
-        return repository.register(name, studentOrLectureId, email, phone, gender, type, password)
+        return repository.register(name, studentOrLectureId, email, phone, gender, status, password)
     }
 
     override fun createPost(
@@ -92,6 +93,10 @@ class IttpizenInteractor(
         return repository.createJob(
             token, title, company, street, city, province, workplaceType, jobType, description, skills, experience, graduates, link
         )
+    }
+
+    override fun getJobById(token: String, jobId: String): Flow<Resource<DetailJobResult>> {
+        return repository.getJobById(token, jobId)
     }
 
     override fun saveJob(token: String, jobId: String): Flow<Resource<Boolean>> {

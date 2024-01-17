@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
 data class JobUiState(
+    val jobLoaded: Boolean = false,
     val jobs: Flow<PagingData<Job>> = emptyFlow()
 )

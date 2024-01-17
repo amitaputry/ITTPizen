@@ -26,6 +26,7 @@ class JobViewModel(
     fun getAllJob(token: String, workplaceType: String, jobType: String) {
         _uiState.update {
             it.copy(
+                jobLoaded = true,
                 jobs = ittpizenPagedUseCase.getAllJob(token = token, workplaceType, jobType).cachedIn(viewModelScope),
             )
         }

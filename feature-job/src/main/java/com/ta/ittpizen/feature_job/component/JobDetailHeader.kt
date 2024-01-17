@@ -11,7 +11,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.domain.model.JobDetail
+import com.ta.ittpizen.domain.model.job.DetailJobResult
 import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.component.text.TextBodyLarge
 import com.ta.ittpizen.ui.component.text.TextBodyMediumWithLeadingIcon
@@ -21,7 +21,7 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 @Composable
 fun JobDetailHeader(
     modifier: Modifier = Modifier,
-    job: JobDetail
+    job: DetailJobResult
 ) {
     val address = buildString {
         append(job.street)
@@ -77,7 +77,7 @@ fun JobDetailHeader(
 fun PreviewJobDetailHeader() {
     ITTPizenTheme {
         Surface {
-            val job = JobDetail(
+            val job = DetailJobResult(
                 title = "Asisten Praktikum Basis Data",
                 company = "Fakultas Informatika",
                 street = "Jl. DI Panjaitan No.128",

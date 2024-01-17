@@ -12,6 +12,7 @@ import com.ta.ittpizen.data.remote.response.auth.RegisterResponse
 import com.ta.ittpizen.data.remote.response.connection.ConnectionResponse
 import com.ta.ittpizen.data.remote.response.connection.DetailConnectionResponse
 import com.ta.ittpizen.data.remote.response.job.CreateJobResponse
+import com.ta.ittpizen.data.remote.response.job.DetailJobResponse
 import com.ta.ittpizen.data.remote.response.job.JobResponse
 import com.ta.ittpizen.data.remote.response.job.SaveJobResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostCommentResponse
@@ -179,6 +180,14 @@ class RemoteDataSource(private val service: IttpizenService) {
     ): NetworkResponse<CommonResponse<Unit>, CommonErrorResponse> {
         val authorization = "Bearer $token"
         return service.unSaveJob(authorization, jobId)
+    }
+
+    suspend fun getJobById(
+        token: String,
+        jobId: String
+    ): NetworkResponse<CommonResponse<DetailJobResponse>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.getJobById(authorization, jobId)
     }
 
 }

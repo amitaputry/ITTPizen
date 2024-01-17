@@ -12,6 +12,7 @@ import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.auth.LoginResult
 import com.ta.ittpizen.domain.model.auth.RegisterResult
 import com.ta.ittpizen.domain.model.connection.DetailConnection
+import com.ta.ittpizen.domain.model.job.DetailJobResult
 import com.ta.ittpizen.domain.model.post.CreatePostCommentResult
 import com.ta.ittpizen.domain.model.post.CreatePostResult
 import com.ta.ittpizen.domain.model.post.Post
@@ -198,6 +199,22 @@ class IttpizenRepositoryImpl(
         emit(Resource.Loading)
         val response = remoteDataSource.createJob(token, title, company, street, city, province, workplaceType, jobType, description, skills, experience, graduates, link)
         when (response) {
+            is NetworkResponse.Success -> {
+                val result = response.body.data.toDomain()
+                emit(Resource.Success(result))
+            }
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+    }.catch {
+        emit(Resource.Error(message = it.message))
+    }
+
+    override fun getJobById(token: String, jobId: String): Flow<Resource<DetailJobResult>> = flow {
+        emit(Resource.Loading)
+        when (val response = remoteDataSource.getJobById(token, jobId)) {
             is NetworkResponse.Success -> {
                 val result = response.body.data.toDomain()
                 emit(Resource.Success(result))
