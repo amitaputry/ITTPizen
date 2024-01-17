@@ -9,6 +9,7 @@ import com.ta.ittpizen.data.remote.response.PagedCommonResponse
 import com.ta.ittpizen.data.remote.response.auth.LoginResponse
 import com.ta.ittpizen.data.remote.response.auth.RegisterResponse
 import com.ta.ittpizen.data.remote.response.connection.ConnectionResponse
+import com.ta.ittpizen.data.remote.response.connection.DetailConnectionResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostCommentResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostResponse
 import com.ta.ittpizen.data.remote.response.post.PostCommentResponse
@@ -16,8 +17,6 @@ import com.ta.ittpizen.data.remote.response.post.PostResponse
 import com.ta.ittpizen.data.remote.service.IttpizenService
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Header
-import retrofit2.http.Query
 
 class RemoteDataSource(private val service: IttpizenService) {
 
@@ -64,10 +63,12 @@ class RemoteDataSource(private val service: IttpizenService) {
 
     suspend fun getPostByUser(
         token: String,
-        userId: String
+        userId: String,
+        page: Int,
+        size: Int
     ): NetworkResponse<PagedCommonResponse<List<PostResponse>>, CommonErrorResponse> {
         val authorization = "Bearer $token"
-        return service.getPostByUser(authorization, userId)
+        return service.getPostByUser(authorization, userId, page, size)
     }
 
     suspend fun getPostById(
@@ -119,6 +120,14 @@ class RemoteDataSource(private val service: IttpizenService) {
     ): NetworkResponse<PagedCommonResponse<List<ConnectionResponse>>, CommonErrorResponse> {
         val authorization = "Bearer $token"
         return service.getAllConnection(authorization, type, page, size)
+    }
+
+    suspend fun getConnectionById(
+        token: String,
+        userId: String
+    ): NetworkResponse<CommonResponse<DetailConnectionResponse>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.getConnectionById(authorization, userId)
     }
 
 }

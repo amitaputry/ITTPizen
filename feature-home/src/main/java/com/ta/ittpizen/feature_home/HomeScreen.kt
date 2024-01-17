@@ -2,13 +2,16 @@ package com.ta.ittpizen.feature_home
 
 import android.content.Intent
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -17,13 +20,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.ta.ittpizen.domain.model.PostItem
 import com.ta.ittpizen.domain.model.PostItemType
@@ -34,6 +41,7 @@ import com.ta.ittpizen.ui.component.post.PostItem
 import com.ta.ittpizen.ui.component.tab.BaseScrollableTabRow
 import com.ta.ittpizen.ui.component.topappbar.HomeTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
+import com.ta.ittpizen.ui.theme.PrimaryRed
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -57,6 +65,8 @@ fun HomeScreen(
     val pagerState = rememberPagerState { tabs.size }
     val scope = rememberCoroutineScope()
 
+    var showProgressLoading by remember { mutableStateOf(true) }
+
     val userPreference by viewModel.userPreference.collectAsStateWithLifecycle(initialValue = UserPreference())
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -79,13 +89,23 @@ fun HomeScreen(
         postItems.filter { it.postType == type }
     }
 
+    val onProfileClicked: (Post) -> Unit = { post ->
+        showProgressLoading = false
+        val userId = post.user.id
+        val isMe = userPreference.userId == userId
+        if (isMe) {
+            navigateToMyProfileScreen(userId)
+        } else {
+            navigateToUserProfileScreen(userId)
+        }
+    }
+
     val onLikeClicked: (Post) -> Unit = { post ->
         if (post.liked) {
             viewModel.deletePostLike(token = userPreference.accessToken, postId = post.id)
         } else {
             viewModel.createPostLike(token = userPreference.accessToken, postId = post.id)
         }
-        allPost.refresh()
     }
 
     val onShareClicked: (Post) -> Unit = { post ->
@@ -138,16 +158,26 @@ fun HomeScreen(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize()
             ) { page ->
+                if (allPost.loadState.refresh is LoadState.Loading) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        CircularProgressIndicator(color = PrimaryRed)
+                    }
+                }
                 LazyColumn {
-                    items(count = allPost.itemCount, key = { it }) {
+                    items(count = allPost.itemCount) {
                         val post = allPost[it]
                         if (post != null) {
                             PostItem(
                                 post = post,
-                                onProfileClick = { navigateToUserProfileScreen(it.user.id) },
+                                onProfileClick = onProfileClicked,
                                 onClick = { navigateToDetailPostScreen(it.id) },
                                 onPhotoClick = { navigateToPhotoDetailScreen(it) },
-                                onLike = { onLikeClicked(post) },
+                                onLike = { onLikeClicked(it) },
                                 onComment = { navigateToDetailPostScreen(post.id) },
                                 onSend = onShareClicked,
                                 modifier = Modifier.padding(top = 20.dp)

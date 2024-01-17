@@ -8,6 +8,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,7 +32,24 @@ fun PostItem(
     onComment: (Post) -> Unit = {},
     onSend: (Post) -> Unit = {},
 ) {
-    val outerModifier = if (enabled) Modifier.clickable { onClick(post) }.then(modifier) else Modifier
+    var postLiked by rememberSaveable { mutableStateOf(post.liked) }
+    var postLikes by rememberSaveable { mutableIntStateOf(post.likes) }
+
+    val onLiked: (Post) -> Unit = {
+        if (postLiked) {
+            postLikes -= 1
+            val updatedPost = post.copy(liked = true)
+            onLike(updatedPost)
+        } else {
+            postLikes += 1
+            val updatedPost = post.copy(liked = false)
+            onLike(updatedPost)
+        }
+        postLiked = postLiked.not()
+    }
+    val outerModifier = if (enabled) Modifier
+        .clickable { onClick(post) }
+        .then(modifier) else Modifier
     Column(
         modifier = outerModifier,
         verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -51,10 +73,10 @@ fun PostItem(
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
             PostFooter(
-                like = post.likes,
+                like = postLikes,
                 comment = post.comments,
-                liked = post.liked,
-                onLike = { onLike(post) },
+                liked = postLiked,
+                onLike = { onLiked(post) },
                 onComment = { onComment(post) },
                 onSend = { onSend(post) },
                 modifier = Modifier.padding(vertical = 10.dp, horizontal = 20.dp)

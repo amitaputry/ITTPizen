@@ -1,6 +1,7 @@
 package com.ta.ittpizen.feature_profile.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.ta.ittpizen.domain.model.Profile
+import com.ta.ittpizen.domain.model.connection.DetailConnection
 import com.ta.ittpizen.feature_profile.R
 import com.ta.ittpizen.ui.component.iconbutton.BaseIconButton
 import com.ta.ittpizen.ui.component.text.TextBodyLarge
@@ -44,7 +46,7 @@ fun ProfileHeader(
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit = {},
     onLogoutClicked: () -> Unit = {},
-    profile: Profile,
+    profile: DetailConnection,
     showLogOutButton: Boolean = false
 ) {
     Box(modifier = modifier.fillMaxWidth()) {
@@ -66,6 +68,7 @@ fun ProfileHeader(
             error = painterResource(id = R.drawable.ic_profile_default),
             modifier = Modifier
                 .offset(y = 118.dp)
+                .background(MaterialTheme.colorScheme.background, shape = CircleShape)
                 .clip(CircleShape)
                 .size(75.dp)
                 .align(Alignment.TopCenter)
@@ -153,7 +156,7 @@ fun ProfileHeaderBackground(
 @Composable
 fun ProfileHeaderContent(
     modifier: Modifier = Modifier,
-    profile: Profile
+    profile: DetailConnection
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -230,7 +233,7 @@ fun UserDataInfo(
 fun PreviewProfileHeader() {
     ITTPizenTheme {
         Surface {
-            val profile = Profile(
+            val profile = DetailConnection(
                 name = "Amita Putry Prasasti",
                 type = "Student",
                 bio = "I am Software Engineering Student at Telkom Institute of Technology Purwokerto IG @amt_p3",

@@ -3,6 +3,7 @@ package com.ta.ittpizen.domain.repository
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.auth.LoginResult
 import com.ta.ittpizen.domain.model.auth.RegisterResult
+import com.ta.ittpizen.domain.model.connection.DetailConnection
 import com.ta.ittpizen.domain.model.post.CreatePostCommentResult
 import com.ta.ittpizen.domain.model.post.CreatePostResult
 import com.ta.ittpizen.domain.model.post.Post
@@ -56,5 +57,10 @@ interface IttpizenRepository {
         token: String,
         postId: String
     ): Flow<Resource<Boolean>>
+
+    fun getConnectionById(
+        token: String,
+        userId: String
+    ): Flow<Resource<DetailConnection>>
 
 }

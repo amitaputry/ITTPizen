@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.ta.ittpizen.data.paging.ConnectionPagingSource
+import com.ta.ittpizen.data.paging.PostByUserPagingSource
 import com.ta.ittpizen.data.paging.PostPagingSource
 import com.ta.ittpizen.data.remote.RemoteDataSource
 import com.ta.ittpizen.domain.model.connection.Connection
@@ -24,7 +25,10 @@ class IttpizenPagedRepositoryImpl(
     }
 
     override fun getPostByUser(token: String, userId: String): Flow<PagingData<Post>> {
-        TODO("Not yet implemented")
+        return Pager(
+            config = PagingConfig(pageSize = PostByUserPagingSource.DEFAULT_SIZE),
+            pagingSourceFactory = { PostByUserPagingSource(token, userId, remoteDataSource) }
+        ).flow
     }
 
     override fun getAllConnection(token: String, type: String): Flow<PagingData<Connection>> {

@@ -3,11 +3,13 @@ package com.ta.ittpizen.data
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.ta.ittpizen.common.reduceFileImage
 import com.ta.ittpizen.data.mapper.auth.toDomain
+import com.ta.ittpizen.data.mapper.connection.toDomain
 import com.ta.ittpizen.data.mapper.post.toDomain
 import com.ta.ittpizen.data.remote.RemoteDataSource
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.auth.LoginResult
 import com.ta.ittpizen.domain.model.auth.RegisterResult
+import com.ta.ittpizen.domain.model.connection.DetailConnection
 import com.ta.ittpizen.domain.model.post.CreatePostCommentResult
 import com.ta.ittpizen.domain.model.post.CreatePostResult
 import com.ta.ittpizen.domain.model.post.Post
@@ -148,6 +150,25 @@ class IttpizenRepositoryImpl(
         emit(Resource.Loading)
         when (val response = remoteDataSource.deletePostLike(token, postId)) {
             is NetworkResponse.Success -> emit(Resource.Success(true))
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+    }.catch {
+        emit(Resource.Error(message = it.message))
+    }
+
+    override fun getConnectionById(
+        token: String,
+        userId: String
+    ): Flow<Resource<DetailConnection>> = flow {
+        emit(Resource.Loading)
+        when (val response = remoteDataSource.getConnectionById(token, userId)) {
+            is NetworkResponse.Success -> {
+                val result = response.body.data.toDomain()
+                emit(Resource.Success(result))
+            }
             is NetworkResponse.Error -> {
                 val message = response.body?.data ?: response.error?.message
                 emit(Resource.Error(message = message))

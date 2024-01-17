@@ -9,6 +9,7 @@ import com.ta.ittpizen.data.remote.response.PagedCommonResponse
 import com.ta.ittpizen.data.remote.response.auth.LoginResponse
 import com.ta.ittpizen.data.remote.response.auth.RegisterResponse
 import com.ta.ittpizen.data.remote.response.connection.ConnectionResponse
+import com.ta.ittpizen.data.remote.response.connection.DetailConnectionResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostCommentResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostResponse
 import com.ta.ittpizen.data.remote.response.post.PostCommentResponse
@@ -69,7 +70,11 @@ interface IttpizenService {
         @Header("Authorization")
         authorization: String,
         @Path("userId")
-        userId: String
+        userId: String,
+        @Query("page")
+        page: Int,
+        @Query("size")
+        size: Int
     ): NetworkResponse<PagedCommonResponse<List<PostResponse>>, CommonErrorResponse>
 
     @GET("post/{postId}")
@@ -126,5 +131,14 @@ interface IttpizenService {
         @Query("size")
         size: Int
     ): NetworkResponse<PagedCommonResponse<List<ConnectionResponse>>, CommonErrorResponse>
+
+    @GET("connection/{userId}")
+    suspend fun getConnectionById(
+        @Header("Authorization")
+        authorization: String,
+        @Path("userId")
+        userId: String
+    ): NetworkResponse<CommonResponse<DetailConnectionResponse>, CommonErrorResponse>
+
 
 }
