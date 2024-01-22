@@ -29,6 +29,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.ta.ittpizen.domain.model.job.Job
 import com.ta.ittpizen.domain.model.preference.UserPreference
+import com.ta.ittpizen.feature_job.component.EmptyJobContent
 import com.ta.ittpizen.ui.component.chip.SingleChipRow
 import com.ta.ittpizen.ui.component.job.JobItem
 import com.ta.ittpizen.ui.component.searchbar.DummySearchBarWithIconButton
@@ -55,11 +56,25 @@ fun JobScreen(
     val jobLoaded = uiState.jobLoaded
     val jobs = uiState.jobs.collectAsLazyPagingItems()
 
-    val options = listOf("For you", "Remote", "Onsite", "FullTime", "PartTime", "Internship", "Volunteer")
+    val workplaceTypes = listOf("Remote", "Onsite")
+    val jobTypes = listOf("FullTime", "PartTime", "Internship", "Volunteer")
+    val options = listOf("For you") + workplaceTypes + jobTypes
+
     var selectedOption by remember { mutableStateOf(options[0]) }
+
+    val workplaceType by remember(key1 = selectedOption) {
+        val value = if (workplaceTypes.contains(selectedOption)) selectedOption else ""
+        mutableStateOf(value)
+    }
+
+    val jobType by remember(key1 = selectedOption) {
+        val value = if (jobTypes.contains(selectedOption)) selectedOption else ""
+        mutableStateOf(value)
+    }
 
     val onOptionClick: (String) -> Unit = {
         selectedOption = it
+
     }
 
     val onButtonSaveClick: (Job) -> Unit = { job ->
@@ -76,6 +91,11 @@ fun JobScreen(
         if (userPreference.accessToken.isEmpty()) return@LaunchedEffect
         if (jobLoaded) return@LaunchedEffect
         viewModel.getAllJob(userPreference.accessToken, workplaceType = "", jobType = "")
+    }
+
+    LaunchedEffect(key1 = selectedOption) {
+        if (userPreference.accessToken.isEmpty()) return@LaunchedEffect
+        viewModel.getAllJob(userPreference.accessToken, workplaceType = workplaceType, jobType = jobType)
     }
 
     Scaffold(modifier = modifier) { paddingValues ->
@@ -116,6 +136,14 @@ fun JobScreen(
                     ) {
                         CircularProgressIndicator(color = PrimaryRed)
                     }
+                }
+            }
+            if (jobs.itemCount == 0 && jobs.loadState.refresh is LoadState.NotLoading) {
+                item {
+                    EmptyJobContent(
+                        title = "There is no job :(",
+                        modifier = Modifier.padding(top = 130.dp)
+                    )
                 }
             }
             items(count = jobs.itemCount) {

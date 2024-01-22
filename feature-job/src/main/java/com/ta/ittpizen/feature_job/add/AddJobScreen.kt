@@ -75,7 +75,7 @@ fun AddJobScreen(
     val userPreference by viewModel.userPreference.collectAsStateWithLifecycle(initialValue = UserPreference())
     val createJobResult by viewModel.createJobResult.collectAsStateWithLifecycle()
 
-    val postUrl = "0"
+    var jobId by remember { mutableStateOf("") }
 
     val scrollState = rememberScrollState()
     val pagerState = rememberPagerState(pageCount = steps::size)
@@ -146,6 +146,7 @@ fun AddJobScreen(
         }
         if (createJobResult is Resource.Success) {
             pagerState.animateScrollToPage(pagerState.pageCount)
+            jobId = (createJobResult as Resource.Success<CreateJobResult>).data.id
         }
     }
 
@@ -217,7 +218,7 @@ fun AddJobScreen(
                             .padding(horizontal = 20.dp)
                     )
                     2 -> AddJobDoneSection(
-                        onSeePostClick = { navigateToDetailJob(postUrl) },
+                        onSeePostClick = { navigateToDetailJob(jobId) },
                         onFinishClick = navigateUp,
                         modifier = Modifier
                             .padding(horizontal = 20.dp)

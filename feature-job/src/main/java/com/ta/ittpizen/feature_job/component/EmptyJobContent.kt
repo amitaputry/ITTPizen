@@ -19,8 +19,9 @@ import com.ta.ittpizen.ui.component.text.TextBodyLarge
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
 @Composable
-fun EmptySavedJobContent(
-    modifier: Modifier = Modifier
+fun EmptyJobContent(
+    modifier: Modifier = Modifier,
+    title: String = ""
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -29,7 +30,7 @@ fun EmptySavedJobContent(
     ) {
         Image(painter = painterResource(id = R.drawable.img_empty_saved_job), contentDescription = null)
         Spacer(modifier = Modifier.height(20.dp))
-        TextBodyLarge(text = "No Saved Job :(", textAlign = TextAlign.Center)
+        TextBodyLarge(text = title, textAlign = TextAlign.Center)
     }
 }
 
@@ -38,7 +39,7 @@ fun EmptySavedJobContent(
 fun PreviewEmptySavedJobContent() {
     ITTPizenTheme {
         Surface {
-            EmptySavedJobContent()
+            EmptyJobContent()
         }
     }
 }

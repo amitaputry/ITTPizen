@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.ta.ittpizen.domain.model.JobItem
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.utils.DataJobItem
-import com.ta.ittpizen.feature_job.component.EmptySavedJobContent
+import com.ta.ittpizen.feature_job.component.EmptyJobContent
 import com.ta.ittpizen.ui.component.topappbar.DetailTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
@@ -57,8 +57,9 @@ fun SavedJobScreen(
         modifier = modifier
     ) { paddingValues ->
         AnimatedVisibility(jobs is Resource.Success && (jobs as Resource.Success<List<JobItem>>).data.isEmpty()) {
-            EmptySavedJobContent(
-                modifier = Modifier.padding(paddingValues)
+            EmptyJobContent(
+                modifier = Modifier.padding(paddingValues),
+                title = "No Saved Job :("
             )
         }
         AnimatedVisibility (jobs is Resource.Success && (jobs as Resource.Success<List<JobItem>>).data.isNotEmpty()) {
