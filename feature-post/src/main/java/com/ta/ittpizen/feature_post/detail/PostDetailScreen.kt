@@ -22,7 +22,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,7 +34,7 @@ import com.ta.ittpizen.domain.model.preference.UserPreference
 import com.ta.ittpizen.feature_post.component.PostDetailEmptyComment
 import com.ta.ittpizen.feature_post.component.PostDetailFooter
 import com.ta.ittpizen.ui.component.post.PostCommentItem
-import com.ta.ittpizen.ui.component.post.PostItem
+import com.ta.ittpizen.ui.component.post.PostDetailItem
 import com.ta.ittpizen.ui.component.topappbar.DetailTopAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 import org.koin.androidx.compose.koinViewModel
@@ -51,9 +50,9 @@ fun PostDetailScreen(
 ) {
 
     val lazyState = rememberLazyListState()
-    val scope = rememberCoroutineScope()
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val createPostCommentResult by viewModel.createPostCommentResult.collectAsStateWithLifecycle()
     val userPreference by viewModel.userPreference.collectAsStateWithLifecycle(initialValue = UserPreference())
     val buttonEnabled by viewModel.buttonEnabled.collectAsStateWithLifecycle(initialValue = false)
 
@@ -66,15 +65,12 @@ fun PostDetailScreen(
     var message by remember { mutableStateOf("") }
 
     val onSendButtonClick: () -> Unit = {
-    }
-
-    val onLikeClicked: (Post) -> Unit = {
-        val token = userPreference.accessToken
-        if (it.liked) {
-            viewModel.deletePostLike(token, postId)
-        } else {
-            viewModel.createPostLike(token, postId)
-        }
+        viewModel.createPostComment(
+            token = userPreference.accessToken,
+            postId = postId,
+            comment = message
+        )
+        message = ""
     }
 
     LaunchedEffect(key1 = userPreference) {
@@ -94,9 +90,19 @@ fun PostDetailScreen(
         if (postComment is Resource.Success) {
             postCommentData.clear()
             postCommentData.addAll(postComment.data)
-
             if (postCommentData.isEmpty()) return@LaunchedEffect
             lazyState.animateScrollToItem(postCommentData.lastIndex)
+        }
+    }
+
+    LaunchedEffect(key1 = createPostCommentResult) {
+        if (createPostCommentResult is Resource.Success) {
+            viewModel.getPostComment(token = userPreference.accessToken, postId)
+            if (postComment is Resource.Success) {
+                postData = postData.copy(
+                    comments = postData.comments.inc()
+                )
+            }
         }
     }
 
@@ -125,11 +131,7 @@ fun PostDetailScreen(
         ) {
             LazyColumn(state = lazyState) {
                 item {
-                    PostItem(
-                        post = postData,
-                        enabled = false,
-                        onLike = onLikeClicked
-                    )
+                    PostDetailItem(post = postData)
                 }
                 item { Spacer(modifier = Modifier.height(10.dp)) }
                 items(items = postCommentData, key = { it.id }) {

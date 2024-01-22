@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
-import coil.size.Size
 import com.ta.ittpizen.common.encode
 import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.theme.ColorText
@@ -62,7 +61,7 @@ fun PostBody(
             Spacer(modifier = Modifier.height(10.dp))
             val model = ImageRequest.Builder(context)
                 .data(media)
-                .size(Size.ORIGINAL)
+//                .size(Size.ORIGINAL)
                 .crossfade(true)
                 .scale(Scale.FIT)
                 .placeholder(R.drawable.img_media_placeholder)
@@ -75,6 +74,7 @@ fun PostBody(
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
+                    .height(211.dp)
                     .fillMaxWidth()
                     .clickable { onPhotoClick(media.encode()) }
             )

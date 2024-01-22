@@ -6,7 +6,6 @@ import com.ta.ittpizen.domain.model.auth.LoginResult
 import com.ta.ittpizen.domain.model.auth.RegisterResult
 import com.ta.ittpizen.domain.model.connection.DetailConnection
 import com.ta.ittpizen.domain.model.job.DetailJobResult
-import com.ta.ittpizen.domain.model.post.CreatePostCommentResult
 import com.ta.ittpizen.domain.model.post.CreatePostResult
 import com.ta.ittpizen.domain.model.post.Post
 import com.ta.ittpizen.domain.model.post.PostComment
@@ -56,7 +55,7 @@ class IttpizenInteractor(
         token: String,
         postId: String,
         comment: String
-    ): Flow<Resource<CreatePostCommentResult>> {
+    ): Flow<Resource<Boolean>> {
         return repository.createPostComment(token, postId, comment)
     }
 

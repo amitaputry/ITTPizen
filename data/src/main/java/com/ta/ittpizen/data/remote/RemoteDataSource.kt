@@ -4,6 +4,7 @@ import com.haroldadmin.cnradapter.NetworkResponse
 import com.ta.ittpizen.data.remote.request.auth.LoginRequest
 import com.ta.ittpizen.data.remote.request.auth.RegisterRequest
 import com.ta.ittpizen.data.remote.request.job.CreateJobRequest
+import com.ta.ittpizen.data.remote.request.post.CreatePostCommentRequest
 import com.ta.ittpizen.data.remote.response.CommonErrorResponse
 import com.ta.ittpizen.data.remote.response.CommonResponse
 import com.ta.ittpizen.data.remote.response.PagedCommonResponse
@@ -98,7 +99,8 @@ class RemoteDataSource(private val service: IttpizenService) {
         comment: String
     ): NetworkResponse<CommonResponse<CreatePostCommentResponse>, CommonErrorResponse> {
         val authorization = "Bearer $token"
-        return service.createPostComment(authorization, postId, comment)
+        val request = CreatePostCommentRequest(comment)
+        return service.createPostComment(authorization, postId, request)
     }
 
     suspend fun createPostLike(

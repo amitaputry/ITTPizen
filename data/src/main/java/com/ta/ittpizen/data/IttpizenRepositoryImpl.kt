@@ -14,7 +14,6 @@ import com.ta.ittpizen.domain.model.auth.LoginResult
 import com.ta.ittpizen.domain.model.auth.RegisterResult
 import com.ta.ittpizen.domain.model.connection.DetailConnection
 import com.ta.ittpizen.domain.model.job.DetailJobResult
-import com.ta.ittpizen.domain.model.post.CreatePostCommentResult
 import com.ta.ittpizen.domain.model.post.CreatePostResult
 import com.ta.ittpizen.domain.model.post.Post
 import com.ta.ittpizen.domain.model.post.PostComment
@@ -155,12 +154,10 @@ class IttpizenRepositoryImpl(private val remoteDataSource: RemoteDataSource) : I
         token: String,
         postId: String,
         comment: String
-    ): Flow<Resource<CreatePostCommentResult>> = flow {
+    ): Flow<Resource<Boolean>> = flow {
         emit(Resource.Loading)
         when (val response = remoteDataSource.createPostComment(token, postId, comment)) {
-            is NetworkResponse.Success -> {
-//                emit(Resource.Success(true))
-            }
+            is NetworkResponse.Success -> emit(Resource.Success(true))
             is NetworkResponse.Error -> {
                 val message = response.body?.data ?: response.error?.message
                 emit(Resource.Error(message = message))

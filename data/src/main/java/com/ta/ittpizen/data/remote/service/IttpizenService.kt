@@ -4,6 +4,7 @@ import com.haroldadmin.cnradapter.NetworkResponse
 import com.ta.ittpizen.data.remote.request.auth.LoginRequest
 import com.ta.ittpizen.data.remote.request.auth.RegisterRequest
 import com.ta.ittpizen.data.remote.request.job.CreateJobRequest
+import com.ta.ittpizen.data.remote.request.post.CreatePostCommentRequest
 import com.ta.ittpizen.data.remote.response.CommonErrorResponse
 import com.ta.ittpizen.data.remote.response.CommonResponse
 import com.ta.ittpizen.data.remote.response.PagedCommonResponse
@@ -23,8 +24,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -98,15 +97,14 @@ interface IttpizenService {
         postId: String
     ): NetworkResponse<CommonResponse<List<PostCommentResponse>>, CommonErrorResponse>
 
-    @FormUrlEncoded
     @POST("post/comment/{postId}")
     suspend fun createPostComment(
         @Header("Authorization")
         authorization: String,
         @Path("postId")
         postId: String,
-        @Field("comment")
-        comment: String
+        @Body
+        request: CreatePostCommentRequest
     ): NetworkResponse<CommonResponse<CreatePostCommentResponse>, CommonErrorResponse>
 
     @POST("post/like/{postId}")

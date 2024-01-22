@@ -24,6 +24,7 @@ import com.ta.ittpizen.ui.theme.SecondDarkGrey
 @Composable
 fun PostFooter(
     modifier: Modifier = Modifier,
+    showButton: Boolean = true,
     liked: Boolean = false,
     like: Int = 0,
     comment: Int = 0,
@@ -44,27 +45,29 @@ fun PostFooter(
             )
             TextBodySmall(text = "$comment comments", color = SecondDarkGrey)
         }
-        Spacer(modifier = Modifier.height(4.dp))
-        Row(
-            modifier = Modifier.offset(x = (-4).dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            BaseIconButton(
-                icon = painterResource(id = iconLike),
-                contentDescription = "Like",
-                onClick = onLike
-            )
-            BaseIconButton(
-                icon = painterResource(id = R.drawable.ic_comment),
-                contentDescription = "Comment",
-                onClick = onComment
-            )
-            BaseIconButton(
-                icon = painterResource(id = R.drawable.ic_share),
-                contentDescription = "Send",
-                onClick = onSend
-            )
+        if (showButton) {
+            Spacer(modifier = Modifier.height(4.dp))
+            Row(
+                modifier = Modifier.offset(x = (-4).dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                BaseIconButton(
+                    icon = painterResource(id = iconLike),
+                    contentDescription = "Like",
+                    onClick = onLike
+                )
+                BaseIconButton(
+                    icon = painterResource(id = R.drawable.ic_comment),
+                    contentDescription = "Comment",
+                    onClick = onComment
+                )
+                BaseIconButton(
+                    icon = painterResource(id = R.drawable.ic_share),
+                    contentDescription = "Send",
+                    onClick = onSend
+                )
+            }
         }
     }
 }

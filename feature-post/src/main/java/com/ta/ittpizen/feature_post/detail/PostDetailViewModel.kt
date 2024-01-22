@@ -7,7 +7,6 @@ import com.ta.ittpizen.domain.usecase.IttpizenUseCase
 import com.ta.ittpizen.domain.usecase.UserPreferenceUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -19,6 +18,15 @@ class PostDetailViewModel(
 
     private val _uiState = MutableStateFlow(PostDetailUiState())
     val uiState: StateFlow<PostDetailUiState> get() = _uiState
+
+        private val _createPostCommentResult = MutableStateFlow<Resource<Boolean>>(Resource.Idle)
+    val createPostCommentResult: StateFlow<Resource<Boolean>> get() = _createPostCommentResult
+
+//    private val _createPostLikeResult = MutableStateFlow<Resource<Boolean>>(Resource.Idle)
+//    val createPostLikeResult: StateFlow<Resource<Boolean>> get() = _createPostLikeResult
+//
+//    private val _deletePostLikeResult = MutableStateFlow<Resource<Boolean>>(Resource.Idle)
+//    val deletePostLikeResult: StateFlow<Resource<Boolean>> get() = _deletePostLikeResult
 
     val userPreference get() = userPreferenceUseCase.userPreference
 
@@ -46,15 +54,11 @@ class PostDetailViewModel(
         }
     }
 
-    fun createPostLike(token: String, postId: String) {
+    fun createPostComment(token: String, postId: String, comment: String) {
         viewModelScope.launch {
-            useCase.createPostLike(token, postId).collect()
-        }
-    }
-
-    fun deletePostLike(token: String, postId: String) {
-        viewModelScope.launch {
-            useCase.deletePostLike(token, postId).collect()
+            useCase.createPostComment(token, postId, comment).collect { result ->
+                _createPostCommentResult.value = result
+            }
         }
     }
 
