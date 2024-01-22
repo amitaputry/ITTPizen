@@ -37,6 +37,7 @@ import com.ta.ittpizen.feature_profile.component.ProfileFriendButtonSection
 import com.ta.ittpizen.feature_profile.component.ProfileHeader
 import com.ta.ittpizen.feature_profile.component.ProfileMeButtonSection
 import com.ta.ittpizen.feature_profile.component.ProfilePostIndicator
+import com.ta.ittpizen.ui.component.content.EmptyContent
 import com.ta.ittpizen.ui.component.post.PostItem
 import com.ta.ittpizen.ui.component.text.TextBodyMedium
 import com.ta.ittpizen.ui.component.text.TextTitleSmall
@@ -85,7 +86,7 @@ fun ProfileScreen(
         type == ProfileScreenType.ME
     }
 
-    val primaryText by remember(key1 = profile) {
+    val primaryText by remember(key1 = profileData) {
         val text = if (profileData.connected) "Connected" else "Connect"
         mutableStateOf(text)
     }
@@ -103,8 +104,13 @@ fun ProfileScreen(
     }
 
     val onConnectClick: () -> Unit = {
-//        val updatedProfile = DataProfile.connectToProfile(profileData)
-//        profile = updatedProfile
+        val token = userPreference.accessToken
+        if (profileData.connected) {
+            viewModel.deleteConnection(token, userId)
+        } else {
+            viewModel.createConnection(token, userId)
+        }
+        profileData = profileData.copy(connected = profileData.connected.not())
     }
 
     val onMessageClick: () -> Unit = {
@@ -213,6 +219,14 @@ fun ProfileScreen(
                     ) {
                         CircularProgressIndicator(color = PrimaryRed)
                     }
+                }
+            }
+            if (allPost.itemCount == 0 && allPost.loadState.refresh is LoadState.NotLoading) {
+                item {
+                    EmptyContent(
+                        title = "There is post :(",
+                        modifier = Modifier.padding(top = 10.dp)
+                    )
                 }
             }
             if (allPost.loadState.refresh is LoadState.NotLoading) {

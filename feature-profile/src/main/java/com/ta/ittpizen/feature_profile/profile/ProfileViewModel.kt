@@ -3,6 +3,7 @@ package com.ta.ittpizen.feature_profile.profile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.ta.ittpizen.domain.model.preference.UserPreference
 import com.ta.ittpizen.domain.usecase.IttpizenPagedUseCase
 import com.ta.ittpizen.domain.usecase.IttpizenUseCase
 import com.ta.ittpizen.domain.usecase.SettingPreferenceUseCase
@@ -33,6 +34,24 @@ class ProfileViewModel(
         }
     }
 
+    fun createConnection(
+        token: String,
+        userId: String
+    ) {
+        viewModelScope.launch {
+            ittpizenUseCase.createConnection(token, userId).collect()
+        }
+    }
+
+    fun deleteConnection(
+        token: String,
+        userId: String
+    ) {
+        viewModelScope.launch {
+            ittpizenUseCase.deleteConnection(token, userId).collect()
+        }
+    }
+
     fun getAllPost(token: String, userId: String) {
         _uiState.update {
             it.copy(
@@ -57,6 +76,7 @@ class ProfileViewModel(
     fun logout() {
         viewModelScope.launch {
             settingPreferenceUseCase.updateIsLoginState(false)
+            userPreferenceUseCase.updateUserPreference(UserPreference())
         }
     }
 
