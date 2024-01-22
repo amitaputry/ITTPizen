@@ -12,6 +12,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,10 +25,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.ta.ittpizen.domain.model.UserItem
+import com.ta.ittpizen.domain.model.connection.Connection
 import com.ta.ittpizen.ui.R
-import com.ta.ittpizen.ui.component.button.SmallPrimaryOutlinedButton
 import com.ta.ittpizen.ui.component.button.SmallPrimaryButton
+import com.ta.ittpizen.ui.component.button.SmallPrimaryOutlinedButton
 import com.ta.ittpizen.ui.component.text.TextBodyLarge
 import com.ta.ittpizen.ui.component.text.TextBodySmall
 import com.ta.ittpizen.ui.theme.ColorText
@@ -34,10 +38,17 @@ import com.ta.ittpizen.ui.theme.SecondDarkGrey
 @Composable
 fun UserItem(
     modifier: Modifier = Modifier,
-    user: UserItem,
-    onClick: (UserItem) -> Unit = {},
-    onConnectClick: (UserItem) -> Unit = {},
+    user: Connection,
+    onClick: (Connection) -> Unit = {},
+    onConnectClick: (Connection) -> Unit = {},
 ) {
+    var connected by rememberSaveable {
+        mutableStateOf(user.connected)
+    }
+    val onConnectClicked: (Connection) -> Unit = {
+        onConnectClick(user.copy(connected = connected))
+        connected = connected.not()
+    }
     Row(
         modifier = Modifier
             .clickable { onClick(user) }
@@ -68,10 +79,10 @@ fun UserItem(
                 color = SecondDarkGrey
             )
         }
-        if (user.connected) {
-            SmallPrimaryOutlinedButton(text = "Connected", onClick = { onConnectClick(user) })
+        if (connected) {
+            SmallPrimaryOutlinedButton(text = "Connected", onClick = { onConnectClicked(user) })
         } else {
-            SmallPrimaryButton(text = "Connect", onClick = { onConnectClick(user) })
+            SmallPrimaryButton(text = "Connect", onClick = { onConnectClicked(user) })
         }
     }
 }
@@ -81,7 +92,7 @@ fun UserItem(
 fun PreviewUserItem() {
     ITTPizenTheme {
         Surface {
-            val user = UserItem(
+            val user = Connection(
                 name = "Amita Putry Prasasti",
                 type = "Student"
             )

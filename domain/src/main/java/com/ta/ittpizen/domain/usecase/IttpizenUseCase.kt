@@ -67,6 +67,16 @@ interface IttpizenUseCase {
         userId: String
     ): Flow<Resource<DetailConnection>>
 
+    fun createConnection(
+        token: String,
+        userId: String
+    ): Flow<Resource<Boolean>>
+
+    fun deleteConnection(
+        token: String,
+        userId: String
+    ): Flow<Resource<Boolean>>
+
     fun createJob(
         token: String,
         title: String,

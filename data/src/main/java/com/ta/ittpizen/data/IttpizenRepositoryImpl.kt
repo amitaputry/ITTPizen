@@ -212,6 +212,32 @@ class IttpizenRepositoryImpl(private val remoteDataSource: RemoteDataSource) : I
         emit(Resource.Error(message = it.message))
     }
 
+    override fun createConnection(token: String, userId: String): Flow<Resource<Boolean>> = flow {
+        emit(Resource.Loading)
+        when (val response = remoteDataSource.createConnection(token, userId)) {
+            is NetworkResponse.Success -> emit(Resource.Success(true))
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+    }.catch {
+        emit(Resource.Error(message = it.message))
+    }
+
+    override fun deleteConnection(token: String, userId: String): Flow<Resource<Boolean>> = flow {
+        emit(Resource.Loading)
+        when (val response = remoteDataSource.deleteConnection(token, userId)) {
+            is NetworkResponse.Success -> emit(Resource.Success(true))
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+    }.catch {
+        emit(Resource.Error(message = it.message))
+    }
+
     override fun createJob(
         token: String,
         title: String,

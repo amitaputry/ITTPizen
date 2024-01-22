@@ -11,6 +11,7 @@ import com.ta.ittpizen.data.remote.response.PagedCommonResponse
 import com.ta.ittpizen.data.remote.response.auth.LoginResponse
 import com.ta.ittpizen.data.remote.response.auth.RegisterResponse
 import com.ta.ittpizen.data.remote.response.connection.ConnectionResponse
+import com.ta.ittpizen.data.remote.response.connection.CreateConnectionResponse
 import com.ta.ittpizen.data.remote.response.connection.DetailConnectionResponse
 import com.ta.ittpizen.data.remote.response.job.CreateJobResponse
 import com.ta.ittpizen.data.remote.response.job.DetailJobResponse
@@ -142,6 +143,22 @@ interface IttpizenService {
         @Path("userId")
         userId: String
     ): NetworkResponse<CommonResponse<DetailConnectionResponse>, CommonErrorResponse>
+
+    @POST("connection/connect/{userId}")
+    suspend fun createConnection(
+        @Header("Authorization")
+        authorization: String,
+        @Path("userId")
+        userId: String
+    ): NetworkResponse<CommonResponse<CreateConnectionResponse>, CommonErrorResponse>
+
+    @DELETE("connection/connect/{userId}")
+    suspend fun deleteConnection(
+        @Header("Authorization")
+        authorization: String,
+        @Path("userId")
+        userId: String
+    ): NetworkResponse<CommonResponse<String?>, CommonErrorResponse>
 
     @GET("job")
     suspend fun getAllJob(

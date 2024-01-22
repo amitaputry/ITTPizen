@@ -11,6 +11,7 @@ import com.ta.ittpizen.data.remote.response.PagedCommonResponse
 import com.ta.ittpizen.data.remote.response.auth.LoginResponse
 import com.ta.ittpizen.data.remote.response.auth.RegisterResponse
 import com.ta.ittpizen.data.remote.response.connection.ConnectionResponse
+import com.ta.ittpizen.data.remote.response.connection.CreateConnectionResponse
 import com.ta.ittpizen.data.remote.response.connection.DetailConnectionResponse
 import com.ta.ittpizen.data.remote.response.job.CreateJobResponse
 import com.ta.ittpizen.data.remote.response.job.DetailJobResponse
@@ -135,6 +136,22 @@ class RemoteDataSource(private val service: IttpizenService) {
     ): NetworkResponse<CommonResponse<DetailConnectionResponse>, CommonErrorResponse> {
         val authorization = "Bearer $token"
         return service.getConnectionById(authorization, userId)
+    }
+
+    suspend fun createConnection(
+        token: String,
+        userId: String
+    ): NetworkResponse<CommonResponse<CreateConnectionResponse>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.createConnection(authorization, userId)
+    }
+
+    suspend fun deleteConnection(
+        token: String,
+        userId: String
+    ): NetworkResponse<CommonResponse<String?>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.deleteConnection(authorization, userId)
     }
 
     suspend fun createJob(

@@ -26,7 +26,6 @@ import com.ta.ittpizen.domain.utils.DataUserItem
 import com.ta.ittpizen.ui.component.history.HistoryContent
 import com.ta.ittpizen.ui.component.history.HistoryEmptyContent
 import com.ta.ittpizen.ui.component.topappbar.DetailSearchAppBar
-import com.ta.ittpizen.ui.component.user.UserItem
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
 
 @ExperimentalFoundationApi
@@ -109,13 +108,13 @@ fun SearchConnectionScreen(
                 modifier = Modifier.padding(paddingValues),
             ) {
                 items(items = data, key = { it.id }) { userItem ->
-                    UserItem(
-                        user = userItem,
-                        onClick = { navigateToDetailConnection(it.id) },
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp, vertical = 10.dp)
-                            .animateItemPlacement()
-                    )
+//                    UserItem(
+//                        user = userItem,
+//                        onClick = { navigateToDetailConnection(it.id) },
+//                        modifier = Modifier
+//                            .padding(horizontal = 20.dp, vertical = 10.dp)
+//                            .animateItemPlacement()
+//                    )
                 }
             }
         }

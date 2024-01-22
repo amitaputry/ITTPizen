@@ -74,6 +74,14 @@ class IttpizenInteractor(
         return repository.getConnectionById(token, userId)
     }
 
+    override fun createConnection(token: String, userId: String): Flow<Resource<Boolean>> {
+        return repository.createConnection(token, userId)
+    }
+
+    override fun deleteConnection(token: String, userId: String): Flow<Resource<Boolean>> {
+        return repository.deleteConnection(token, userId)
+    }
+
     override fun createJob(
         token: String,
         title: String,

@@ -29,8 +29,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.ta.ittpizen.domain.model.job.Job
 import com.ta.ittpizen.domain.model.preference.UserPreference
-import com.ta.ittpizen.feature_job.component.EmptyJobContent
 import com.ta.ittpizen.ui.component.chip.SingleChipRow
+import com.ta.ittpizen.ui.component.content.EmptyContent
 import com.ta.ittpizen.ui.component.job.JobItem
 import com.ta.ittpizen.ui.component.searchbar.DummySearchBarWithIconButton
 import com.ta.ittpizen.ui.component.topappbar.BaseTopAppBar
@@ -140,7 +140,7 @@ fun JobScreen(
             }
             if (jobs.itemCount == 0 && jobs.loadState.refresh is LoadState.NotLoading) {
                 item {
-                    EmptyJobContent(
+                    EmptyContent(
                         title = "There is no job :(",
                         modifier = Modifier.padding(top = 130.dp)
                     )
