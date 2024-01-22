@@ -32,7 +32,7 @@ class AddPostViewModel(
     }
 
     val buttonLoading get() = _createPostResult.map {
-        it is Resource.Loading || it is Resource.Error
+        it is Resource.Loading
     }
 
     fun updateMedia(media: Uri?) {

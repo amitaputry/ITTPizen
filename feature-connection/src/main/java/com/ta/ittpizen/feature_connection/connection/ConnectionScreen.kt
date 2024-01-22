@@ -71,7 +71,6 @@ fun ConnectionScreen(
 
     LaunchedEffect(key1 = userPreference) {
         if (userPreference.accessToken.isEmpty()) return@LaunchedEffect
-        if (connectionLoaded) return@LaunchedEffect
         viewModel.getAllConnection(userPreference.accessToken, type = selectedOption)
     }
 

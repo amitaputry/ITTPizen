@@ -65,12 +65,14 @@ fun PostDetailScreen(
     var message by remember { mutableStateOf("") }
 
     val onSendButtonClick: () -> Unit = {
-        viewModel.createPostComment(
-            token = userPreference.accessToken,
-            postId = postId,
-            comment = message
-        )
-        message = ""
+        if (message.isNotEmpty()) {
+            viewModel.createPostComment(
+                token = userPreference.accessToken,
+                postId = postId,
+                comment = message
+            )
+            message = ""
+        }
     }
 
     LaunchedEffect(key1 = userPreference) {

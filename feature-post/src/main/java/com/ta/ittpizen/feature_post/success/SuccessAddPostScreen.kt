@@ -63,7 +63,7 @@ fun SuccessAddPostScreen(
             Spacer(modifier = Modifier.height(40.dp))
             LargePrimaryButton(
                 text = "See Post",
-                onClick = navigateToMainScreen,
+                onClick = navigateToDetailPostScreen,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(20.dp))
