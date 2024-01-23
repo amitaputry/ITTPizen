@@ -17,7 +17,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,7 +55,14 @@ fun SearchConnectionScreen(
     val userPreference by viewModel.userPreference.collectAsStateWithLifecycle(initialValue = UserPreference())
 
     val histories = remember {
-        mutableStateListOf("abdul hafiz ramadan", "amita", "afifa")
+        mutableStateListOf("abdul hafiz", "amita", "afifa", "daffa", "rendi", "fajar")
+    }
+
+    var showSeeMoreButton by remember { mutableStateOf(histories.isNotEmpty()) }
+
+    var historiesToShow by remember {
+        val history = if (histories.size > 3) histories.take(3) else histories
+        mutableStateOf(history)
     }
 
     val onDeleteAllClick: () -> Unit = {
@@ -61,6 +70,19 @@ fun SearchConnectionScreen(
     }
 
     val onDeleteHistoryClick: (Int) -> Unit = { histories.remove(histories[it]) }
+
+    val onHistoryClick: (String) -> Unit = { history ->
+        viewModel.updateQuery(history)
+        val token = userPreference.accessToken
+        if (token.isNotEmpty()) {
+            viewModel.searchConnection(token, history)
+        }
+    }
+
+    val onSeeMoreClick: () -> Unit = {
+        historiesToShow = histories
+        showSeeMoreButton = false
+    }
 
     val onSearch: () -> Unit = {
         val token = userPreference.accessToken
@@ -104,14 +126,13 @@ fun SearchConnectionScreen(
             exit = fadeOut()
         ) {
             HistoryContent(
-                histories = histories,
                 modifier = Modifier.padding(paddingValues),
-                onHistoryClick = {
-                    viewModel.updateQuery(query)
-                    onSearch()
-                },
+                showSeeMoreButton = showSeeMoreButton,
+                histories = historiesToShow,
+                onHistoryClick = onHistoryClick,
                 onDeleteHistoryClick = onDeleteHistoryClick,
-                onDeleteAllClick = onDeleteAllClick
+                onDeleteAllClick = onDeleteAllClick,
+                onSeeMoreClick = onSeeMoreClick
             )
         }
         AnimatedVisibility(

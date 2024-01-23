@@ -17,7 +17,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,8 +55,16 @@ fun SearchJobScreen(
 
     val userPreference by viewModel.userPreference.collectAsStateWithLifecycle(initialValue = UserPreference())
 
+
     val histories = remember {
-        mutableStateListOf("management", "web", "android developer")
+        mutableStateListOf("management", "web", "android developer", "project management", "fullstack")
+    }
+
+    var showSeeMoreButton by remember { mutableStateOf(histories.isNotEmpty()) }
+
+    var historiesToShow by remember {
+        val history = if (histories.size > 3) histories.take(3) else histories
+        mutableStateOf(history)
     }
 
     val onDeleteAllClick: () -> Unit = {
@@ -63,6 +73,19 @@ fun SearchJobScreen(
 
     val onDeleteHistoryClick: (Int) -> Unit = {
         histories.remove(histories[it])
+    }
+
+    val onHistoryClick: (String) -> Unit = { history ->
+        viewModel.updateQuery(history)
+        val token = userPreference.accessToken
+        if (token.isNotEmpty()) {
+            viewModel.searchJob(token, history)
+        }
+    }
+
+    val onSeeMoreClick: () -> Unit = {
+        historiesToShow = histories
+        showSeeMoreButton = false
     }
 
     val onSearch: () -> Unit = {
@@ -100,10 +123,13 @@ fun SearchJobScreen(
             exit = fadeOut()
         ) {
             HistoryContent(
-                histories = histories,
                 modifier = Modifier.padding(paddingValues),
+                showSeeMoreButton = showSeeMoreButton,
+                histories = historiesToShow,
                 onDeleteHistoryClick = onDeleteHistoryClick,
-                onDeleteAllClick = onDeleteAllClick
+                onDeleteAllClick = onDeleteAllClick,
+                onSeeMoreClick = onSeeMoreClick,
+                onHistoryClick = onHistoryClick
             )
         }
         AnimatedVisibility(

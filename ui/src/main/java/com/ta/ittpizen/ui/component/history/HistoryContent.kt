@@ -1,5 +1,8 @@
 package com.ta.ittpizen.ui.component.history
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +22,7 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 @Composable
 fun HistoryContent(
     modifier: Modifier = Modifier,
+    showSeeMoreButton: Boolean = false,
     histories: List<String> = emptyList(),
     onDeleteAllClick: () -> Unit = {},
     onHistoryClick: (String) -> Unit = {},
@@ -29,12 +33,13 @@ fun HistoryContent(
         stickyHeader {
             HistoryHeader(
                 onDeleteAllClick = onDeleteAllClick,
-                modifier = Modifier.padding(horizontal = 20.dp)
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
                     .padding(top = 8.dp)
             )
         }
         item { Spacer(modifier = Modifier.height(8.dp)) }
-        itemsIndexed(items = histories) { index, history ->
+        itemsIndexed(items = histories, key = { _, history -> history }) { index, history ->
             HistoryItem(
                 text = history,
                 onClick = { onHistoryClick(history) },
@@ -45,8 +50,8 @@ fun HistoryContent(
             )
         }
         item { Spacer(modifier = Modifier.height(8.dp)) }
-        if (histories.isNotEmpty()) {
-            item {
+        item {
+            AnimatedVisibility(visible = showSeeMoreButton, enter = fadeIn(), exit = fadeOut()) {
                 LargeButtonTertiary(
                     text = "See More",
                     onClick = onSeeMoreClick,
@@ -55,8 +60,8 @@ fun HistoryContent(
                         .fillMaxWidth()
                 )
             }
-            item { Spacer(modifier = Modifier.height(8.dp)) }
         }
+        item { Spacer(modifier = Modifier.height(8.dp)) }
     }
 }
 
