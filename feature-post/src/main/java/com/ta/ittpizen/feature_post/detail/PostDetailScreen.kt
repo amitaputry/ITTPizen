@@ -7,7 +7,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -118,8 +117,7 @@ fun PostDetailScreen(
                 onValueChange = { message = it },
                 placeholder = "Add a comment...",
                 onSendClick = onSendButtonClick,
-                enabled = buttonEnabled,
-                modifier = Modifier.fillMaxWidth()
+                enabled = buttonEnabled
             )
         },
         modifier = modifier
@@ -134,12 +132,11 @@ fun PostDetailScreen(
                     PostDetailItem(post = postData)
                 }
                 item { Spacer(modifier = Modifier.height(10.dp)) }
-                items(items = postCommentData, key = { it.id }) {
+                items(items = postCommentData) {
                     PostCommentItem(
                         post = it,
                         modifier = Modifier
-                            .padding(horizontal = 20.dp)
-                            .padding(vertical = 10.dp)
+                            .padding(horizontal = 20.dp, vertical = 10.dp)
                     )
                 }
             }

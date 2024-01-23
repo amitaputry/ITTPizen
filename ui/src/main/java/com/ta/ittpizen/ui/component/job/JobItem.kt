@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ta.ittpizen.common.toRelativeDateFormat
 import com.ta.ittpizen.domain.model.job.Job
 import com.ta.ittpizen.domain.model.job.getCharacteristics
 import com.ta.ittpizen.domain.model.job.getLocation
@@ -71,7 +72,7 @@ fun JobItem(
         Divider(thickness = 0.5.dp, color = DisableColorGrey)
         Spacer(modifier = Modifier.height(10.dp))
         JobItemFooter(
-            date = jobItem.createdAt,
+            date = jobItem.createdAt.toRelativeDateFormat(),
             saved = jobSaved,
             onSaveClick = { onSaved(jobItem) }
         )

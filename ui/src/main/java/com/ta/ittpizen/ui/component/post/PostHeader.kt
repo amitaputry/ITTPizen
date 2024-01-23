@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.ta.ittpizen.common.toRelativeDateFormat
 import com.ta.ittpizen.ui.R
 import com.ta.ittpizen.ui.component.text.TextBodySmall
 import com.ta.ittpizen.ui.component.text.TextTitleSmall
@@ -69,7 +70,7 @@ fun PostHeader(
                     contentDescription = null
                 )
                 TextBodySmall(
-                    text = date,
+                    text = date.toRelativeDateFormat(),
                     color = SecondDarkGrey,
                     fontWeight = FontWeight(500)
                 )
