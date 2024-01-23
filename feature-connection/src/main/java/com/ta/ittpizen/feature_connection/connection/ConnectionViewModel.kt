@@ -2,7 +2,6 @@ package com.ta.ittpizen.feature_connection.connection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.cachedIn
 import com.ta.ittpizen.domain.usecase.IttpizenPagedUseCase
 import com.ta.ittpizen.domain.usecase.IttpizenUseCase
 import com.ta.ittpizen.domain.usecase.UserPreferenceUseCase
@@ -27,7 +26,7 @@ class ConnectionViewModel(
         _uiState.update {
             it.copy(
                 connectionLoaded = true,
-                connections = ittpizenPagedUseCase.getAllConnection(token = token, type = type).cachedIn(viewModelScope),
+                connections = ittpizenPagedUseCase.getAllConnection(token = token, type = type),
             )
         }
     }

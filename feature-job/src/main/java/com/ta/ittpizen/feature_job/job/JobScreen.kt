@@ -18,6 +18,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,7 +61,7 @@ fun JobScreen(
     val jobTypes = listOf("FullTime", "PartTime", "Internship", "Volunteer")
     val options = listOf("For you") + workplaceTypes + jobTypes
 
-    var selectedOption by remember { mutableStateOf(options[0]) }
+    var selectedOption by rememberSaveable { mutableStateOf(options[0]) }
 
     val workplaceType by remember(key1 = selectedOption) {
         val value = if (workplaceTypes.contains(selectedOption)) selectedOption else ""

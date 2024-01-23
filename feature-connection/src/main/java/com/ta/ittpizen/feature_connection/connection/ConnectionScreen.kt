@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,7 +53,7 @@ fun ConnectionScreen(
     val connections = uiState.connections.collectAsLazyPagingItems()
 
     val options = listOf("Student", "Alumni", "Lecturer", "Staff")
-    var selectedOption by remember { mutableStateOf(options[0]) }
+    var selectedOption by rememberSaveable { mutableStateOf(options[0]) }
 
     val onOptionClick: (String) -> Unit = {
         selectedOption = it
@@ -71,6 +71,10 @@ fun ConnectionScreen(
 
     LaunchedEffect(key1 = userPreference) {
         if (userPreference.accessToken.isEmpty()) return@LaunchedEffect
+        if (connectionLoaded) {
+            connections.refresh()
+            return@LaunchedEffect
+        }
         viewModel.getAllConnection(userPreference.accessToken, type = selectedOption)
     }
 
