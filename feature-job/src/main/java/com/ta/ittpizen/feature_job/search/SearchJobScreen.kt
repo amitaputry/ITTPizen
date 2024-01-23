@@ -4,31 +4,36 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ta.ittpizen.domain.model.JobItem
-import com.ta.ittpizen.domain.model.Resource
-import com.ta.ittpizen.domain.model.UserItem
-import com.ta.ittpizen.domain.utils.DataJobItem
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.ta.ittpizen.domain.model.job.Job
+import com.ta.ittpizen.domain.model.preference.UserPreference
 import com.ta.ittpizen.ui.component.history.HistoryContent
 import com.ta.ittpizen.ui.component.history.HistoryEmptyContent
+import com.ta.ittpizen.ui.component.job.JobItem
 import com.ta.ittpizen.ui.component.topappbar.DetailSearchAppBar
 import com.ta.ittpizen.ui.theme.ITTPizenTheme
+import com.ta.ittpizen.ui.theme.PrimaryRed
+import org.koin.androidx.compose.koinViewModel
 
 @ExperimentalLayoutApi
 @ExperimentalFoundationApi
@@ -36,11 +41,17 @@ import com.ta.ittpizen.ui.theme.ITTPizenTheme
 @Composable
 fun SearchJobScreen(
     modifier: Modifier = Modifier,
+    viewModel: SearchJobViewModel = koinViewModel(),
     navigateUp: () -> Unit = {},
     navigateToDetailJob: (String) -> Unit = {},
 ) {
 
-    var query by remember { mutableStateOf("") }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val jobLoaded = uiState.jobLoaded
+    val query = uiState.query
+    val jobs = uiState.jobs.collectAsLazyPagingItems()
+
+    val userPreference by viewModel.userPreference.collectAsStateWithLifecycle(initialValue = UserPreference())
 
     val histories = remember {
         mutableStateListOf("management", "web", "android developer")
@@ -54,22 +65,20 @@ fun SearchJobScreen(
         histories.remove(histories[it])
     }
 
-    var jobs: Resource<List<JobItem>> by remember {
-        mutableStateOf(Resource.Idle)
-    }
-
     val onSearch: () -> Unit = {
-        jobs = Resource.Success(data = DataJobItem.searchJob(query))
+        val token = userPreference.accessToken
+        if (token.isNotEmpty()) {
+            viewModel.searchJob(token, query)
+        }
     }
 
-    val onButtonSaveClick: (JobItem) -> Unit = { jobItem ->
-        val updatedJob = DataJobItem.savedOrUnsavedJob(jobItem)
-        if (updatedJob != null && jobs is Resource.Success<List<JobItem>>) {
-            val mutableJob = (jobs as Resource.Success<List<JobItem>>).data.toMutableList()
-            mutableJob.replaceAll {
-                if (it.id == jobItem.id) updatedJob else it
-            }
-            jobs = Resource.Success(mutableJob)
+    val onButtonSaveClick: (Job) -> Unit = { jobItem ->
+        val token = userPreference.accessToken
+        val jobId = jobItem.id
+        if (jobItem.saved) {
+            viewModel.unSaveJob(token, jobId)
+        } else {
+            viewModel.saveJob(token, jobId)
         }
     }
 
@@ -77,7 +86,7 @@ fun SearchJobScreen(
         topBar = {
             DetailSearchAppBar(
                 query = query,
-                onQueryChange = { query = it },
+                onQueryChange = viewModel::updateQuery,
                 placeholder = "Search...",
                 onSearchClick = onSearch,
                 onNavigationClick = navigateUp
@@ -86,7 +95,7 @@ fun SearchJobScreen(
         modifier = modifier
     ) { paddingValues ->
         AnimatedVisibility(
-            visible = jobs is Resource.Idle,
+            visible = jobLoaded.not(),
             enter = fadeIn(),
             exit = fadeOut()
         ) {
@@ -98,7 +107,19 @@ fun SearchJobScreen(
             )
         }
         AnimatedVisibility(
-            visible = jobs is Resource.Success && (jobs as Resource.Success<List<UserItem>>).data.isEmpty(),
+            visible = jobs.loadState.refresh is LoadState.Loading && jobLoaded,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator(color = PrimaryRed)
+            }
+        }
+        AnimatedVisibility(
+            visible = jobs.loadState.refresh is LoadState.NotLoading && jobs.itemCount == 0,
             enter = fadeIn(),
             exit = fadeOut()
         ) {
@@ -108,22 +129,24 @@ fun SearchJobScreen(
             )
         }
         AnimatedVisibility(
-            visible = jobs is Resource.Success,
+            visible = jobs.loadState.refresh is LoadState.NotLoading,
             enter = fadeIn(),
             exit = fadeOut()
         ) {
-            val data = (jobs as Resource.Success).data
             LazyColumn(
                 contentPadding = PaddingValues(vertical = 20.dp),
                 modifier = Modifier.padding(paddingValues),
             ) {
-                items(items = data, key = { it.id }) { jobItem ->
-//                    JobItem(
-//                        jobItem = jobItem,
-//                        onClick = { navigateToDetailJob(it.id) },
-//                        onSaveClick = onButtonSaveClick,
-//                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
-//                    )
+                items(count = jobs.itemCount, key = { it }) {
+                    val jobItem = jobs[it]
+                    if (jobItem != null) {
+                        JobItem(
+                            jobItem = jobItem,
+                            onClick = { navigateToDetailJob(jobItem.id) },
+                            onSaveClick = onButtonSaveClick,
+                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
+                        )
+                    }
                 }
             }
         }

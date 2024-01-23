@@ -99,7 +99,7 @@ fun SearchConnectionScreen(
         modifier = modifier
     ) { paddingValues ->
         AnimatedVisibility(
-            visible = !uiState.connectionLoaded,
+            visible = connectionLoaded.not(),
             enter = fadeIn(),
             exit = fadeOut()
         ) {

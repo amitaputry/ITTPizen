@@ -1,4 +1,4 @@
-package com.ta.ittpizen.feature_job.job
+package com.ta.ittpizen.feature_job.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,22 +11,28 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class JobViewModel(
+class SearchJobViewModel(
     private val userPreferenceUseCase: UserPreferenceUseCase,
     private val ittpizenPagedUseCase: IttpizenPagedUseCase,
     private val ittpizenUseCase: IttpizenUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(JobUiState())
-    val uiState: StateFlow<JobUiState> get() = _uiState
+    private val _uiState = MutableStateFlow(SearchJobUiState())
+    val uiState: StateFlow<SearchJobUiState> get() = _uiState
 
     val userPreference get() = userPreferenceUseCase.userPreference
 
-    fun getAllJob(token: String, workplaceType: String, jobType: String) {
+    fun updateQuery(query: String) {
+        _uiState.update {
+            it.copy(query = query)
+        }
+    }
+
+    fun searchJob(token: String, query: String) {
         _uiState.update {
             it.copy(
                 jobLoaded = true,
-                jobs = ittpizenPagedUseCase.getAllJob(token = token, workplaceType, jobType),
+                jobs = ittpizenPagedUseCase.searchJob(token = token, query = query),
             )
         }
     }
