@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -32,11 +31,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.ta.ittpizen.domain.model.PostItem
-import com.ta.ittpizen.domain.model.PostItemType
 import com.ta.ittpizen.domain.model.post.Post
+import com.ta.ittpizen.domain.model.post.PostType
 import com.ta.ittpizen.domain.model.preference.UserPreference
-import com.ta.ittpizen.domain.utils.DataPostItem
+import com.ta.ittpizen.ui.component.content.EmptyContent
 import com.ta.ittpizen.ui.component.post.PostItem
 import com.ta.ittpizen.ui.component.tab.BaseScrollableTabRow
 import com.ta.ittpizen.ui.component.topappbar.HomeTopAppBar
@@ -77,16 +75,22 @@ fun HomeScreen(
         mutableIntStateOf(pagerState.currentPage)
     }
 
-    val postItems = remember { mutableStateListOf<PostItem>() }
+    val postType by remember(key1 = pagerState.currentPage) {
+        val type = when (pagerState.currentPage) {
+            1 -> PostType.Tweet
+            2 -> PostType.Academic
+            3 -> PostType.Achievement
+            4 -> PostType.Event
+            5 -> PostType.Scholarship
+            else -> PostType.All
+        }
+        mutableStateOf(type)
+    }
 
     val onTabSelected: (Int) -> Unit = {
         scope.launch {
             pagerState.scrollToPage(it)
         }
-    }
-
-    val getPostByType: (type: PostItemType) -> List<PostItem>  = { type ->
-        postItems.filter { it.postType == type }
     }
 
     val onProfileClicked: (Post) -> Unit = { post ->
@@ -124,14 +128,15 @@ fun HomeScreen(
         context.startActivity(shareIntent)
     }
 
-    LaunchedEffect(key1 = Unit) {
-        postItems.addAll(DataPostItem.generateAllPost())
-    }
-
     LaunchedEffect(key1 = userPreference) {
         if (userPreference.accessToken.isEmpty()) return@LaunchedEffect
         if (allPostLoaded) return@LaunchedEffect
         viewModel.getAllPost(token = userPreference.accessToken)
+    }
+
+    LaunchedEffect(key1 = postType) {
+        if (userPreference.accessToken.isEmpty()) return@LaunchedEffect
+        viewModel.getAllPost(token = userPreference.accessToken, type = postType)
     }
 
     Scaffold(
@@ -157,7 +162,7 @@ fun HomeScreen(
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize()
-            ) { page ->
+            ) {
                 if (allPost.loadState.refresh is LoadState.Loading) {
                     Box(
                         modifier = Modifier
@@ -167,6 +172,12 @@ fun HomeScreen(
                     ) {
                         CircularProgressIndicator(color = PrimaryRed)
                     }
+                }
+                if (allPost.itemCount == 0 && allPost.loadState.refresh is LoadState.NotLoading) {
+                    EmptyContent(
+                        title = "There is no post :(",
+                        modifier = Modifier.padding(top = 130.dp)
+                    )
                 }
                 LazyColumn {
                     items(count = allPost.itemCount) {

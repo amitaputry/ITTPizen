@@ -105,7 +105,7 @@ fun ProfileScreen(
             dialogMessage = "You have to connect this user before can send a message?"
             messageDialogState.show()
         } else {
-            navigateToDetailChatScreen("-", userId)
+            navigateToDetailChatScreen("2", "2")
         }
     }
 

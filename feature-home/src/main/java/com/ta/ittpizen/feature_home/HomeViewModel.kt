@@ -24,11 +24,11 @@ class HomeViewModel(
 
     val userPreference get() = userPreferenceUseCase.userPreference
 
-    fun getAllPost(token: String) {
+    fun getAllPost(token: String, type: PostType = PostType.All) {
         _uiState.update {
             it.copy(
                 allPostLoaded = true,
-                allPost = ittpizenPagedUseCase.getAllPost(token = token, type = PostType.All).cachedIn(viewModelScope),
+                allPost = ittpizenPagedUseCase.getAllPost(token = token, type = type).cachedIn(viewModelScope),
             )
         }
     }
