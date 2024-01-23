@@ -89,6 +89,10 @@ fun JobScreen(
 
     LaunchedEffect(key1 = userPreference) {
         if (userPreference.accessToken.isEmpty()) return@LaunchedEffect
+        if (jobLoaded) {
+            jobs.refresh()
+            return@LaunchedEffect
+        }
         viewModel.getAllJob(userPreference.accessToken, workplaceType = "", jobType = "")
     }
 

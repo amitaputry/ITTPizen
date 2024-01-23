@@ -1,5 +1,8 @@
 package com.ta.ittpizen.domain.model.post
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class Post(
 
 	val id: String = "",

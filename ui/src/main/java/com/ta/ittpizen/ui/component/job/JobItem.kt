@@ -14,7 +14,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,7 +40,7 @@ fun JobItem(
     onClick: (Job) -> Unit = {},
     onSaveClick: (Job) -> Unit = {}
 ) {
-    var jobSaved by rememberSaveable { mutableStateOf(jobItem.saved) }
+    var jobSaved by remember { mutableStateOf(jobItem.saved) }
     val onSaved: (Job) -> Unit = { job ->
         onSaveClick(job.copy(saved = jobSaved))
         jobSaved = jobSaved.not()

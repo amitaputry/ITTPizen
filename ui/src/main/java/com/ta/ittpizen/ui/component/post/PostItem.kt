@@ -1,6 +1,5 @@
 package com.ta.ittpizen.ui.component.post
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -56,7 +55,6 @@ fun PostItem(
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         Column(
-            modifier = Modifier.animateContentSize(),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             PostHeader(

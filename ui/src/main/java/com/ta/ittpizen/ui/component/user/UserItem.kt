@@ -14,7 +14,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,9 +42,7 @@ fun UserItem(
     onClick: (Connection) -> Unit = {},
     onConnectClick: (Connection) -> Unit = {},
 ) {
-    var connected by rememberSaveable {
-        mutableStateOf(user.connected)
-    }
+    var connected by remember { mutableStateOf(user.connected) }
     val onConnectClicked: (Connection) -> Unit = {
         onConnectClick(user.copy(connected = connected))
         connected = connected.not()

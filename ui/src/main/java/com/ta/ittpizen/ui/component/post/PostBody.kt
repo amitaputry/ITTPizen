@@ -61,12 +61,11 @@ fun PostBody(
             Spacer(modifier = Modifier.height(10.dp))
             val model = ImageRequest.Builder(context)
                 .data(media)
-//                .size(Size.ORIGINAL)
                 .crossfade(true)
                 .scale(Scale.FIT)
                 .placeholder(R.drawable.img_media_placeholder)
                 .error(R.drawable.img_media_placeholder)
-                .memoryCacheKey(media)
+                .allowHardware(true)
                 .build()
             AsyncImage(
                 model = model,

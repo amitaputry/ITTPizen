@@ -1,5 +1,8 @@
 package com.ta.ittpizen.domain.model.job
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class Job(
 
 	val id: String = "",

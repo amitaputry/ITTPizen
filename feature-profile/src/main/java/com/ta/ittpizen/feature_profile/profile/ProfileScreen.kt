@@ -68,7 +68,8 @@ fun ProfileScreen(
 ) {
 
     val context = LocalContext.current
-    val dialogState = rememberUseCaseState()
+    val logoutDialogState = rememberUseCaseState()
+    val messageDialogState = rememberUseCaseState()
 
     var dialogTitle by remember { mutableStateOf("") }
     var dialogMessage by remember { mutableStateOf("") }
@@ -95,7 +96,17 @@ fun ProfileScreen(
     val onLogoutClick: () -> Unit = {
         dialogTitle = "Warning message!"
         dialogMessage = "Are you sure you want to log out?"
-        dialogState.show()
+        logoutDialogState.show()
+    }
+
+    val onMessageClick: () -> Unit = {
+        if (profileData.connected.not()) {
+            dialogTitle = "Warning message!"
+            dialogMessage = "You have to connect this user before can send a message?"
+            messageDialogState.show()
+        } else {
+            navigateToDetailChatScreen("-", userId)
+        }
     }
 
     val logout: () -> Unit = {
@@ -110,11 +121,11 @@ fun ProfileScreen(
         } else {
             viewModel.createConnection(token, userId)
         }
-        profileData = profileData.copy(connected = profileData.connected.not())
-    }
-
-    val onMessageClick: () -> Unit = {
-        navigateToDetailChatScreen("-", userId)
+        val updatedFollower = if (profileData.connected) profileData.followers - 1 else profileData.followers + 1
+        profileData = profileData.copy(
+            connected = profileData.connected.not(),
+            followers = updatedFollower
+        )
     }
 
     val onLikeClicked: (Post) -> Unit = { post ->
@@ -156,17 +167,27 @@ fun ProfileScreen(
     }
 
     CoreDialog(
-        state = dialogState,
+        state = logoutDialogState,
         body = {
             TextTitleSmall(text = dialogTitle)
             Spacer(modifier = Modifier.height(16.dp))
             TextBodyMedium(text = dialogMessage, color = SecondDarkGrey)
         },
         selection = CoreSelection(
-            positiveButton = SelectionButton(
-                text = "Logout"
-            ),
+            positiveButton = SelectionButton(text = "Logout"),
             onPositiveClick = logout
+        )
+    )
+
+    CoreDialog(
+        state = messageDialogState,
+        body = {
+            TextTitleSmall(text = dialogTitle)
+            Spacer(modifier = Modifier.height(16.dp))
+            TextBodyMedium(text = dialogMessage, color = SecondDarkGrey)
+        },
+        selection = CoreSelection(
+            positiveButton = SelectionButton(text = "Ok")
         )
     )
 
