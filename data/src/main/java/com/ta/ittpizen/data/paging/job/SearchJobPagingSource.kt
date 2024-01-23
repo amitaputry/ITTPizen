@@ -1,4 +1,4 @@
-package com.ta.ittpizen.data.paging
+package com.ta.ittpizen.data.paging.job
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -7,10 +7,9 @@ import com.ta.ittpizen.data.mapper.job.toDomains
 import com.ta.ittpizen.data.remote.RemoteDataSource
 import com.ta.ittpizen.domain.model.job.Job
 
-class JobPagingSource(
+class SearchJobPagingSource(
     private val token: String,
-    private val workplaceType: String,
-    private val jobType: String,
+    private val query: String,
     private val remoteDataSource: RemoteDataSource
 ) : PagingSource<Int, Job>() {
 
@@ -30,7 +29,7 @@ class JobPagingSource(
         return try {
             val page = params.key ?: DEFAULT_PAGE
             val size = params.loadSize
-            val response = remoteDataSource.getAllJob(token, workplaceType, jobType, page, size)
+            val response = remoteDataSource.searchJob(token, query, page, size)
             when (response) {
                 is NetworkResponse.Success -> {
                     val data = response.body.data.toDomains()

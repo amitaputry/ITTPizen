@@ -1,4 +1,4 @@
-package com.ta.ittpizen.data.paging
+package com.ta.ittpizen.data.paging.post
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -7,9 +7,9 @@ import com.ta.ittpizen.data.mapper.post.toDomains
 import com.ta.ittpizen.data.remote.RemoteDataSource
 import com.ta.ittpizen.domain.model.post.Post
 
-class PostPagingSource(
+class PostByUserPagingSource(
     private val token: String,
-    private val type: String,
+    private val userId: String,
     private val remoteDataSource: RemoteDataSource
 ) : PagingSource<Int, Post>() {
 
@@ -29,7 +29,7 @@ class PostPagingSource(
         return try {
             val page = params.key ?: DEFAULT_PAGE
             val size = params.loadSize
-            val response = remoteDataSource.getAllPost(token, type, page, size)
+            val response = remoteDataSource.getPostByUser(token, userId, page, size)
             when (response) {
                 is NetworkResponse.Success -> {
                     val data = response.body.data.toDomains()

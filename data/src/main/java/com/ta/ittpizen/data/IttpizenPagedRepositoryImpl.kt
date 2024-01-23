@@ -3,11 +3,13 @@ package com.ta.ittpizen.data
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.ta.ittpizen.data.paging.ConnectionPagingSource
-import com.ta.ittpizen.data.paging.JobPagingSource
-import com.ta.ittpizen.data.paging.PostByUserPagingSource
-import com.ta.ittpizen.data.paging.PostPagingSource
-import com.ta.ittpizen.data.paging.SavedJobPagingSource
+import com.ta.ittpizen.data.paging.connection.ConnectionPagingSource
+import com.ta.ittpizen.data.paging.connection.SearchConnectionPagingSource
+import com.ta.ittpizen.data.paging.job.JobPagingSource
+import com.ta.ittpizen.data.paging.job.SavedJobPagingSource
+import com.ta.ittpizen.data.paging.job.SearchJobPagingSource
+import com.ta.ittpizen.data.paging.post.PostByUserPagingSource
+import com.ta.ittpizen.data.paging.post.PostPagingSource
 import com.ta.ittpizen.data.remote.RemoteDataSource
 import com.ta.ittpizen.domain.model.connection.Connection
 import com.ta.ittpizen.domain.model.job.Job
@@ -41,6 +43,13 @@ class IttpizenPagedRepositoryImpl(
         ).flow
     }
 
+    override fun searchConnection(token: String, query: String): Flow<PagingData<Connection>> {
+        return Pager(
+            config = PagingConfig(SearchConnectionPagingSource.DEFAULT_SIZE),
+            pagingSourceFactory = { SearchConnectionPagingSource(token, query, remoteDataSource) }
+        ).flow
+    }
+
     override fun getAllJob(
         token: String,
         workplaceType: String,
@@ -49,6 +58,13 @@ class IttpizenPagedRepositoryImpl(
         return Pager(
             config = PagingConfig(JobPagingSource.DEFAULT_SIZE),
             pagingSourceFactory = { JobPagingSource(token, workplaceType, jobType, remoteDataSource) }
+        ).flow
+    }
+
+    override fun searchJob(token: String, query: String): Flow<PagingData<Job>> {
+        return Pager(
+            config = PagingConfig(SearchJobPagingSource.DEFAULT_SIZE),
+            pagingSourceFactory = { SearchJobPagingSource(token, query, remoteDataSource) }
         ).flow
     }
 

@@ -24,10 +24,20 @@ interface IttpizenPagedRepository {
         type: String
     ): Flow<PagingData<Connection>>
 
+    fun searchConnection(
+        token: String,
+        query: String
+    ): Flow<PagingData<Connection>>
+
     fun getAllJob(
         token: String,
         workplaceType: String,
         jobType: String,
+    ): Flow<PagingData<Job>>
+
+    fun searchJob(
+        token: String,
+        query: String
     ): Flow<PagingData<Job>>
 
     fun getSavedJob(

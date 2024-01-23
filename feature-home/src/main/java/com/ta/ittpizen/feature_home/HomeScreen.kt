@@ -175,8 +175,7 @@ fun HomeScreen(
                 }
                 if (allPost.itemCount == 0 && allPost.loadState.refresh is LoadState.NotLoading) {
                     EmptyContent(
-                        title = "There is no post :(",
-                        modifier = Modifier.padding(top = 130.dp)
+                        title = "There is no post :("
                     )
                 }
                 LazyColumn {

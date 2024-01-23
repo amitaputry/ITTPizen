@@ -25,12 +25,20 @@ class IttpizenPagedInteractor(
         return repository.getAllConnection(token, type)
     }
 
+    override fun searchConnection(token: String, query: String): Flow<PagingData<Connection>> {
+        return repository.searchConnection(token, query)
+    }
+
     override fun getAllJob(
         token: String,
         workplaceType: String,
         jobType: String
     ): Flow<PagingData<Job>> {
         return repository.getAllJob(token, workplaceType, jobType)
+    }
+
+    override fun searchJob(token: String, query: String): Flow<PagingData<Job>> {
+        return repository.searchJob(token, query)
     }
 
     override fun getSavedJob(token: String): Flow<PagingData<Job>> {

@@ -138,6 +138,19 @@ interface IttpizenService {
         size: Int
     ): NetworkResponse<PagedCommonResponse<List<ConnectionResponse>>, CommonErrorResponse>
 
+    @GET("connection/search")
+    suspend fun searchConnection(
+        @Header("Authorization")
+        authorization: String,
+        @Query("query")
+        query: String,
+        @Query("page")
+        page: Int,
+        @Query("size")
+        size: Int
+    ): NetworkResponse<PagedCommonResponse<List<ConnectionResponse>>, CommonErrorResponse>
+
+
     @GET("connection/{userId}")
     suspend fun getConnectionById(
         @Header("Authorization")
@@ -170,6 +183,18 @@ interface IttpizenService {
         workplaceType: String,
         @Query("jobType")
         jobType: String,
+        @Query("page")
+        page: Int,
+        @Query("size")
+        size: Int
+    ): NetworkResponse<PagedCommonResponse<List<JobResponse>>, CommonErrorResponse>
+
+    @GET("job/search")
+    suspend fun searchJob(
+        @Header("Authorization")
+        authorization: String,
+        @Query("query")
+        query: String,
         @Query("page")
         page: Int,
         @Query("size")

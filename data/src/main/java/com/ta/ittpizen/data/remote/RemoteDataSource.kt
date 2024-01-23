@@ -131,6 +131,16 @@ class RemoteDataSource(private val service: IttpizenService) {
         return service.getAllConnection(authorization, type, page, size)
     }
 
+    suspend fun searchConnection(
+        token: String,
+        query: String,
+        page: Int,
+        size: Int
+    ): NetworkResponse<PagedCommonResponse<List<ConnectionResponse>>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.searchConnection(authorization, query, page, size)
+    }
+
     suspend fun getConnectionById(
         token: String,
         userId: String
@@ -184,6 +194,16 @@ class RemoteDataSource(private val service: IttpizenService) {
     ): NetworkResponse<PagedCommonResponse<List<JobResponse>>, CommonErrorResponse> {
         val authorization = "Bearer $token"
         return service.getAllJob(authorization, workplaceType, jobType, page, size)
+    }
+
+    suspend fun searchJob(
+        token: String,
+        query: String,
+        page: Int,
+        size: Int
+    ): NetworkResponse<PagedCommonResponse<List<JobResponse>>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.searchJob(authorization, query, page, size)
     }
 
     suspend fun getSavedJob(
