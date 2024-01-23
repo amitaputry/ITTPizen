@@ -143,7 +143,6 @@ fun ProfileScreen(
 
     LaunchedEffect(key1 = userPreference) {
         if (userPreference.accessToken.isEmpty()) return@LaunchedEffect
-        if (allPostLoaded) return@LaunchedEffect
 
         val token = userPreference.accessToken
         viewModel.getProfile(token, userId)

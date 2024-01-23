@@ -7,5 +7,5 @@ import org.koin.dsl.module
 
 val profileModule = module {
     viewModel { ProfileViewModel(get(), get(), get(), get()) }
-    viewModel { EditProfileViewModel() }
+    viewModel { EditProfileViewModel(get(), get()) }
 }

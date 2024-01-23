@@ -7,6 +7,7 @@ import com.ta.ittpizen.data.mapper.connection.toDomain
 import com.ta.ittpizen.data.mapper.job.toDomain
 import com.ta.ittpizen.data.mapper.post.toDomain
 import com.ta.ittpizen.data.mapper.post.toDomains
+import com.ta.ittpizen.data.mapper.profile.toDomain
 import com.ta.ittpizen.data.remote.RemoteDataSource
 import com.ta.ittpizen.data.remote.response.job.CreateJobResult
 import com.ta.ittpizen.domain.model.Resource
@@ -17,6 +18,7 @@ import com.ta.ittpizen.domain.model.job.DetailJobResult
 import com.ta.ittpizen.domain.model.post.CreatePostResult
 import com.ta.ittpizen.domain.model.post.Post
 import com.ta.ittpizen.domain.model.post.PostComment
+import com.ta.ittpizen.domain.model.profile.Profile
 import com.ta.ittpizen.domain.repository.IttpizenRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -311,4 +313,54 @@ class IttpizenRepositoryImpl(private val remoteDataSource: RemoteDataSource) : I
         emit(Resource.Error(message = it.message))
     }
 
+    override fun getProfile(token: String): Flow<Resource<Profile>> = flow {
+        emit(Resource.Loading)
+        when (val response = remoteDataSource.getProfile(token)) {
+            is NetworkResponse.Success -> {
+                val result = response.body.data.toDomain()
+                emit(Resource.Success(result))
+            }
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+    }.catch {
+        emit(Resource.Error(message = it.message))
+    }
+
+    override fun updateProfile(
+        token: String,
+        name: String,
+        bio: String,
+        photo: File?
+    ): Flow<Resource<Profile>> = flow {
+        emit(Resource.Loading)
+
+        val compressedFile = withContext(Dispatchers.IO) { photo?.reduceFileImage() }
+        val nameRequestBody = name.toRequestBody("text/plain".toMediaType())
+        val bioRequestBody = bio.toRequestBody("text/plain".toMediaType())
+        val photoRequestBody = compressedFile?.asRequestBody("image/jpeg".toMediaTypeOrNull())
+        val photoMultipart = photoRequestBody?.let {
+            MultipartBody.Part.createFormData(
+                "photo",
+                filename = compressedFile.name,
+                body = photoRequestBody
+            )
+        }
+
+        when (val response = remoteDataSource.updateProfile(token, nameRequestBody, bioRequestBody, photoMultipart)) {
+            is NetworkResponse.Success -> {
+                val result = response.body.data.toDomain()
+                emit(Resource.Success(result))
+            }
+            is NetworkResponse.Error -> {
+                val message = response.body?.data ?: response.error?.message
+                emit(Resource.Error(message = message))
+            }
+        }
+
+    }.catch {
+        emit(Resource.Error(message = it.message))
+    }
 }

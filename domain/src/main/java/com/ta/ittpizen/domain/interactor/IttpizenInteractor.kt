@@ -9,6 +9,7 @@ import com.ta.ittpizen.domain.model.job.DetailJobResult
 import com.ta.ittpizen.domain.model.post.CreatePostResult
 import com.ta.ittpizen.domain.model.post.Post
 import com.ta.ittpizen.domain.model.post.PostComment
+import com.ta.ittpizen.domain.model.profile.Profile
 import com.ta.ittpizen.domain.repository.IttpizenRepository
 import com.ta.ittpizen.domain.usecase.IttpizenUseCase
 import kotlinx.coroutines.flow.Flow
@@ -113,4 +114,18 @@ class IttpizenInteractor(
     override fun unSaveJob(token: String, jobId: String): Flow<Resource<Boolean>> {
         return repository.unSaveJob(token, jobId)
     }
+
+    override fun getProfile(token: String): Flow<Resource<Profile>> {
+        return repository.getProfile(token)
+    }
+
+    override fun updateProfile(
+        token: String,
+        name: String,
+        bio: String,
+        photo: File?
+    ): Flow<Resource<Profile>> {
+        return repository.updateProfile(token, name, bio, photo)
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.ta.ittpizen.domain.usecase
 
 import com.ta.ittpizen.data.remote.response.job.CreateJobResult
+import com.ta.ittpizen.domain.model.profile.Profile
 import com.ta.ittpizen.domain.model.Resource
 import com.ta.ittpizen.domain.model.auth.LoginResult
 import com.ta.ittpizen.domain.model.auth.RegisterResult
@@ -107,5 +108,16 @@ interface IttpizenUseCase {
         token: String,
         jobId: String
     ): Flow<Resource<Boolean>>
+
+    fun getProfile(
+        token: String
+    ): Flow<Resource<Profile>>
+
+    fun updateProfile(
+        token: String,
+        name: String,
+        bio: String,
+        photo: File?
+    ): Flow<Resource<Profile>>
 
 }

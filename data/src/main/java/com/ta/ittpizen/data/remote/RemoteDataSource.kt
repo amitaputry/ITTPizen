@@ -21,6 +21,7 @@ import com.ta.ittpizen.data.remote.response.post.CreatePostCommentResponse
 import com.ta.ittpizen.data.remote.response.post.CreatePostResponse
 import com.ta.ittpizen.data.remote.response.post.PostCommentResponse
 import com.ta.ittpizen.data.remote.response.post.PostResponse
+import com.ta.ittpizen.data.remote.response.profile.ProfileResponse
 import com.ta.ittpizen.data.remote.service.IttpizenService
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -216,6 +217,23 @@ class RemoteDataSource(private val service: IttpizenService) {
     ): NetworkResponse<CommonResponse<DetailJobResponse>, CommonErrorResponse> {
         val authorization = "Bearer $token"
         return service.getJobById(authorization, jobId)
+    }
+
+    suspend fun getProfile(
+        token: String
+    ): NetworkResponse<CommonResponse<ProfileResponse>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.getProfile(authorization)
+    }
+
+    suspend fun updateProfile(
+        token: String,
+        name: RequestBody,
+        bio: RequestBody,
+        photo: MultipartBody.Part? = null
+    ): NetworkResponse<CommonResponse<ProfileResponse>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.updateProfile(authorization, name, bio, photo)
     }
 
 }
