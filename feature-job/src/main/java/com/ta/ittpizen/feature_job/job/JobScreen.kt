@@ -149,7 +149,7 @@ fun JobScreen(
                     )
                 }
             }
-            items(count = jobs.itemCount) {
+            items(count = jobs.itemCount, key = { it }) {
                 val job = jobs[it]
                 if (job != null) {
                     JobItem(

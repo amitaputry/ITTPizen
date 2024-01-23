@@ -58,7 +58,7 @@ fun UserItem(
             placeholder = painterResource(id = R.drawable.ic_profile_default),
             error = painterResource(id = R.drawable.ic_profile_default),
             contentDescription = "image description",
-            contentScale = ContentScale.FillBounds,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .clip(CircleShape)
                 .size(40.dp)

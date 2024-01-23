@@ -2,6 +2,7 @@ package com.ta.ittpizen.feature_job.job
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.ta.ittpizen.domain.usecase.IttpizenPagedUseCase
 import com.ta.ittpizen.domain.usecase.IttpizenUseCase
 import com.ta.ittpizen.domain.usecase.UserPreferenceUseCase
@@ -26,7 +27,7 @@ class JobViewModel(
         _uiState.update {
             it.copy(
                 jobLoaded = true,
-                jobs = ittpizenPagedUseCase.getAllJob(token = token, workplaceType, jobType),
+                jobs = ittpizenPagedUseCase.getAllJob(token = token, workplaceType, jobType).cachedIn(viewModelScope),
             )
         }
     }

@@ -173,6 +173,7 @@ fun AddPostScreen(
         ) {
             Spacer(modifier = Modifier.height(10.dp))
             AddPostHeader(
+                profile = userPreference.photo,
                 name = userPreference.name,
                 type = userPreference.type,
                 modifier = Modifier.padding(horizontal = 20.dp)

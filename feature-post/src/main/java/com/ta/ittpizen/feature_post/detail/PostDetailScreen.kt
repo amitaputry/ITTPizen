@@ -92,8 +92,6 @@ fun PostDetailScreen(
         if (postComment is Resource.Success) {
             postCommentData.clear()
             postCommentData.addAll(postComment.data)
-            if (postCommentData.isEmpty()) return@LaunchedEffect
-            lazyState.animateScrollToItem(postCommentData.lastIndex)
         }
     }
 

@@ -3,6 +3,7 @@ package com.ta.ittpizen.feature_profile.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ta.ittpizen.domain.model.Resource
+import com.ta.ittpizen.domain.model.preference.UserPreference
 import com.ta.ittpizen.domain.model.profile.Profile
 import com.ta.ittpizen.domain.usecase.IttpizenUseCase
 import com.ta.ittpizen.domain.usecase.UserPreferenceUseCase
@@ -98,6 +99,12 @@ class EditProfileViewModel(
             useCase.updateProfile(token, name, bio, file).collect { result ->
                 _updateProfileResult.value = result
             }
+        }
+    }
+
+    fun updateUserPreference(userPreference: UserPreference) {
+        viewModelScope.launch {
+            userPreferenceUseCase.updateUserPreference(userPreference)
         }
     }
 

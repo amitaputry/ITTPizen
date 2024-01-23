@@ -63,7 +63,7 @@ fun ProfileHeader(
         AsyncImage(
             model = profile.photo,
             contentDescription = profile.name,
-            contentScale = ContentScale.FillBounds,
+            contentScale = ContentScale.Crop,
             placeholder = painterResource(id = R.drawable.ic_profile_default),
             error = painterResource(id = R.drawable.ic_profile_default),
             modifier = Modifier

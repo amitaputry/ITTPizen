@@ -43,7 +43,7 @@ fun PostHeader(
         AsyncImage(
             model = profile,
             contentDescription = name,
-            contentScale = ContentScale.FillBounds,
+            contentScale = ContentScale.Crop,
             placeholder = painterResource(id = R.drawable.ic_profile_default),
             error = painterResource(id = R.drawable.ic_profile_default),
             modifier = Modifier

@@ -124,7 +124,7 @@ fun ConnectionScreen(
                     )
                 }
             }
-            items(count = connections.itemCount) {
+            items(count = connections.itemCount, key = { connections[it]?.id ?: it }) {
                 val connection = connections[it]
                 if (connection != null) {
                     UserItem(

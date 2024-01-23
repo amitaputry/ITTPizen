@@ -180,7 +180,7 @@ fun HomeScreen(
                     )
                 }
                 LazyColumn {
-                    items(count = allPost.itemCount) {
+                    items(count = allPost.itemCount, key = { allPost[it]?.id ?: it }) {
                         val post = allPost[it]
                         if (post != null) {
                             PostItem(

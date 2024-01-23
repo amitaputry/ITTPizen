@@ -110,6 +110,13 @@ fun EditProfileScreen(
     }
     LaunchedEffect(key1 = updateProfileResult) {
         if (updateProfileResult is Resource.Success) {
+            val data = (updateProfileResult as Resource.Success<Profile>).data
+            val updateUserPreference = userPreference.copy(
+                photo = data.photo,
+                name = data.name,
+                type = data.type
+            )
+            viewModel.updateUserPreference(updateUserPreference)
             Toast.makeText(context, "Update profile successfully!", Toast.LENGTH_SHORT).show()
         }
         if (updateProfileResult is Resource.Error) {
