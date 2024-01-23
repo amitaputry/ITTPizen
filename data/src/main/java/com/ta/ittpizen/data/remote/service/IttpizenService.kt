@@ -174,6 +174,16 @@ interface IttpizenService {
         size: Int
     ): NetworkResponse<PagedCommonResponse<List<JobResponse>>, CommonErrorResponse>
 
+    @GET("job/saved")
+    suspend fun getSavedJob(
+        @Header("Authorization")
+        authorization: String,
+        @Query("page")
+        page: Int,
+        @Query("size")
+        size: Int
+    ): NetworkResponse<PagedCommonResponse<List<JobResponse>>, CommonErrorResponse>
+
     @POST("job")
     suspend fun createJob(
         @Header("Authorization")

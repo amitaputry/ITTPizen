@@ -185,6 +185,15 @@ class RemoteDataSource(private val service: IttpizenService) {
         return service.getAllJob(authorization, workplaceType, jobType, page, size)
     }
 
+    suspend fun getSavedJob(
+        token: String,
+        page: Int,
+        size: Int
+    ): NetworkResponse<PagedCommonResponse<List<JobResponse>>, CommonErrorResponse> {
+        val authorization = "Bearer $token"
+        return service.getSavedJob(authorization, page, size)
+    }
+
     suspend fun saveJob(
         token: String,
         jobId: String,

@@ -7,6 +7,7 @@ import com.ta.ittpizen.data.paging.ConnectionPagingSource
 import com.ta.ittpizen.data.paging.JobPagingSource
 import com.ta.ittpizen.data.paging.PostByUserPagingSource
 import com.ta.ittpizen.data.paging.PostPagingSource
+import com.ta.ittpizen.data.paging.SavedJobPagingSource
 import com.ta.ittpizen.data.remote.RemoteDataSource
 import com.ta.ittpizen.domain.model.connection.Connection
 import com.ta.ittpizen.domain.model.job.Job
@@ -48,6 +49,13 @@ class IttpizenPagedRepositoryImpl(
         return Pager(
             config = PagingConfig(JobPagingSource.DEFAULT_SIZE),
             pagingSourceFactory = { JobPagingSource(token, workplaceType, jobType, remoteDataSource) }
+        ).flow
+    }
+
+    override fun getSavedJob(token: String): Flow<PagingData<Job>> {
+        return Pager(
+            config = PagingConfig(SavedJobPagingSource.DEFAULT_SIZE),
+            pagingSourceFactory = { SavedJobPagingSource(token, remoteDataSource) }
         ).flow
     }
 }

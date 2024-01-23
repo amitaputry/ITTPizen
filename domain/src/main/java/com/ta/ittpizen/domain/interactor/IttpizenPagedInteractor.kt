@@ -32,4 +32,8 @@ class IttpizenPagedInteractor(
     ): Flow<PagingData<Job>> {
         return repository.getAllJob(token, workplaceType, jobType)
     }
+
+    override fun getSavedJob(token: String): Flow<PagingData<Job>> {
+        return repository.getSavedJob(token)
+    }
 }

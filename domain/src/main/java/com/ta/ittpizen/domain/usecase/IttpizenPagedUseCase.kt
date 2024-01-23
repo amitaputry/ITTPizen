@@ -30,4 +30,8 @@ interface IttpizenPagedUseCase {
         jobType: String,
     ): Flow<PagingData<Job>>
 
+    fun getSavedJob(
+        token: String
+    ): Flow<PagingData<Job>>
+
 }
