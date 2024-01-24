@@ -20,7 +20,7 @@ fun LocalDateTime.toChatTimeFormat(): String {
 }
 
 fun String.toRelativeDateFormat(): String {
-    val sdf = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.getDefault())
+    val sdf = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US)
     val date = try {
         sdf.parse(this)
     } catch (e:Exception) {

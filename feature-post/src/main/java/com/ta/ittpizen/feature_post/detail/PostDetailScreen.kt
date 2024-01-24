@@ -6,9 +6,9 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -120,12 +120,10 @@ fun PostDetailScreen(
                 enabled = buttonEnabled
             )
         },
-        modifier = modifier
+        modifier = modifier.safeDrawingPadding()
     ) { paddingValues ->
         Column(
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
+            modifier = Modifier.padding(paddingValues)
         ) {
             LazyColumn(state = lazyState) {
                 item {
